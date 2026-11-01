@@ -354,7 +354,9 @@ class HybridTTSManager {
 const DEFAULT_STATE = {
   totalIncense: 268,
   totalVotiveBurned: 688,
-  totalMerit: 6880,
+  totalMerit: 368880,
+  dailyMeritTarget: 1000000,
+  dailyMeritCurrent: 368880,
   woodenFishHits: 520,
   bellRings: 68,
   lanternCount: 36,
@@ -464,6 +466,8 @@ function loadState() {
       return {
         ...DEFAULT_STATE,
         ...saved,
+        dailyMeritTarget: saved.dailyMeritTarget || DEFAULT_STATE.dailyMeritTarget,
+        dailyMeritCurrent: saved.dailyMeritCurrent || saved.totalMerit || DEFAULT_STATE.dailyMeritCurrent,
         devotees: saved.devotees && Object.keys(saved.devotees).length > 0 ? saved.devotees : DEFAULT_STATE.devotees,
         offerings: { ...DEFAULT_STATE.offerings, ...(saved.offerings || {}) },
         settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) },
@@ -599,6 +603,7 @@ function recordDevotee(user, uniqueId, avatar, meritDelta, incenseDelta = 0, vot
   if (cleanWish) dev.lastWish = cleanWish;
 
   state.totalMerit += meritDelta;
+  state.dailyMeritCurrent = (state.dailyMeritCurrent || 0) + meritDelta;
   state.totalVotiveBurned = (state.totalVotiveBurned || 0) + votiveDelta;
   state.haloIntensity = Math.min(1.0, 0.45 + (state.totalMerit % 1000) / 1400);
   return dev;
@@ -622,6 +627,8 @@ function getPublicState() {
     totalIncense: state.totalIncense,
     totalVotiveBurned: state.totalVotiveBurned || 0,
     totalMerit: state.totalMerit,
+    dailyMeritTarget: state.dailyMeritTarget || 1000000,
+    dailyMeritCurrent: state.dailyMeritCurrent || state.totalMerit || 368880,
     woodenFishHits: state.woodenFishHits,
     bellRings: state.bellRings,
     lanternCount: state.lanternCount,
@@ -703,7 +710,7 @@ const Rituals = {
     const merit = count * 2;
 
     state.woodenFishHits += count;
-    const devotee = recordDevotee(user, uniqueId, avatar, merit, 0, 1);
+    const devotee = recordDevotee(user, uniqueId, avatar, merit, 0, 1, 0, `Thả ${count} tim tích +${merit} công đức`);
 
     const event = pushEventLog({
       type: 'strikeWoodenFish',

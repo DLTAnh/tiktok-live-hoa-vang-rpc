@@ -1,14 +1,14 @@
 {
-  "totalIncense": 424,
-  "totalVotiveBurned": 998,
-  "totalMerit": 33043,
-  "woodenFishHits": 759,
+  "totalIncense": 532,
+  "totalVotiveBurned": 1180,
+  "totalMerit": 36043,
+  "woodenFishHits": 1169,
   "bellRings": 69,
-  "lanternCount": 43,
+  "lanternCount": 44,
   "fortuneCount": 22,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 324,
+    "gold_ingot": 468,
     "hell_money": 126,
     "royal_robe": 25,
     "sacred_horse": 20,
@@ -82,11 +82,11 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 24395,
-      "incense": 78,
-      "votiveCount": 198,
+      "merit": 25910,
+      "incense": 94,
+      "votiveCount": 281,
       "gifts": 6,
-      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
+      "lastWish": "Thả 10 tim tích 20 công đức"
     },
     "luklacstore": {
       "name": "user51360464158",
@@ -282,9 +282,9 @@
       "name": "Quang vàng mã làm đồ ng ch",
       "uniqueId": "quangvangma1",
       "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/66cf8f54179b74eab32a41a9c0214f65~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=584df52d&x-expires=1793689200&x-signature=SAjcCA6vIdORFnt%2FL3HM7Yln6mI%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
-      "merit": 540,
-      "incense": 36,
-      "votiveCount": 36,
+      "merit": 1215,
+      "incense": 81,
+      "votiveCount": 81,
       "gifts": 0,
       "lastWish": "1 ngừoi tham gia"
     },
@@ -332,9 +332,9 @@
       "name": "Vương Phong VCT Thuận Thàn",
       "uniqueId": "vuongphongvocotruyen99",
       "avatar": "https://p19-common-sign.tiktokcdn.com/tos-alisg-avt-0068/64e762b0700a7664f28e33d5daf57550~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=b0fb08a3&x-expires=1793689200&x-signature=164h3%2FY2%2FdnX%2FCt%2FWZRTTm%2FKKDM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
-      "merit": 616,
-      "incense": 42,
-      "votiveCount": 45,
+      "merit": 1291,
+      "incense": 87,
+      "votiveCount": 90,
       "gifts": 1,
       "lastWish": "Alo"
     },
@@ -667,6 +667,16 @@
       "votiveCount": 0,
       "gifts": 0,
       "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "ducthinh88": {
+      "name": "Vũ Đức Thịnh",
+      "uniqueId": "ducthinh88",
+      "avatar": "",
+      "merit": 135,
+      "incense": 3,
+      "votiveCount": 9,
+      "gifts": 0,
+      "lastWish": "Con xin gieo một quẻ cầu tài lộc buôn bán tháng này"
     }
   },
   "settings": {

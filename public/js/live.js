@@ -707,6 +707,21 @@
     document.getElementById('statMerit').textContent = Number(st.totalMerit || 0).toLocaleString('vi-VN');
     document.getElementById('statWoodenFish').textContent = Number(st.woodenFishHits || 0).toLocaleString('vi-VN');
 
+    // Cập nhật Dòng Timeline Tiến Trình 1.000.000 Điểm Công Đức Mỗi Ngày
+    const target = Number(st.dailyMeritTarget) || 1000000;
+    const current = Number(st.dailyMeritCurrent || st.totalMerit || 0);
+    const pct = Math.min(100, Math.max(0, (current / target) * 100));
+
+    const curEl = document.getElementById('timelineMeritCurrent');
+    const tgtEl = document.getElementById('timelineMeritTarget');
+    const pctEl = document.getElementById('timelineMeritPercent');
+    const barEl = document.getElementById('timelineBarFill');
+
+    if (curEl) curEl.textContent = current.toLocaleString('vi-VN');
+    if (tgtEl) tgtEl.textContent = target.toLocaleString('vi-VN');
+    if (pctEl) pctEl.textContent = `${pct.toFixed(1)}%`;
+    if (barEl) barEl.style.width = `${pct}%`;
+
     renderIncenseSticks(st.activeIncenseSticks || 9);
 
     if (st.settings?.stageBg) {
@@ -815,7 +830,7 @@
       case 'burnIncense':
         return `${ev.itemEmoji || '🪙'} <strong>${escapeHtml(ev.user)}</strong> hoá ${ev.count || 3} ${escapeHtml(ev.itemName || 'Thoi Vàng')} (+${ev.merit} LĐ)`;
       case 'strikeWoodenFish':
-        return `❤️ <strong>${escapeHtml(ev.user)}</strong> thả ${ev.count} tim quạt lửa (+${ev.merit} LĐ)`;
+        return `❤️ <strong>${escapeHtml(ev.user)}</strong> thả ${ev.count} tim tích +${ev.merit} Công Đức`;
       case 'ringBell':
         return `🔔 <strong>${escapeHtml(ev.user)}</strong> thỉnh Đại Hồng Chung (+${ev.merit} LĐ)`;
       case 'sendPrayer':
@@ -867,11 +882,11 @@
         particles.spawnHearts(ev.count || 10);
         particles.spawnIncenseBurst(520, 1015, 16);
         pulseHallBowing();
-        particles.spawnFloatingMerit(`❤️ +${ev.merit} Lộc Đức`, 860, 935, '#ffd54f');
+        particles.spawnFloatingMerit(`❤️ +${ev.merit} Công Đức`, 860, 935, '#ff4757');
         const hudName = document.getElementById('devoteeNameLine');
         const hudAct = document.getElementById('devoteeActionTag');
         if (hudName) hudName.textContent = ev.user || 'Tín Chủ';
-        if (hudAct) hudAct.textContent = `❤️ Thả ${ev.count || 10} tim quạt lửa (+${ev.merit} LĐ)`;
+        if (hudAct) hudAct.textContent = `❤️ Thả ${ev.count || 10} tim • Tích +${ev.merit} Công Đức`;
         break;
       }
 
