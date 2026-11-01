@@ -116,6 +116,11 @@ body.obs-mode .stage-wrapper {
   object-position: center top;
   z-index: 1;
   pointer-events: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* 1B. HỆ THỐNG HÀO QUANG KIM QUANG (Ẩn mặc định ở cảnh Đài Hoá Vàng ngoài sân, hiện ở cảnh Chánh Điện) */

@@ -1637,4 +1637,20 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`🎛️ Bảng điều khiển RPC Admin        : http://localhost:${PORT}/admin`);
   console.log(`🔌 JSON-RPC 2.0 Endpoint            : http://localhost:${PORT}/rpc (ws://localhost:${PORT}/ws)`);
   console.log(`====================================================================`);
+
+  // Tự động quét và kết nối tức thì khi kênh @quangvangma1 vừa bấm phát LIVE (chu kỳ 5s)
+  let isAutoScanning = false;
+  setInterval(async () => {
+    if (state.tiktok.connected || state.tiktok.connecting || isAutoScanning) return;
+    const targetUser = state.tiktok.username || 'quangvangma1';
+    if (!targetUser) return;
+    try {
+      isAutoScanning = true;
+      await connectTikTokLive(targetUser);
+    } catch (_) {
+      // Khi kênh chưa phát live: bỏ qua và đợi chu kỳ quét kế tiếp
+    } finally {
+      isAutoScanning = false;
+    }
+  }, 5000);
 });
