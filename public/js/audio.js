@@ -22,6 +22,8 @@ class TempleAudioEngine {
 
     this.useSynthMusicFallback = false;
     this.synthBgTimer = null;
+    this.fireLoopSource = null;
+    this.fireGain = null;
     this.bgAudio = new Audio('/assets/bg_chant.wav');
     this.bgAudio.loop = true;
     this.bgAudio.preload = 'auto';
@@ -114,10 +116,7 @@ class TempleAudioEngine {
 
   startZenAmbience() {
     if (!this.bgMusicEnabled) return;
-    if (this.useSynthMusicFallback) {
-      this.startDefaultZenSynthLoop();
-      return;
-    }
+    this.startSacredZenSoundscape();
     try {
       this.bgAudio.volume = this.getEffectiveBgVolume(this.ttsPlaying);
       if (this.bgAudio.paused) {
@@ -125,58 +124,124 @@ class TempleAudioEngine {
         if (p && typeof p.catch === 'function') {
           p.catch(() => {
             this.useSynthMusicFallback = true;
-            this.startDefaultZenSynthLoop();
           });
         }
       }
     } catch (_) {
       this.useSynthMusicFallback = true;
-      this.startDefaultZenSynthLoop();
     }
   }
 
-  // Fallback âm trầm ấm (108Hz - 196Hz qua bộ lọc Low-pass 220Hz, tuyệt đối không có tần số chói tai)
-  startDefaultZenSynthLoop() {
+  // Hệ thống Âm Thanh Thiền Tâm Linh Đa Tầng (Harmonic Tibetan Singing Bowls & Bronze Chimes Ngũ Cung 432Hz)
+  startSacredZenSoundscape() {
     if (!this.bgMusicEnabled || this.synthBgTimer) return;
-    const WARM_DRONE_NOTES = [108.0, 144.0, 162.0, 196.0];
-    let step = 0;
-    const playWarmPad = () => {
+    this.startContinuousFireAmbience();
+
+    const TIBETAN_PENTATONIC = [
+      { base: 216.0, ratios: [1.0, 2.76, 5.4], amps: [0.18, 0.08, 0.03], dur: 6.5 },
+      { base: 256.0, ratios: [1.0, 2.76, 5.4], amps: [0.16, 0.07, 0.025], dur: 6.0 },
+      { base: 288.0, ratios: [1.0, 2.76, 5.4], amps: [0.15, 0.06, 0.02], dur: 5.8 },
+      { base: 324.0, ratios: [1.0, 2.76, 5.4], amps: [0.17, 0.07, 0.025], dur: 6.2 },
+      { base: 384.0, ratios: [1.0, 2.76, 5.4], amps: [0.14, 0.05, 0.02], dur: 5.5 },
+      { base: 432.0, ratios: [1.0, 2.76, 5.4], amps: [0.18, 0.08, 0.03], dur: 7.0 }
+    ];
+
+    let melodyStep = 0;
+    const playTibetanHarmonicTone = () => {
       if (!this.bgMusicEnabled || !this.ctx) return;
       try {
         const now = this.ctx.currentTime;
-        const freq = WARM_DRONE_NOTES[step % WARM_DRONE_NOTES.length];
-        step++;
-        const vol = this.getEffectiveBgVolume(this.ttsPlaying) * 0.22;
-        if (vol <= 0.002) return;
+        const tone = TIBETAN_PENTATONIC[melodyStep % TIBETAN_PENTATONIC.length];
+        melodyStep++;
+        const masterVol = this.getEffectiveBgVolume(this.ttsPlaying);
+        if (masterVol <= 0.001) return;
 
-        const osc = this.ctx.createOscillator();
-        const lp = this.ctx.createBiquadFilter();
-        const gain = this.ctx.createGain();
+        const masterGain = this.ctx.createGain();
+        masterGain.gain.setValueAtTime(masterVol, now);
+        masterGain.connect(this.ctx.destination);
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now);
+        tone.ratios.forEach((ratio, idx) => {
+          const osc = this.ctx.createOscillator();
+          const lp = this.ctx.createBiquadFilter();
+          const gain = this.ctx.createGain();
 
-        lp.type = 'lowpass';
-        lp.frequency.setValueAtTime(220, now);
+          osc.type = idx === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(tone.base * ratio, now);
 
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.linearRampToValueAtTime(vol, now + 1.4);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 5.2);
+          if (idx > 0) {
+            osc.detune.setValueAtTime((Math.random() - 0.5) * 8, now);
+          }
 
-        osc.connect(lp);
-        lp.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.onended = () => {
-          osc.disconnect();
-          lp.disconnect();
-          gain.disconnect();
-        };
-        osc.start(now);
-        osc.stop(now + 5.3);
+          lp.type = 'lowpass';
+          lp.frequency.setValueAtTime(850, now);
+
+          const amp = tone.amps[idx] || 0.05;
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.linearRampToValueAtTime(amp, now + 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + tone.dur);
+
+          osc.connect(lp);
+          lp.connect(gain);
+          gain.connect(masterGain);
+
+          osc.onended = () => {
+            osc.disconnect();
+            lp.disconnect();
+            gain.disconnect();
+            if (idx === 0) masterGain.disconnect();
+          };
+          osc.start(now);
+          osc.stop(now + tone.dur + 0.1);
+        });
+
+        // Nhịp gõ mõ thiền nhẹ nhàng cách quãng
+        if (melodyStep % 2 === 0) {
+          setTimeout(() => {
+            this.playWoodenFish(0.92);
+          }, 2600);
+        }
       } catch (_) {}
     };
-    playWarmPad();
-    this.synthBgTimer = setInterval(playWarmPad, 4800);
+
+    playTibetanHarmonicTone();
+    this.synthBgTimer = setInterval(playTibetanHarmonicTone, 5600);
+  }
+
+  // Tiếng than hồng lò lửa bập bùng âm trầm chân thực (Continuous Fire Hearth Ambience)
+  startContinuousFireAmbience() {
+    if (this.fireLoopSource || !this.ctx || !this.bgMusicEnabled) return;
+    try {
+      const sampleRate = this.ctx.sampleRate;
+      const bufferLength = sampleRate * 4;
+      const buffer = this.ctx.createBuffer(1, bufferLength, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      let brown = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const white = Math.random() * 2 - 1;
+        brown = (brown + 0.02 * white) / 1.02;
+        const crackle = Math.random() < 0.0018 ? (Math.random() * 2 - 1) * 0.45 : 0;
+        data[i] = (brown * 0.38 + crackle);
+      }
+
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(280, this.ctx.currentTime);
+
+      this.fireGain = this.ctx.createGain();
+      this.fireGain.gain.setValueAtTime(this.getEffectiveBgVolume(this.ttsPlaying) * 0.35, this.ctx.currentTime);
+
+      noise.connect(filter);
+      filter.connect(this.fireGain);
+      this.fireGain.connect(this.ctx.destination);
+
+      noise.start(0);
+      this.fireLoopSource = noise;
+    } catch (_) {}
   }
 
   stopZenAmbience() {
@@ -187,6 +252,13 @@ class TempleAudioEngine {
       clearInterval(this.synthBgTimer);
       this.synthBgTimer = null;
     }
+    if (this.fireLoopSource) {
+      try {
+        this.fireLoopSource.stop();
+        this.fireLoopSource.disconnect();
+      } catch (_) {}
+      this.fireLoopSource = null;
+    }
   }
 
   setBgDucking(ducked) {
@@ -194,6 +266,10 @@ class TempleAudioEngine {
     try {
       if (!this.useSynthMusicFallback && this.bgAudio) {
         this.bgAudio.volume = this.getEffectiveBgVolume(ducked);
+      }
+      if (this.fireGain && this.ctx) {
+        const target = this.getEffectiveBgVolume(ducked) * 0.35;
+        this.fireGain.gain.linearRampToValueAtTime(target, this.ctx.currentTime + 0.4);
       }
     } catch (_) {}
   }

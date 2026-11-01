@@ -1225,6 +1225,7 @@ async function connectTikTokLive(usernameOrUrl) {
     const { user, uniqueId, avatar } = extractUserFromEvent(data);
     recordDevotee(user, uniqueId, avatar, 2, 0, 0, 0, 'Đã vào Đàn Tràng Hoá Vàng');
     broadcastNotification('temple.state', getPublicState());
+    broadcastNotification('temple.welcome', { user, uniqueId, avatar });
   });
 
   tiktokConn.on(WebcastEvent.CHAT, (data) => {

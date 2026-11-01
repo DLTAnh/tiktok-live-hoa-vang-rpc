@@ -1045,6 +1045,64 @@
     }, 6800);
   }
 
+  // Hiển thị dải lụa hoàng kim chào mừng tín chủ mới vào phòng Live
+  let welcomeToastTimer = null;
+  function showWelcomeDevoteeToast(user, avatar) {
+    const toast = document.getElementById('devoteeWelcomeToast');
+    const nameEl = document.getElementById('welcomeDevoteeName');
+    const avatarEl = document.getElementById('welcomeAvatar');
+    if (!toast || !nameEl || !user) return;
+
+    if (welcomeToastTimer) clearTimeout(welcomeToastTimer);
+
+    nameEl.textContent = `@${user}`;
+    if (avatarEl) {
+      if (avatar && avatar.startsWith('http')) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(avatar)}" alt="" />`;
+      } else {
+        avatarEl.textContent = String(user).trim().charAt(0).toUpperCase() || '🪙';
+      }
+    }
+
+    toast.classList.add('active');
+    audio.playIncenseChime();
+
+    welcomeToastTimer = setTimeout(() => {
+      toast.classList.remove('active');
+    }, 4200);
+  }
+
+  // Tự động nhắc nhở phòng Live khi không có bình luận mới (45s) để người mới vào luôn hiểu live làm gì
+  let lastRoomActivityTime = Date.now();
+  function registerRoomActivity() {
+    lastRoomActivityTime = Date.now();
+  }
+
+  setInterval(() => {
+    const now = Date.now();
+    if (now - lastRoomActivityTime >= 45000 && !audio.ttsPlaying) {
+      lastRoomActivityTime = now;
+      const bubbleEl = document.getElementById('masterChantBubble');
+      const statusEl = document.getElementById('masterStatusText');
+      if (bubbleEl) {
+        bubbleEl.textContent = '📜 “Kính mời thiện tín bình luận [Tên + Lời khấn] để Thầy dâng sớ hoá vàng!”';
+      }
+      if (statusEl) {
+        statusEl.textContent = '📢 Lời nhắc hướng dẫn cầu an';
+      }
+      setMasterPose('chant');
+      audio.playTempleBell(0.8);
+
+      const guideSpoken = 'Kính chào thiện nam tín nữ. Hãy bình luận họ tên và ước nguyện tài lộc để Thầy Chủ Lễ kính dâng sớ điệp hoá vàng vào lò lửa linh thiêng.';
+      audio.enqueueTts(guideSpoken, { voice: 'maichi' });
+
+      setTimeout(() => {
+        setMasterPose('stand');
+        if (statusEl) statusEl.textContent = '🔥 Trực đàn khấn lễ';
+      }, 7000);
+    }
+  }, 10000);
+
   // 9. Kết nối JSON-RPC 2.0 WebSocket & Gửi Lệnh RPC
   let ws = null;
   let rpcId = 1;
@@ -1064,13 +1122,18 @@
         if (msg.method === 'temple.state') {
           updateUIState(msg.params);
         } else if (msg.method === 'temple.event') {
+          registerRoomActivity();
           if (msg.params?.state) updateUIState(msg.params.state);
           if (msg.params?.event) triggerRitualVisuals(msg.params.event);
+        } else if (msg.method === 'temple.welcome') {
+          showWelcomeDevoteeToast(msg.params?.user, msg.params?.avatar);
         } else if (msg.method === 'temple.chat') {
+          registerRoomActivity();
           if (msg.params?.comment) {
             pushLiveCommentBubble(msg.params.user, msg.params.avatar, msg.params.comment);
           }
         } else if (msg.method === 'tts.play') {
+          registerRoomActivity();
           audio.enqueueTts(msg.params.text || 'Chứng tâm công đức', {
             voice: msg.params.voice || 'maichi',
             url: msg.params.url || null,
