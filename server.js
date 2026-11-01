@@ -757,8 +757,8 @@ const DEFAULT_STATE = {
     ttsVolume: 0.95,
     smokeDensity: 1.0,
     stageBg: 'hoavang',
-    autoSim: false,
-    autoSimIntervalMs: 8000
+    autoSim: true,
+    autoSimIntervalMs: 3800
   },
   tiktok: {
     connected: false,
@@ -781,7 +781,11 @@ function loadState() {
         dailyMeritCurrent: saved.dailyMeritCurrent || saved.totalMerit || DEFAULT_STATE.dailyMeritCurrent,
         devotees: saved.devotees && Object.keys(saved.devotees).length > 0 ? saved.devotees : DEFAULT_STATE.devotees,
         offerings: { ...DEFAULT_STATE.offerings, ...(saved.offerings || {}) },
-        settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) },
+        settings: {
+          ...DEFAULT_STATE.settings,
+          ...(saved.settings || {}),
+          autoSim: saved.settings?.autoSim !== false
+        },
         tiktok: { ...DEFAULT_STATE.tiktok },
         communityMilestones: saved.communityMilestones && saved.communityMilestones.length > 0 ? saved.communityMilestones : DEFAULT_STATE.communityMilestones,
         votiveKeywordRules: saved.votiveKeywordRules && saved.votiveKeywordRules.length > 0 ? saved.votiveKeywordRules : DEFAULT_STATE.votiveKeywordRules,
@@ -2380,70 +2384,105 @@ function disconnectTikTokLive() {
 // ============================================================================
 let autoSimTimer = null;
 const SIM_DEVOTEES = [
-  {
-    user: 'Ngọc Anh Chuyên Sỉ',
-    uniqueId: 'ngocanh.shop',
-    wish: 'Thành tâm hoá 9 thoi vàng cầu tháng mới đơn hàng nổ liên tục'
-  },
-  {
-    user: 'Trần Minh Quân',
-    uniqueId: 'minhquan_bds',
-    wish: 'Hoá Biệt Thự & Siêu Xe kính biếu Gia Tiên, cầu chốt đất đại thắng'
-  },
-  {
-    user: 'Diệu Thảo Tâm An',
-    uniqueId: 'tam_an_99',
-    wish: 'Con thành tâm hoá vàng cầu cho bố mẹ luôn mạnh khỏe, gia đạo bình an'
-  },
-  {
-    user: 'Lê Hoàng Nam',
-    uniqueId: 'hoangnam.dev',
-    wish: 'Hoá Ngựa Đỏ Xích Thố cầu công danh sự nghiệp mã đáo thành công'
-  },
-  {
-    user: 'Phạm Thanh Hà',
-    uniqueId: 'thanhha.99',
-    wish: 'Dâng sớ cầu Thần Tài Thổ Địa phù hộ buôn may bán đắt tiền vào như nước'
-  },
-  {
-    user: 'Vũ Đức Thịnh',
-    uniqueId: 'ducthinh88',
-    wish: 'Con xin gieo một quẻ cầu tài lộc buôn bán tháng này'
-  }
+  { user: 'Ngọc Anh Chuyên Sỉ', uniqueId: 'ngocanh.shop', badge: '👑 Bảo Trợ Đàn Tràng', sessionsCount: 12, streakDays: 8 },
+  { user: 'Trần Minh Quân', uniqueId: 'minhquan_bds', badge: '✨ Thiện Tín 7 Ngày', sessionsCount: 7, streakDays: 7 },
+  { user: 'Diệu Thảo Tâm An', uniqueId: 'tam_an_99', badge: '🪙 Hữu Duyên 3 Ngày', sessionsCount: 4, streakDays: 3 },
+  { user: 'Lê Hoàng Nam', uniqueId: 'hoangnam.dev', badge: '🪙 Hữu Duyên 3 Ngày', sessionsCount: 3, streakDays: 2 },
+  { user: 'Phạm Thanh Hà', uniqueId: 'thanhha.99', badge: '✨ Thiện Tín 7 Ngày', sessionsCount: 9, streakDays: 6 },
+  { user: 'Vũ Đức Thịnh', uniqueId: 'ducthinh88', badge: '🪙 Hữu Duyên 3 Ngày', sessionsCount: 5, streakDays: 4 },
+  { user: 'Nguyễn Bích Ngọc', uniqueId: 'bichngoc.live', badge: '🐉 Đại Đạo Tràng 30 Ngày', sessionsCount: 35, streakDays: 31 },
+  { user: 'Khánh Linh Phong Thuỷ', uniqueId: 'khanhlinh.pt', badge: '👑 Bảo Trợ Đàn Tràng', sessionsCount: 22, streakDays: 14 },
+  { user: 'Hoàng Bách Tài Lộc', uniqueId: 'hoangbach.888', badge: '✨ Thiện Tín 7 Ngày', sessionsCount: 8, streakDays: 8 }
+];
+
+const SIM_COMMENTS = [
+  'hương',
+  'hoa',
+  'thỏi vàng',
+  'vàng',
+  'bình an',
+  'tổ tiên',
+  'xin quẻ',
+  'Con xin dâng nén hương trầm cầu gia quyến an khang mạnh khỏe',
+  'Dâng đóa hoa sen thanh tịnh cúng dường Tam Bảo',
+  'Thành tâm hoá 9 thỏi vàng kim nguyên bảo chiêu tài tấn bảo',
+  'Kính biếu Cửu Huyền Thất Tổ phù hộ độ trì toàn gia hưng vượng',
+  'Dâng sớ cầu tài lộc buôn may bán đắt, đơn đi nườm nượp',
+  'Con xin gieo một quẻ linh xăm đầu ngày cầu may mắn'
 ];
 
 function runSingleSimulationStep() {
   const pick = SIM_DEVOTEES[Math.floor(Math.random() * SIM_DEVOTEES.length)];
   const roll = Math.random();
-  if (roll < 0.32) {
-    Rituals.burnVotive({
-      user: pick.user,
+
+  // 1. Nếu đang có bình chọn realtime: cho người xem giả lập vote 1, 2, 3, 4
+  if (state.activePoll?.active) {
+    const choice = String(Math.floor(Math.random() * 4) + 1);
+    parseViewerComment(choice, pick.user, pick.uniqueId, '', true);
+    return;
+  }
+
+  // 2. Bình luận từ khóa dâng lễ (Comment dâng hương / hoa / vàng / sớ / quẻ) -> Tỉ lệ 38%
+  if (roll < 0.38) {
+    const cmt = SIM_COMMENTS[Math.floor(Math.random() * SIM_COMMENTS.length)];
+    parseViewerComment(cmt, pick.user, pick.uniqueId, '', true);
+  }
+  // 3. Thả tim dồn dập (Nhấp gõ mõ +25 hoặc +50 tim) -> 22%
+  else if (roll < 0.60) {
+    const heartCount = Math.random() < 0.6 ? 25 : 50;
+    Rituals.strikeWoodenFish({ user: pick.user, uniqueId: pick.uniqueId, count: heartCount });
+  }
+  // 4. Người xem mới vừa vào phòng live (Hiển thị dải lụa hoàng kim + gợi ý từ khóa) -> 12%
+  else if (roll < 0.72) {
+    const newViewerNames = ['Phan Anh Đức', 'Cẩm Tú 88', 'Gia Huy Lộc', 'Thanh Mai Store', 'Quốc Tuấn BĐS', 'Hải Đăng 68', 'Phương Thảo'];
+    const newName = newViewerNames[Math.floor(Math.random() * newViewerNames.length)];
+    handleMemberJoin(newName, `sim_join_${Date.now()}`, '');
+  }
+  // 5. Thẻ Sớ Lụa Hoàng Kim (Hiển thị cuộn sớ lụa cổ truyền đóng triện son) -> 10%
+  else if (roll < 0.82) {
+    const categories = ['ancestor', 'peace', 'prosperity', 'blessing'];
+    const cat = categories[Math.floor(Math.random() * categories.length)];
+    const wishes = {
+      ancestor: 'Kính biếu Cửu Huyền Thất Tổ phù hộ độ trì toàn gia hưng vượng, con cháu hiếu thuận',
+      peace: 'Cầu cho gia đình bốn mùa thân tâm an lạc, tai qua nạn khỏi, vạn sự cát tường',
+      prosperity: 'Thành tâm kính dâng sớ chiêu tài, cầu buôn may bán đắt, tiền tài sung túc đầy kho',
+      blessing: 'Cầu công danh sự nghiệp hanh thông, học hành thi cử đỗ đạt hiển vinh'
+    };
+    const dev = { name: pick.user, avatar: '', badge: pick.badge, lastWish: wishes[cat] };
+    triggerSilkScroll(dev, cat, wishes[cat]);
+  }
+  // 6. Tặng quà donate lễ vật lớn (Biệt Thự & Siêu Xe, Ngựa Thần) -> 10%
+  else if (roll < 0.92) {
+    if (Math.random() < 0.5) {
+      Rituals.offerGift({
+        user: pick.user,
+        uniqueId: pick.uniqueId,
+        itemKey: 'luxury_villa_car',
+        coins: 50,
+        giftName: 'Biệt Thự Phố & Siêu Xe Vàng',
+        wish: 'Cúng dường Biệt Thự và Siêu Xe vàng mã kính biếu Gia Tiên'
+      });
+    } else {
+      Rituals.offerGift({
+        user: pick.user,
+        uniqueId: pick.uniqueId,
+        itemKey: 'sacred_horse',
+        coins: 15,
+        giftName: 'Ngựa Đỏ Xích Thố Thần Hành',
+        wish: 'Cúng dường Ngựa Thần Xích Thố cầu công danh sự nghiệp'
+      });
+    }
+  }
+  // 7. Thiện tín lâu năm quay lại đàn tràng -> 8%
+  else {
+    broadcastReturningDevotee({
+      name: pick.user,
       uniqueId: pick.uniqueId,
-      itemKey: 'gold_ingot',
-      count: 9,
-      wish: pick.wish
-    });
-  } else if (roll < 0.52) {
-    Rituals.sendPrayer({ user: pick.user, uniqueId: pick.uniqueId, wish: pick.wish });
-  } else if (roll < 0.68) {
-    Rituals.offerGift({
-      user: pick.user,
-      uniqueId: pick.uniqueId,
-      itemKey: 'luxury_villa_car',
-      coins: 50,
-      giftName: 'Biệt Thự Phố & Siêu Xe Vàng',
-      wish: pick.wish
-    });
-  } else if (roll < 0.84) {
-    Rituals.drawFortune({ user: pick.user, uniqueId: pick.uniqueId, topic: pick.wish });
-  } else {
-    Rituals.offerGift({
-      user: pick.user,
-      uniqueId: pick.uniqueId,
-      itemKey: 'sacred_horse',
-      coins: 15,
-      giftName: 'Ngựa Đỏ Xích Thố Thần Hành',
-      wish: pick.wish
+      avatar: '',
+      badge: pick.badge,
+      sessionsCount: pick.sessionsCount,
+      streakDays: pick.streakDays,
+      merit: 2850
     });
   }
 }
@@ -2456,7 +2495,7 @@ function configureAutoSim(enabled) {
   }
   if (state.settings.autoSim) {
     runSingleSimulationStep();
-    autoSimTimer = setInterval(runSingleSimulationStep, state.settings.autoSimIntervalMs || 8000);
+    autoSimTimer = setInterval(runSingleSimulationStep, state.settings.autoSimIntervalMs || 3800);
   }
 }
 
@@ -2955,6 +2994,23 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`🎛️ Bảng điều khiển RPC Admin        : http://localhost:${PORT}/admin`);
   console.log(`🔌 JSON-RPC 2.0 Endpoint            : http://localhost:${PORT}/rpc (ws://localhost:${PORT}/ws)`);
   console.log(`====================================================================`);
+
+  // Khởi động simulation engine ngay khi server chạy để màn hình luôn sôi động
+  configureAutoSim(state.settings.autoSim !== false);
+
+  // Kích hoạt Mini-Event đầu tiên sau 6 giây nếu chưa có event nào chạy
+  setTimeout(() => {
+    if (state.miniEventEngine?.enabled && !state.miniEventEngine.activeEvent) {
+      startMiniEvent('incense_rush');
+    }
+  }, 6000);
+
+  // Khởi động chu kỳ bình chọn tự động mỗi 6 phút để người xem tham gia bầu chọn vật phẩm
+  setInterval(() => {
+    if (!state.activePoll?.active && (!state.miniEventEngine?.activeEvent || Date.now() > state.miniEventEngine.activeEvent.endsAt)) {
+      startLivePoll('Bình chọn vật phẩm hoá vàng đợt tiếp theo (Gõ 1, 2, 3, 4):', null, 45);
+    }
+  }, 6 * 60 * 1000);
 
   // Tự động quét và kết nối tức thì khi kênh @quangvangma1 vừa bấm phát LIVE (chu kỳ 5s)
   let isAutoScanning = false;

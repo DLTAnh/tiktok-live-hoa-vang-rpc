@@ -1,24 +1,25 @@
 {
-  "totalIncense": 703,
-  "totalVotiveBurned": 1577,
-  "totalMerit": 90024,
+  "totalIncense": 745,
+  "totalVotiveBurned": 1636,
+  "totalMerit": 97060,
   "dailyMeritTarget": 1000000,
-  "dailyMeritCurrent": 90024,
-  "woodenFishHits": 1279,
+  "dailyMeritCurrent": 97060,
+  "woodenFishHits": 1379,
   "bellRings": 71,
-  "lanternCount": 51,
-  "fortuneCount": 25,
+  "lanternCount": 52,
+  "fortuneCount": 28,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 690,
+    "gold_ingot": 702,
     "hell_money": 156,
     "royal_robe": 27,
-    "sacred_horse": 24,
+    "sacred_horse": 27,
     "five_elements_tray": 12,
     "golden_tech": 12,
-    "luxury_villa_car": 32,
+    "luxury_villa_car": 35,
     "dragon_treasury": 5,
-    "flower": 1
+    "flower": 1,
+    "incense": 12
   },
   "devotees": {
     "minhtam.88": {
@@ -45,21 +46,33 @@
       "name": "Ngọc Anh Chuyên Sỉ",
       "uniqueId": "ngocanh.shop",
       "avatar": "",
-      "merit": 890,
-      "incense": 9,
-      "votiveCount": 12,
-      "gifts": 2,
-      "lastWish": "Cầu Thần Tài độ trì đơn đi tấp nập, tiền về đầy kho"
+      "merit": 1640,
+      "incense": 15,
+      "votiveCount": 22,
+      "gifts": 4,
+      "lastWish": "Cúng dường Ngựa Thần Xích Thố cầu công danh sự nghiệp",
+      "firstSeen": 1793527171187,
+      "sessionsCount": 2,
+      "streakDays": 1,
+      "lastSeen": 1793527194001,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
     },
     "thanhha.99": {
       "name": "Phạm Thanh Hà",
       "uniqueId": "thanhha.99",
       "avatar": "",
-      "merit": 1075,
-      "incense": 13,
-      "votiveCount": 14,
+      "merit": 1135,
+      "incense": 16,
+      "votiveCount": 17,
       "gifts": 2,
-      "lastWish": "Dâng sớ cầu Thần Tài Thổ Địa phù hộ buôn may bán đắt tiền vào như nước"
+      "lastWish": "Xin quẻ Tài Lộc Quẻ số 18 Thượng Cát",
+      "firstSeen": 1793527152183,
+      "sessionsCount": 2,
+      "streakDays": 1,
+      "lastSeen": 1793527174988,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
     },
     "quynh_finn": {
       "name": "Quỳnh_Finn",
@@ -675,11 +688,17 @@
       "name": "Vũ Đức Thịnh",
       "uniqueId": "ducthinh88",
       "avatar": "",
-      "merit": 135,
-      "incense": 3,
-      "votiveCount": 9,
-      "gifts": 0,
-      "lastWish": "Con xin gieo một quẻ cầu tài lộc buôn bán tháng này"
+      "merit": 570,
+      "incense": 9,
+      "votiveCount": 17,
+      "gifts": 1,
+      "lastWish": "hương",
+      "firstSeen": 1793527102768,
+      "sessionsCount": 2,
+      "streakDays": 1,
+      "lastSeen": 1793527136979,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
     },
     "Đại Gia Minh Tâm": {
       "name": "Đại Gia Minh Tâm",
@@ -752,6 +771,134 @@
       "streakDays": 1,
       "badge": "🌿 Tín Chủ Thành Tâm",
       "greetedThisSession": true
+    },
+    "minhquan_bds": {
+      "name": "Trần Minh Quân",
+      "uniqueId": "minhquan_bds",
+      "avatar": "",
+      "merit": 120,
+      "incense": 6,
+      "votiveCount": 6,
+      "gifts": 0,
+      "lastWish": "hương",
+      "firstSeen": 1793527095164,
+      "lastSeen": 1793527121775,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "hoangnam.dev": {
+      "name": "Lê Hoàng Nam",
+      "uniqueId": "hoangnam.dev",
+      "avatar": "",
+      "merit": 1860,
+      "incense": 10,
+      "votiveCount": 12,
+      "gifts": 1,
+      "lastWish": "Cúng dường Biệt Thự và Siêu Xe vàng mã kính biếu Gia Tiên",
+      "firstSeen": 1793527098968,
+      "lastSeen": 1793527190193,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "bichngoc.live": {
+      "name": "Nguyễn Bích Ngọc",
+      "uniqueId": "bichngoc.live",
+      "avatar": "",
+      "merit": 1905,
+      "incense": 9,
+      "votiveCount": 12,
+      "gifts": 1,
+      "lastWish": "Cúng dường Biệt Thự và Siêu Xe vàng mã kính biếu Gia Tiên",
+      "firstSeen": 1793527106569,
+      "lastSeen": 1793527167387,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "khanhlinh.pt": {
+      "name": "Khánh Linh Phong Thuỷ",
+      "uniqueId": "khanhlinh.pt",
+      "avatar": "",
+      "merit": 150,
+      "incense": 0,
+      "votiveCount": 3,
+      "gifts": 0,
+      "lastWish": "Thả 25 tim tích 50 công đức Cấp 1",
+      "firstSeen": 1793527110371,
+      "lastSeen": 1793527163586,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "sim_join_1793527140780": {
+      "name": "Thanh Mai Store",
+      "uniqueId": "sim_join_1793527140780",
+      "avatar": "",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng",
+      "firstSeen": 1793527140780,
+      "lastSeen": 1793527140780,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "sim_join_1793527159785": {
+      "name": "Hải Đăng 68",
+      "uniqueId": "sim_join_1793527159785",
+      "avatar": "",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng",
+      "firstSeen": 1793527159785,
+      "lastSeen": 1793527159785,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "hoangbach.888": {
+      "name": "Hoàng Bách Tài Lộc",
+      "uniqueId": "hoangbach.888",
+      "avatar": "",
+      "merit": 1750,
+      "incense": 3,
+      "votiveCount": 5,
+      "gifts": 1,
+      "lastWish": "Cúng dường Biệt Thự và Siêu Xe vàng mã kính biếu Gia Tiên",
+      "firstSeen": 1793527178793,
+      "lastSeen": 1793527178793,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "sim_join_1793527197803": {
+      "name": "Phương Thảo",
+      "uniqueId": "sim_join_1793527197803",
+      "avatar": "",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng",
+      "firstSeen": 1793527197803,
+      "lastSeen": 1793527197803,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
     }
   },
   "settings": {
@@ -762,9 +909,9 @@
     "musicVolume": 0.91,
     "ttsVolume": 0.26,
     "smokeDensity": 1,
-    "stageBg": "altar",
-    "autoSim": false,
-    "autoSimIntervalMs": 8000
+    "stageBg": "hoavang",
+    "autoSim": true,
+    "autoSimIntervalMs": 3800
   },
   "communityMilestones": [
     {
@@ -1056,11 +1203,11 @@
     }
   ],
   "furnaceStatus": {
-    "state": "idle",
-    "label": "Lò đang hoạt động",
+    "state": "heating",
+    "label": "Lò đang nóng lên",
     "temperature": 999,
     "itemsBurnedThisSession": 688,
-    "lastAction": "Lò hoạt động bình thường"
+    "lastAction": "Lò giữ nhiệt sau khi hoá"
   },
   "ceremonySchedule": [
     {
@@ -1151,7 +1298,7 @@
   "communityGate": {
     "name": "Cổng Trời Kim Long Khai Khố",
     "targetHearts": 50000,
-    "currentHearts": 18750,
+    "currentHearts": 18850,
     "status": "charging",
     "levels": [
       {
@@ -1243,7 +1390,7 @@
       "description": "Cộng đồng cùng dâng 100 nén hương cầu phúc",
       "targetType": "incense",
       "targetAmount": 100,
-      "currentAmount": 72,
+      "currentAmount": 84,
       "active": true,
       "completed": false,
       "rewardText": "Kích hoạt Khói Trầm Kim Quang toàn Đàn Tràng!"
@@ -1351,17 +1498,7 @@
   "miniEventEngine": {
     "enabled": true,
     "intervalMinutes": 10,
-    "activeEvent": {
-      "id": "golden_heart_storm",
-      "name": "Bão Tim Kim Quang — Mở Cổng Trời",
-      "type": "hearts",
-      "durationSeconds": 45,
-      "multiplier": 2,
-      "bannerText": "✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!",
-      "description": "Tất cả lượt thả tim nhân đôi tiến độ mở Cổng Trời",
-      "endsAt": 1793525048370,
-      "startedAt": 1793525003370
-    },
+    "activeEvent": null,
     "availableEvents": [
       {
         "id": "incense_rush",
@@ -1434,7 +1571,7 @@
   "smartPromptSettings": {
     "enabled": true,
     "intervalSeconds": 25,
-    "activePrompt": "✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!",
+    "activePrompt": "🎯 Nhiệm vụ cộng đồng: Dâng 100 Nén Hương Trầm (Còn 16)! Gõ từ khóa để cùng hoàn thành!",
     "rules": [
       {
         "condition": "poll_active",

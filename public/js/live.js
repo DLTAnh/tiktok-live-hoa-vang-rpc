@@ -59,6 +59,18 @@
   const particles = new window.TempleParticleEngine(canvas);
   const audio = new window.TempleAudioEngine();
 
+  // 2.1. Đồng bộ trạng thái tức thì từ API (Đảm bảo nạp dữ liệu 100% ngay khi mở trang)
+  function syncStateFromApi() {
+    fetch('/api/state')
+      .then((r) => r.json())
+      .then((st) => {
+        if (st) updateUIState(st);
+      })
+      .catch((e) => console.warn('[SyncState Error]', e.message));
+  }
+  syncStateFromApi();
+  setInterval(syncStateFromApi, 3000);
+
   let hasUnlockedGesture = false;
   function unlockAudioOnce() {
     if (hasUnlockedGesture) return;
