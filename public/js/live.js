@@ -19,10 +19,14 @@
   function fitStage() {
     if (!stageWrapper || !stage9x16) return;
     const rect = stageWrapper.getBoundingClientRect();
-    const scale = rect.width / 1080;
+    const w = rect.width || window.innerWidth || 360;
+    const scale = w / 1080;
     stage9x16.style.transform = `scale(${scale})`;
   }
   window.addEventListener('resize', fitStage);
+  window.addEventListener('orientationchange', fitStage);
+  window.addEventListener('load', fitStage);
+  requestAnimationFrame(fitStage);
   fitStage();
 
   // 2. Khởi tạo Particle Engine & Audio Engine
@@ -30,8 +34,12 @@
   const particles = new window.TempleParticleEngine(canvas);
   const audio = new window.TempleAudioEngine();
 
+  let hasUnlockedGesture = false;
   function unlockAudioOnce() {
+    if (hasUnlockedGesture) return;
+    hasUnlockedGesture = true;
     audio.ensureContext();
+    audio.playIncenseChime();
     const btnUnlock = document.getElementById('btnUnlockAudio');
     if (btnUnlock) {
       btnUnlock.textContent = '✅ Âm Thanh Lò Lửa & Giọng Đọc Đã Sẵn Sàng';
@@ -39,7 +47,9 @@
       btnUnlock.classList.add('active-toggle');
     }
   }
-  window.addEventListener('pointerdown', unlockAudioOnce, { once: true });
+  window.addEventListener('touchend', unlockAudioOnce, { passive: true });
+  window.addEventListener('click', unlockAudioOnce, { passive: true });
+  window.addEventListener('pointerdown', unlockAudioOnce, { passive: true });
 
   // 3. Chuyển đổi Hình nền Đài Hoá Vàng / Đàn Tràng / Chánh Điện
   const BG_MAP = {
@@ -1304,6 +1314,30 @@
   document.getElementById('btnToggleAutoSim')?.addEventListener('click', () => {
     autoSimState = !autoSimState;
     callRpc('live.setAutoSim', { enabled: autoSimState });
+  });
+
+  let isStageMuted = false;
+  document.getElementById('btnStageMuteToggle')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isStageMuted = !isStageMuted;
+    const btn = e.currentTarget;
+    btn.textContent = isStageMuted ? '🔇' : '🔊';
+    btn.classList.toggle('muted', isStageMuted);
+    audio.bgMusicEnabled = !isStageMuted;
+    audio.ttsEnabled = !isStageMuted;
+    audio.sfxEnabled = !isStageMuted;
+    if (isStageMuted) {
+      audio.stopZenAmbience();
+      if (audio.activeTtsAudio) {
+        try { audio.activeTtsAudio.pause(); } catch (_) {}
+      }
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (_) {}
+      }
+    } else {
+      audio.ensureContext();
+      audio.startZenAmbience();
+    }
   });
 
   document.getElementById('btnToggleTts')?.addEventListener('click', (e) => {

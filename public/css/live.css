@@ -49,19 +49,38 @@ body.obs-mode .quick-dock {
    ========================================================================== */
 .stage-wrapper {
   position: relative;
-  height: 96vh;
+  width: min(96vw, calc(96vh * 9 / 16));
+  height: min(96vh, calc(96vw * 16 / 9));
   aspect-ratio: 9 / 16;
   border-radius: 22px;
   overflow: hidden;
   border: 2px solid rgba(244, 193, 80, 0.55);
   background: #120403;
-  contain: layout paint style;
 }
 
 body.obs-mode .stage-wrapper {
-  height: 100vh;
+  width: min(100vw, calc(100vh * 9 / 16));
+  height: min(100vh, calc(100vw * 16 / 9));
   border-radius: 0;
   border: none;
+}
+
+@media (max-width: 768px) {
+  .app-workspace {
+    padding: 0;
+    gap: 0;
+  }
+  .quick-dock {
+    display: none !important;
+  }
+  .stage-wrapper,
+  body.obs-mode .stage-wrapper {
+    width: 100vw;
+    height: calc(100vw * 16 / 9);
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
 }
 
 .stage-9x16 {
@@ -73,7 +92,6 @@ body.obs-mode .stage-wrapper {
   transform-origin: top left;
   overflow: hidden;
   background: #120403;
-  contain: strict;
 }
 
 /* 1. HÌNH NỀN ĐÀN TRÀNG HOÁ VÀNG SẮC NÉT TUYỆT ĐỐI */
@@ -228,6 +246,26 @@ body.indoor-sanctuary .buddha-halo-system.flare {
   display: flex;
   align-items: center;
   gap: 10px;
+  pointer-events: auto;
+}
+
+.stage-mute-btn {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(16, 4, 3, 0.92);
+  border: 1.5px solid rgba(244, 193, 80, 0.65);
+  color: var(--ivory);
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.stage-mute-btn.muted {
+  border-color: #ff5252;
+  background: rgba(68, 8, 8, 0.92);
 }
 
 .live-pill, .mini-stat-pill {

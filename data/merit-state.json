@@ -1,14 +1,14 @@
 {
-  "totalIncense": 304,
-  "totalVotiveBurned": 773,
-  "totalMerit": 27860,
-  "woodenFishHits": 680,
+  "totalIncense": 334,
+  "totalVotiveBurned": 884,
+  "totalMerit": 29382,
+  "woodenFishHits": 753,
   "bellRings": 69,
-  "lanternCount": 38,
+  "lanternCount": 42,
   "fortuneCount": 22,
-  "activeIncenseSticks": 31,
+  "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 146,
+    "gold_ingot": 230,
     "hell_money": 126,
     "royal_robe": 25,
     "sacred_horse": 19,
@@ -82,11 +82,171 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 20980,
-      "incense": 38,
-      "votiveCount": 85,
+      "merit": 22375,
+      "incense": 69,
+      "votiveCount": 175,
       "gifts": 5,
       "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
+    },
+    "luklacstore": {
+      "name": "user51360464158",
+      "uniqueId": "luklacstore",
+      "avatar": "https://p19-common-sign.tiktokcdn.com/musically-maliva-obj/1594805258216454~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=99721d13&x-expires=1793678400&x-signature=pZ6Cn49EfJVUZA8qyDt0TiVHeFE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 48,
+      "incense": 0,
+      "votiveCount": 17,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "luv.aptgirrrl_0612": {
+      "name": "prey",
+      "uniqueId": "luv.aptgirrrl_0612",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/8ff8af2f1b40e383fa1606e625781329~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=5065f39b&x-expires=1793678400&x-signature=6LNAfwQgjeSvCcKKuC6Uc9zjwss%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "aeesasandichoi_9": {
+      "name": "tao đang điên vì",
+      "uniqueId": "aeesasandichoi_9",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/9788167fd237184e97e88633ee9d456c~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=c0839e9a&x-expires=1793678400&x-signature=lNbYpxj6bc3TLYa4tB%2FuHFfTfn0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 47,
+      "incense": 3,
+      "votiveCount": 3,
+      "gifts": 0,
+      "lastWish": "hi"
+    },
+    "ebecom25112025": {
+      "name": "EbéCốm25112025",
+      "uniqueId": "ebecom25112025",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/78a5a8984f84eef2413cb333bada4122~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=4743d658&x-expires=1793678400&x-signature=mg5IKHaas9iqeG4TwsT3pM5Mg6c%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "user7282927930": {
+      "name": "bim",
+      "uniqueId": "user7282927930",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/802abb901982712582eb1c19b493a06a~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=7a23d599&x-expires=1793678400&x-signature=5nYXhXEEX6QxR%2F25M2mXPdQ9ESs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "tongkholuoitexilen": {
+      "name": "A N H U U",
+      "uniqueId": "tongkholuoitexilen",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/f685234612992b071d0748d395b4fb8f~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=dda64772&x-expires=1793678400&x-signature=lOPzny9cx92RAMzEGS1OCMbQsrk%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "buihoang379": {
+      "name": "Huy Hoang",
+      "uniqueId": "buihoang379",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/9597e15fb9d19e6a484e119b92a20049~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=7859e703&x-expires=1793678400&x-signature=1r%2FNadZGhqoejsOpgB%2BngFUgKVs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my3",
+      "merit": 6,
+      "incense": 0,
+      "votiveCount": 1,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "hong.gia.bo.61": {
+      "name": "gia Bảo",
+      "uniqueId": "hong.gia.bo.61",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/b9a04129273e61b3fe36399707134fc0~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=c48eda0b&x-expires=1793678400&x-signature=obRSymBfoNs4YLK1LOpy5x4y9AY%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "itsklin1702_": {
+      "name": "kphai tướng thì đco bướng",
+      "uniqueId": "itsklin1702_",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/419a39b14f3d03a30aa8fb9fe7143549~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=1a7678e0&x-expires=1793678400&x-signature=o8MUJwGfb%2Fstf11eQJ2YbP6%2F3zk%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "useranminh1606": {
+      "name": "An Minh",
+      "uniqueId": "useranminh1606",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/87d697aed081ed97322aa99e3c602cf3~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=6410ecd6&x-expires=1793678400&x-signature=ipxZvmP6NybPSanFIRgCOYXOH3U%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my3",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "hng.v8677": {
+      "name": "Hương ơii",
+      "uniqueId": "hng.v8677",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/e7d387850a2e4d4399a7f79ec3994039~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=546bfeaf&x-expires=1793678400&x-signature=Slxfr9l9rpjNIzZqA2fvz3gVCPM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my3",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "maonguyen565": {
+      "name": "Mao Nguyen56",
+      "uniqueId": "maonguyen565",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/3d5c723b166b4a73f2d7c699559dd4c3~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=4adfece1&x-expires=1793678400&x-signature=aZeXDtinB3jggfk2Yxbo%2BSA0fWM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "bon.trong1992": {
+      "name": "Bon Trọng",
+      "uniqueId": "bon.trong1992",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/23fd1458541b081055865d9d3896690e~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=36118296&x-expires=1793678400&x-signature=3Y%2FYC8sqX8D%2B32EDLnNRosTLe%2FU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "miashop3008": {
+      "name": "Mía kids30",
+      "uniqueId": "miashop3008",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/671a79095d3b890a142081208bcd42a9~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=e2fd2156&x-expires=1793678400&x-signature=Lq1bJqcVrRlwwNEHiYhVvMwiMIE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my2",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "imma.blue.sunflower": {
+      "name": "Hướng Dương Có Màu Biển",
+      "uniqueId": "imma.blue.sunflower",
+      "avatar": "https://p16-common-sign.tiktokcdn.com/tos-useast2a-avt-0068-giso/4edb27a2da7f1442122ea5dd323e71eb~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=e7beacc0&x-expires=1793678400&x-signature=e%2BkAr2xBU7khOiPteg3Eg8Dl054%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my3",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
+    },
+    "macvanbao2009": {
+      "name": "bảo bảo",
+      "uniqueId": "macvanbao2009",
+      "avatar": "https://p19-common-sign.tiktokcdn.com/tos-maliva-avt-0068/7220749591690346502~tplv-tiktok-shrink:72:72.webp?dr=14561&refresh_token=09fb35b7&x-expires=1793678400&x-signature=ZF0g2FdXrJJx%2FyUA%2FoN2UxuFhHE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=my",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng"
     }
   },
   "settings": {

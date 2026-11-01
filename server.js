@@ -1608,7 +1608,7 @@ wss.on('connection', (ws) => {
 
 const ttsManager = new HybridTTSManager();
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`====================================================================`);
   console.log(`🔥 ĐÀN TRÀNG HOÁ VÀNG ONLINE — TIKTOK LIVE RPC ĐÃ KHỞI ĐỘNG`);
   console.log(`📺 Màn hình Live + Điều khiển (9:16): http://localhost:${PORT}`);

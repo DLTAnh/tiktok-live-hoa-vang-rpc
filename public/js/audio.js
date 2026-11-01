@@ -33,6 +33,10 @@ class TempleAudioEngine {
     this.ttsQueue = [];
     this.ttsPlaying = false;
     this.currentAudio = null;
+    this.currentBufferSource = null;
+    this.ttsAudio = new Audio();
+    this.ttsAudio.playsInline = true;
+    this.ttsAudio.preload = 'auto';
     this.onTtsStateChange = null;
   }
 
@@ -46,6 +50,13 @@ class TempleAudioEngine {
   }
 
   ensureContext() {
+    // Bắt buộc iOS 16.4+/17/18 Safari chuyển sang chế độ Media Playback (phát tiếng kể cả khi gạt nút Rung & truyền vào TikTok ReplayKit)
+    try {
+      if ('audioSession' in navigator && navigator.audioSession) {
+        navigator.audioSession.type = 'playback';
+      }
+    } catch (_) {}
+
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       this.ctx = new AudioCtx();
@@ -53,7 +64,24 @@ class TempleAudioEngine {
     if (this.ctx.state === 'suspended') {
       this.ctx.resume();
     }
-    this.unlocked = true;
+    if (!this.unlocked) {
+      this.unlocked = true;
+      // Mở khoá HTMLAudioElement dùng chung và Web Speech trên iOS Safari ngay trong cử chỉ chạm đầu tiên
+      try {
+        const silentBuffer = this.ctx.createBuffer(1, 1, 22050);
+        const src = this.ctx.createBufferSource();
+        src.buffer = silentBuffer;
+        src.connect(this.ctx.destination);
+        src.start(0);
+      } catch (_) {}
+      try {
+        if ('speechSynthesis' in window) {
+          const warm = new SpeechSynthesisUtterance('');
+          warm.volume = 0;
+          window.speechSynthesis.speak(warm);
+        }
+      } catch (_) {}
+    }
     if (this.bgMusicEnabled) {
       this.startZenAmbience();
     }
@@ -451,10 +479,43 @@ class TempleAudioEngine {
     }
   }
 
-  playAudioUrl(url, fallbackText = '') {
+  async playAudioUrl(url, fallbackText = '') {
+    // Ưu tiên giải mã MP3 qua Web Audio API (AudioContext) để iOS Safari phát mượt 100% khi nhận sự kiện từ WebSocket
+    if (this.ctx) {
+      try {
+        if (this.ctx.state === 'suspended') {
+          await this.ctx.resume();
+        }
+        const res = await fetch(url);
+        if (res.ok) {
+          const arrayBuf = await res.arrayBuffer();
+          const audioBuf = await this.ctx.decodeAudioData(arrayBuf);
+          return await new Promise((resolve) => {
+            const source = this.ctx.createBufferSource();
+            const gainNode = this.ctx.createGain();
+            source.buffer = audioBuf;
+            gainNode.gain.value = this.ttsVolume;
+            source.connect(gainNode);
+            gainNode.connect(this.ctx.destination);
+            this.currentBufferSource = source;
+            source.onended = () => {
+              this.currentBufferSource = null;
+              try {
+                source.disconnect();
+                gainNode.disconnect();
+              } catch (_) {}
+              resolve();
+            };
+            source.start(0);
+          });
+        }
+      } catch (_) {}
+    }
+
     return new Promise((resolve) => {
       try {
-        const audio = new Audio(url);
+        const audio = this.ttsAudio || new Audio();
+        audio.src = url;
         this.currentAudio = audio;
         audio.volume = this.ttsVolume;
         audio.onended = () => {
