@@ -338,6 +338,7 @@
       <button class="tab-btn" onclick="switchTab('tab-poll')">🗳️ Bình Chọn Realtime</button>
       <button class="tab-btn" onclick="switchTab('tab-furnace')">🔥 Trạng Thái Lò & Donate</button>
       <button class="tab-btn" onclick="switchTab('tab-simulator')">🎮 Bộ Giả Lập & Test Live</button>
+      <button class="tab-btn" onclick="switchTab('tab-retention')">🌟 Giữ Chân & Tương Tác</button>
     </nav>
 
     <!-- TAB 1: QUẢN LÝ TỪ KHÓA & VẬT PHẨM -->
@@ -668,6 +669,23 @@
               <button class="btn gold" onclick="simMilestone('m3')">Mốc 3 (100K Đại Lễ)</button>
             </div>
           </div>
+
+          <div style="margin-top: 14px; border-top: 1px dashed rgba(244,193,80,0.3); padding-top: 12px;">
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">🌟 Test Giữ Chân Người Xem & Tương Tác Mới (Features 12-18):</label>
+            <div class="row" style="margin-top: 6px; flex-wrap: wrap;">
+              <button class="btn gold" onclick="simWelcome()">🙋 Test Chào Người Mới</button>
+              <button class="btn" onclick="simQuestProgress('incense', 10)">🪔 +10 Nén Hương (Nhiệm Vụ)</button>
+              <button class="btn" onclick="simQuestProgress('flower', 10)">🪷 +10 Đoá Sen (Nhiệm Vụ)</button>
+              <button class="btn" onclick="simQuestProgress('votive', 5)">🪙 +5 Thỏi Vàng (Nhiệm Vụ)</button>
+              <button class="btn gold" onclick="simMiniEvent('incense_rush')">⚡ Kích Hoạt 60s Thắp Hương x2</button>
+              <button class="btn" onclick="simMiniEvent('golden_heart_storm')">✨ Kích Hoạt 45s Bão Tim</button>
+              <button class="btn" onclick="simReturningDevotee()">👑 Test Thiện Tín 7 Ngày Quay Lại</button>
+              <button class="btn success" onclick="simSilkScroll('ancestor')">📜 Test Sớ Kính Biếu Gia Tiên</button>
+              <button class="btn success" onclick="simSilkScroll('peace')">📜 Test Sớ Cầu Bình An</button>
+              <button class="btn" onclick="simSwitchScene('altar')">🏛️ Đổi Cảnh: Điện Thờ Gia Tiên</button>
+              <button class="btn" onclick="simSwitchScene('hoavang')">🔥 Đổi Cảnh: Sân Hoá Vàng</button>
+            </div>
+          </div>
         </div>
 
         <div class="card">
@@ -684,6 +702,138 @@
               <button class="btn gold" onclick="speakAiDirect()">🎙️ Đọc</button>
             </div>
             <audio id="adminAudioPreview" controls style="width: 100%; height: 36px; margin-top: 8px;"></audio>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: QUẢN LÝ GIỮ CHÂN NGƯỜI XEM & TƯƠNG TÁC CỘNG ĐỒNG (FEATURES 12-18) -->
+    <section class="tab-panel" id="tab-retention">
+      <div class="grid-2">
+        <!-- 1. Chào Đón Người Xem Mới -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">👋 Hệ Thống Chào Đón Người Xem Mới (Feature 12)</span>
+            <button class="btn gold" onclick="saveWelcomeSettings()">💾 Lưu Cấu Hình Chào</button>
+          </div>
+          <div>
+            <label><input type="checkbox" id="welcomeEnabled" checked /> Bật dải lụa chào đón khi có người vào livestream</label>
+          </div>
+          <div style="margin-top: 10px;">
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Thời gian giãn cách (Cooldown ms):</label>
+            <input type="number" id="welcomeCooldown" value="6000" min="1000" max="30000" step="1000" />
+          </div>
+          <div style="margin-top: 10px;">
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Nội dung lời chào mẫu:</label>
+            <input type="text" id="welcomeTemplate" value="Hoan hỷ thiện tín đáo Đàn Tràng Hoá Vàng Online!" />
+          </div>
+          <div style="margin-top: 10px;">
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Từ khóa gợi ý hiển thị:</label>
+            <input type="text" id="welcomeKeywords" value="HƯƠNG, HOA, VÀNG, BÌNH AN, TỔ TIÊN" />
+          </div>
+          <div style="margin-top: 12px;">
+            <button class="btn" onclick="simWelcome()">👁️ Xem Thử Dải Lụa Chào Đón</button>
+          </div>
+        </div>
+
+        <!-- 2. Nhiệm Vụ Tương Tác Cộng Đồng -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🎯 Nhiệm Vụ Tương Tác Cộng Đồng Co-op (Feature 13)</span>
+            <button class="btn" onclick="resetAllQuests()">🔄 Đặt Lại Nhiệm Vụ</button>
+          </div>
+          <div id="questsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- 3. Mini-Event Tự Động -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">⚡ Mini-Event Tự Động Tăng Hào Khí (Feature 16)</span>
+            <button class="btn error" onclick="endCurrentMiniEvent()">⏹ Dừng Mini-Event</button>
+          </div>
+          <div id="miniEventsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- 4. Chuyển Đổi Không Gian / Cảnh Đàn Tràng -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🏛️ Chuyển Cảnh Không Gian Đàn Tràng (Feature 17)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+            <button class="btn gold" style="padding: 12px; height: auto; text-align: left;" onclick="simSwitchScene('hoavang')">
+              <strong>🔥 Sân Hoá Vàng Cổ Kính</strong>
+              <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Lò hoá vàng rực sáng hào quang kim bảo</div>
+            </button>
+            <button class="btn" style="padding: 12px; height: auto; text-align: left;" onclick="simSwitchScene('altar')">
+              <strong>🏛️ Điện Thờ Gia Tiên</strong>
+              <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Sơn son thếp vàng, bát hương trầm, nến sáng</div>
+            </button>
+            <button class="btn" style="padding: 12px; height: auto; text-align: left;" onclick="simSwitchScene('amitabha')">
+              <strong>✨ Bảo Điện Sen Vàng</strong>
+              <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Không gian hoa sen và ánh sáng kim quang</div>
+            </button>
+            <button class="btn" style="padding: 12px; height: auto; text-align: left;" onclick="simSwitchScene('temple')">
+              <strong>⛩️ Cổng Tam Quan Chùa Cổ</strong>
+              <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Hoàng hôn thiêng liêng tĩnh lặng</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Thẻ Sớ Lời Nguyện & Tri Ân -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">📜 Thẻ Sớ Lụa Hoàng Kim & Tri Ân Gia Tiên (Feature 15)</span>
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Phát sớ mẫu lên màn hình live:</label>
+            <div class="row" style="margin-top: 8px; flex-wrap: wrap;">
+              <button class="btn success" onclick="simSilkScroll('ancestor')">📜 Kính Biếu Cửu Huyền Thất Tổ</button>
+              <button class="btn gold" onclick="simSilkScroll('peace')">📜 Sớ Cầu Bình An Bốn Mùa</button>
+              <button class="btn" onclick="simSilkScroll('prosperity')">🪙 Sớ Chiêu Tài Tấn Bảo</button>
+              <button class="btn" onclick="simSilkScroll('blessing')">✨ Sớ Cầu Đỗ Đạt Viên Thành</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Người Xem Quay Lại & Huy Hiệu Đồng Hành -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">👑 Người Xem Quay Lại & Huy Hiệu (Feature 14)</span>
+          </div>
+          <div style="max-height: 240px; overflow-y: auto;">
+            <table class="table" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th>Tín Chủ</th>
+                  <th>Huy Hiệu</th>
+                  <th>Số Phiên</th>
+                  <th>Chuỗi Ngày</th>
+                  <th>Công Đức</th>
+                </tr>
+              </thead>
+              <tbody id="devoteesRetentionTable">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 7. Gợi Ý Tương Tác Thông Minh -->
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-title">
+            <span class="card-title-text">💡 Gợi Ý Tương Tác Theo Trạng Thái Live (Feature 18)</span>
+            <button class="btn gold" onclick="saveSmartPromptSettings()">💾 Cập Nhật Gợi Ý</button>
+          </div>
+          <div class="row">
+            <div style="flex: 1;">
+              <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Dòng gợi ý prompter đang phát:</label>
+              <input type="text" id="activeSmartPromptInput" value="Thành tâm dâng nén hương trầm — gõ HƯƠNG hoặc thả tim để tích lũy công đức!" />
+            </div>
+            <button class="btn" style="margin-top: 22px;" onclick="sendCustomSmartPrompt()">📢 Phát Lên Live Ngay</button>
           </div>
         </div>
       </div>
@@ -730,6 +880,91 @@
         renderMilestonesTable(detailedConfig.milestones || []);
         renderScheduleTable(detailedConfig.schedule || []);
         renderPollTab(detailedConfig.poll);
+        renderRetentionTab(detailedConfig);
+      }
+    }
+
+    function renderRetentionTab(cfg) {
+      if (!cfg) return;
+      if (cfg.welcome) {
+        const chk = document.getElementById('welcomeEnabled');
+        const cd = document.getElementById('welcomeCooldown');
+        const tmpl = document.getElementById('welcomeTemplate');
+        const kws = document.getElementById('welcomeKeywords');
+        if (chk) chk.checked = Boolean(cfg.welcome.enabled);
+        if (cd) cd.value = cfg.welcome.cooldownMs || 6000;
+        if (tmpl) tmpl.value = cfg.welcome.welcomeTemplate || '';
+        if (kws && Array.isArray(cfg.welcome.suggestedKeywords)) {
+          kws.value = cfg.welcome.suggestedKeywords.join(', ');
+        }
+      }
+
+      if (Array.isArray(cfg.quests)) {
+        const qBox = document.getElementById('questsContainer');
+        if (qBox) {
+          qBox.innerHTML = cfg.quests.map((q) => {
+            const cur = Number(q.currentAmount) || 0;
+            const tgt = Number(q.targetAmount) || 100;
+            const pct = Math.min(100, Math.max(0, (cur / tgt) * 100));
+            return `
+              <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(244,193,80,0.3); border-radius: 8px; padding: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #ffd700;">${q.active ? '🟢 [ĐANG CHẠY] ' : ''}${escapeHtml(q.title)}</strong>
+                  <span style="font-weight: 800; color: #fff;">${cur} / ${tgt} (${pct.toFixed(0)}%)</span>
+                </div>
+                <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">${escapeHtml(q.description)} • Thưởng: ${escapeHtml(q.rewardText)}</div>
+                <div class="row" style="margin-top: 6px;">
+                  <button class="btn" onclick="simQuestProgress('${q.targetType}', 10)">+10 Tiến Độ</button>
+                  <button class="btn gold" onclick="triggerQuestComplete('${q.id}')">🏆 Hoàn Thành Ngay</button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      if (cfg.miniEvents && Array.isArray(cfg.miniEvents.availableEvents)) {
+        const mBox = document.getElementById('miniEventsContainer');
+        if (mBox) {
+          const act = cfg.miniEvents.activeEvent;
+          mBox.innerHTML = `
+            ${act ? `
+              <div style="background: rgba(255,82,82,0.2); border: 2px solid #ff5252; border-radius: 8px; padding: 10px; margin-bottom: 8px;">
+                <strong style="color: #ff5252;">🔥 ĐANG DIỄN RA: ${escapeHtml(act.name)}</strong>
+                <div style="font-size: 12px; margin-top: 4px;">${escapeHtml(act.bannerText)}</div>
+              </div>
+            ` : '<div style="font-size: 12px; opacity: 0.7; margin-bottom: 6px;">Hiện chưa có mini-event nào đang chạy</div>'}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              ${cfg.miniEvents.availableEvents.map((e) => `
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(244,193,80,0.25); border-radius: 8px; padding: 8px;">
+                  <strong style="font-size: 12px; color: #ffe694;">${escapeHtml(e.name)}</strong>
+                  <div style="font-size: 11px; opacity: 0.8; margin: 3px 0;">${e.durationSeconds}s • x${e.multiplier}</div>
+                  <button class="btn gold" style="width: 100%; font-size: 11px; padding: 4px;" onclick="simMiniEvent('${e.id}')">⚡ Kích Hoạt Ngay</button>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+      }
+
+      if (Array.isArray(cfg.devotees)) {
+        const tb = document.getElementById('devoteesRetentionTable');
+        if (tb) {
+          tb.innerHTML = cfg.devotees.slice(0, 15).map((d) => `
+            <tr>
+              <td><strong>${escapeHtml(d.name)}</strong></td>
+              <td><span class="btn" style="padding: 2px 6px; font-size: 11px;">${escapeHtml(d.badge || '🪙 Hữu Duyên')}</span></td>
+              <td>${d.sessionsCount || 1} phiên</td>
+              <td>${d.streakDays || 1} ngày</td>
+              <td style="color: #ffd700; font-weight: 700;">${Number(d.merit).toLocaleString('vi-VN')}</td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      if (cfg.smartPrompts && cfg.smartPrompts.activePrompt) {
+        const pInput = document.getElementById('activeSmartPromptInput');
+        if (pInput) pInput.value = cfg.smartPrompts.activePrompt;
       }
     }
 
@@ -968,6 +1203,82 @@
 
     async function simMilestone(id) {
       await sendRpc('admin.simulate', { type: 'milestone', id });
+      refreshStatus();
+    }
+
+    async function simWelcome() {
+      await sendRpc('admin.simulate', { type: 'welcome' });
+      refreshStatus();
+    }
+
+    async function simQuestProgress(targetType, amount) {
+      await sendRpc('admin.simulate', { type: 'questProgress', targetType, amount });
+      loadConfig();
+      refreshStatus();
+    }
+
+    async function simMiniEvent(eventId) {
+      await sendRpc('admin.simulate', { type: 'miniEvent', eventId });
+      loadConfig();
+      refreshStatus();
+    }
+
+    async function simReturningDevotee() {
+      await sendRpc('admin.simulate', { type: 'returningDevotee' });
+      refreshStatus();
+    }
+
+    async function simSilkScroll(category) {
+      await sendRpc('admin.simulate', { type: 'silkScroll', category });
+      refreshStatus();
+    }
+
+    async function simSwitchScene(sceneId) {
+      await sendRpc('admin.simulate', { type: 'switchScene', sceneId });
+      refreshStatus();
+    }
+
+    async function saveWelcomeSettings() {
+      const enabled = document.getElementById('welcomeEnabled').checked;
+      const cooldownMs = Number(document.getElementById('welcomeCooldown').value) || 6000;
+      const welcomeTemplate = document.getElementById('welcomeTemplate').value.trim();
+      const rawKws = document.getElementById('welcomeKeywords').value.trim();
+      const suggestedKeywords = rawKws ? rawKws.split(',').map((s) => s.trim().toUpperCase()) : ['HƯƠNG', 'HOA', 'VÀNG'];
+
+      await sendRpc('admin.saveWelcomeSettings', {
+        settings: { enabled, cooldownMs, welcomeTemplate, suggestedKeywords }
+      });
+      alert('Đã lưu cấu hình chào đón!');
+    }
+
+    async function triggerQuestComplete(id) {
+      await sendRpc('admin.triggerQuest', { id });
+      loadConfig();
+      refreshStatus();
+    }
+
+    async function resetAllQuests() {
+      if (!confirm('Xác nhận đặt lại toàn bộ tiến độ nhiệm vụ cộng đồng?')) return;
+      await sendRpc('admin.resetQuests', {});
+      loadConfig();
+      refreshStatus();
+    }
+
+    async function endCurrentMiniEvent() {
+      await sendRpc('admin.endMiniEvent', {});
+      loadConfig();
+      refreshStatus();
+    }
+
+    async function saveSmartPromptSettings() {
+      const activePrompt = document.getElementById('activeSmartPromptInput').value.trim();
+      await sendRpc('admin.saveSmartPrompts', { settings: { activePrompt } });
+      alert('Đã cập nhật dòng gợi ý prompter!');
+    }
+
+    async function sendCustomSmartPrompt() {
+      const activePrompt = document.getElementById('activeSmartPromptInput').value.trim();
+      await sendRpc('admin.saveSmartPrompts', { settings: { activePrompt } });
       refreshStatus();
     }
 

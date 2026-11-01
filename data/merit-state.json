@@ -1,23 +1,23 @@
 {
-  "totalIncense": 616,
-  "totalVotiveBurned": 1417,
-  "totalMerit": 43385,
+  "totalIncense": 703,
+  "totalVotiveBurned": 1577,
+  "totalMerit": 90024,
   "dailyMeritTarget": 1000000,
-  "dailyMeritCurrent": 43385,
+  "dailyMeritCurrent": 90024,
   "woodenFishHits": 1279,
   "bellRings": 71,
-  "lanternCount": 47,
-  "fortuneCount": 24,
+  "lanternCount": 51,
+  "fortuneCount": 25,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 684,
-    "hell_money": 126,
-    "royal_robe": 26,
-    "sacred_horse": 20,
+    "gold_ingot": 690,
+    "hell_money": 156,
+    "royal_robe": 27,
+    "sacred_horse": 24,
     "five_elements_tray": 12,
-    "golden_tech": 9,
-    "luxury_villa_car": 13,
-    "dragon_treasury": 4,
+    "golden_tech": 12,
+    "luxury_villa_car": 32,
+    "dragon_treasury": 5,
     "flower": 1
   },
   "devotees": {
@@ -85,10 +85,10 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 31270,
-      "incense": 174,
-      "votiveCount": 510,
-      "gifts": 8,
+      "merit": 76405,
+      "incense": 262,
+      "votiveCount": 665,
+      "gifts": 31,
       "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
     },
     "luklacstore": {
@@ -710,6 +710,48 @@
       "votiveCount": 1,
       "gifts": 0,
       "lastWish": "Thả 100 tim tích 200 công đức Cấp 2"
+    },
+    "poll_community": {
+      "name": "Cộng Đồng Bình Chọn",
+      "uniqueId": "poll_community",
+      "avatar": "",
+      "merit": 1500,
+      "incense": 3,
+      "votiveCount": 5,
+      "gifts": 0,
+      "lastWish": "Hoá 5 Biệt Thự Siêu Xe do cộng đồng livestream đồng tâm bình chọn"
+    },
+    "mem_1793525408543": {
+      "name": "Thiện Tín Minh Quân",
+      "uniqueId": "mem_1793525408543",
+      "avatar": "",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng",
+      "firstSeen": 1793525408543,
+      "lastSeen": 1793525408543,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
+    },
+    "mem_1793525744234": {
+      "name": "Thiện Tín Minh Quân",
+      "uniqueId": "mem_1793525744234",
+      "avatar": "",
+      "merit": 2,
+      "incense": 0,
+      "votiveCount": 0,
+      "gifts": 0,
+      "lastWish": "Đã vào Đàn Tràng Hoá Vàng",
+      "firstSeen": 1793525744234,
+      "lastSeen": 1793525744234,
+      "sessionsCount": 1,
+      "streakDays": 1,
+      "badge": "🌿 Tín Chủ Thành Tâm",
+      "greetedThisSession": true
     }
   },
   "settings": {
@@ -717,10 +759,10 @@
     "ttsVoice": "maichi",
     "bgMusicEnabled": true,
     "sfxEnabled": true,
-    "musicVolume": 0.3,
-    "ttsVolume": 0.95,
+    "musicVolume": 0.91,
+    "ttsVolume": 0.26,
     "smokeDensity": 1,
-    "stageBg": "hoavang",
+    "stageBg": "altar",
     "autoSim": false,
     "autoSimIntervalMs": 8000
   },
@@ -1016,7 +1058,7 @@
   "furnaceStatus": {
     "state": "idle",
     "label": "Lò đang hoạt động",
-    "temperature": 488,
+    "temperature": 999,
     "itemsBurnedThisSession": 688,
     "lastAction": "Lò hoạt động bình thường"
   },
@@ -1060,7 +1102,7 @@
   ],
   "activePoll": {
     "id": "poll_1793522852269",
-    "active": true,
+    "active": false,
     "question": "Chọn vật phẩm hoá vàng:",
     "options": [
       {
@@ -1098,7 +1140,13 @@
     "totalVotes": 1,
     "expiresAt": 1793522912269,
     "durationSeconds": 60,
-    "winner": null
+    "winner": {
+      "id": 2,
+      "text": "Biệt Thự & Siêu Xe",
+      "itemKey": "luxury_villa_car",
+      "emoji": "🏯",
+      "votes": 1
+    }
   },
   "communityGate": {
     "name": "Cổng Trời Kim Long Khai Khố",
@@ -1173,5 +1221,248 @@
       "sound": "grand_fanfare",
       "announcement": "Đại Lễ Kim Long Khai Khố"
     }
-  ]
+  ],
+  "welcomeSettings": {
+    "enabled": true,
+    "cooldownMs": 6000,
+    "lastWelcomeTime": 0,
+    "welcomeTemplate": "Hoan hỷ thiện tín đáo Đàn Tràng Hoá Vàng Online!",
+    "suggestedKeywords": [
+      "HƯƠNG",
+      "HOA",
+      "VÀNG",
+      "BÌNH AN",
+      "TỔ TIÊN"
+    ],
+    "showActiveEvent": true
+  },
+  "communityQuests": [
+    {
+      "id": "quest_incense_100",
+      "title": "Dâng 100 Nén Hương Trầm",
+      "description": "Cộng đồng cùng dâng 100 nén hương cầu phúc",
+      "targetType": "incense",
+      "targetAmount": 100,
+      "currentAmount": 72,
+      "active": true,
+      "completed": false,
+      "rewardText": "Kích hoạt Khói Trầm Kim Quang toàn Đàn Tràng!"
+    },
+    {
+      "id": "quest_flower_300",
+      "title": "Dâng 300 Đóa Hoa Sen",
+      "description": "Cộng đồng cùng thả 300 hoa sen thanh tịnh",
+      "targetType": "flower",
+      "targetAmount": 300,
+      "currentAmount": 125,
+      "active": false,
+      "completed": false,
+      "rewardText": "Mưa Cánh Sen Hoàng Kim chúc phúc vạn sự hanh thông!"
+    },
+    {
+      "id": "quest_hearts_10k",
+      "title": "Tích Lũy 10.000 Tim Công Đức",
+      "description": "Cùng chung tay thả tim đạt 10.000 điểm Lộc",
+      "targetType": "hearts",
+      "targetAmount": 10000,
+      "currentAmount": 4680,
+      "active": false,
+      "completed": false,
+      "rewardText": "Lò Hoá Vàng Bùng Cháy Hào Quang Cát Tường!"
+    },
+    {
+      "id": "quest_votive_50",
+      "title": "Hoá 50 Thỏi Vàng Kim Bảo",
+      "description": "Cộng đồng cùng hoá 50 thỏi vàng cúng dường",
+      "targetType": "votive",
+      "targetAmount": 50,
+      "currentAmount": 18,
+      "active": false,
+      "completed": false,
+      "rewardText": "Khai mở Kim Ngân Tài Lộc nghinh đón Thần Tài!"
+    }
+  ],
+  "companionSettings": {
+    "enabled": true,
+    "tiers": [
+      {
+        "id": "companion_3d",
+        "name": "Hữu Duyên 3 Ngày",
+        "badge": "🪙 Hữu Duyên",
+        "minDays": 3,
+        "minSessions": 3,
+        "color": "#f4c150"
+      },
+      {
+        "id": "companion_7d",
+        "name": "Thiện Tín 7 Ngày",
+        "badge": "✨ Thiện Tín",
+        "minDays": 7,
+        "minSessions": 7,
+        "color": "#ffb347"
+      },
+      {
+        "id": "companion_30d",
+        "name": "Đại Đạo Tràng 30 Ngày",
+        "badge": "🐉 Đại Đạo Tràng",
+        "minDays": 30,
+        "minSessions": 30,
+        "color": "#ff5252"
+      },
+      {
+        "id": "companion_vip",
+        "name": "Bảo Trợ Đàn Tràng",
+        "badge": "👑 Hộ Trì",
+        "minMerit": 5000,
+        "color": "#e0a96d"
+      }
+    ]
+  },
+  "silkScrollSettings": {
+    "enabled": true,
+    "displayDurationMs": 6500,
+    "categories": [
+      {
+        "key": "ancestor",
+        "name": "Tri Ân & Tưởng Nhớ Gia Tiên",
+        "title": "SỚ KÍNH BIẾU CỬU HUYỀN THẤT TỔ",
+        "stamp": "GIA TIÊN PHÙ HỘ"
+      },
+      {
+        "key": "peace",
+        "name": "Cầu Bình An & Sức Khỏe",
+        "title": "SỚ CẦU BÌNH AN BỐN MÙA",
+        "stamp": "THÂN TÂM AN LẠC"
+      },
+      {
+        "key": "prosperity",
+        "name": "Cầu Tài Lộc & Kinh Doanh",
+        "title": "SỚ CHIÊU TÀI TẤN BẢO",
+        "stamp": "ĐẮT HÀNG ĐẦY KHO"
+      },
+      {
+        "key": "blessing",
+        "name": "Cầu Công Danh & Đỗ Đạt",
+        "title": "SỚ CẦU VẠN SỰ VIÊN THÀNH",
+        "stamp": "CÔNG THÀNH DANH TOẠI"
+      }
+    ]
+  },
+  "miniEventEngine": {
+    "enabled": true,
+    "intervalMinutes": 10,
+    "activeEvent": {
+      "id": "golden_heart_storm",
+      "name": "Bão Tim Kim Quang — Mở Cổng Trời",
+      "type": "hearts",
+      "durationSeconds": 45,
+      "multiplier": 2,
+      "bannerText": "✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!",
+      "description": "Tất cả lượt thả tim nhân đôi tiến độ mở Cổng Trời",
+      "endsAt": 1793525048370,
+      "startedAt": 1793525003370
+    },
+    "availableEvents": [
+      {
+        "id": "incense_rush",
+        "name": "Thắp Hương Đạo Tràng x2 Lộc Đức",
+        "type": "incense",
+        "durationSeconds": 60,
+        "multiplier": 2,
+        "bannerText": "🔥 ĐANG DIỄN RA: 60s THẮP HƯƠNG x2 ĐIỂM CÔNG ĐỨC!",
+        "description": "Mọi nén hương dâng lên đều nhân đôi điểm công đức và lộc may"
+      },
+      {
+        "id": "golden_heart_storm",
+        "name": "Bão Tim Kim Quang — Mở Cổng Trời",
+        "type": "hearts",
+        "durationSeconds": 45,
+        "multiplier": 2,
+        "bannerText": "✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!",
+        "description": "Tất cả lượt thả tim nhân đôi tiến độ mở Cổng Trời"
+      },
+      {
+        "id": "lotus_offering",
+        "name": "Đại Lễ Dâng Sen Thanh Tịnh",
+        "type": "flower",
+        "durationSeconds": 60,
+        "multiplier": 2,
+        "bannerText": "🪷 60s ĐẠI LỄ DÂNG SEN: Hoa nở khắp đàn tràng!",
+        "description": "Comment HOA để dâng hoa sen x2 công đức"
+      },
+      {
+        "id": "rapid_burn",
+        "name": "Hoá Vàng Thần Tốc — Bùng Sáng Kim Khố",
+        "type": "votive",
+        "durationSeconds": 45,
+        "multiplier": 2,
+        "bannerText": "🪙 45s HOÁ VÀNG THẦN TỐC: Lửa bùng sáng rực rỡ!",
+        "description": "Mọi thỏi vàng hoá đều sinh thêm hào quang kim bảo"
+      }
+    ]
+  },
+  "stageScene": {
+    "current": "altar",
+    "autoSwitchEnabled": true,
+    "availableScenes": [
+      {
+        "id": "hoavang",
+        "name": "Sân Hoá Vàng Cổ Kính",
+        "icon": "🔥",
+        "desc": "Sân gạch cổ, lò hoá vàng rực sáng hào quang"
+      },
+      {
+        "id": "altar",
+        "name": "Điện Thờ Gia Tiên Trang Nghiêm",
+        "icon": "🏛️",
+        "desc": "Bàn thờ sơn son thếp vàng, bát hương trầm, nến sáng"
+      },
+      {
+        "id": "amitabha",
+        "name": "Bảo Điện Quang Minh",
+        "icon": "✨",
+        "desc": "Không gian sen vàng, hào quang Phật quang phổ chiếu"
+      },
+      {
+        "id": "temple",
+        "name": "Cổng Tam Quan Chùa Cổ",
+        "icon": "⛩️",
+        "desc": "Cổng chùa cổ kính dưới ánh hoàng hôn thiêng liêng"
+      }
+    ]
+  },
+  "smartPromptSettings": {
+    "enabled": true,
+    "intervalSeconds": 25,
+    "activePrompt": "✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!",
+    "rules": [
+      {
+        "condition": "poll_active",
+        "prompt": "🗳️ Bình chọn đang diễn ra! Hãy bình luận 1, 2, 3 hoặc 4 để chọn vật phẩm hoá tiếp theo!"
+      },
+      {
+        "condition": "mini_event",
+        "prompt": "🔥 Đang diễn ra sự kiện nhân đôi công đức! Hãy thả tim và comment ngay!"
+      },
+      {
+        "condition": "quest_active",
+        "prompt": "🎯 Đạo tràng đang chung tay hoàn thành nhiệm vụ! Gõ từ khóa để cùng đóng góp!"
+      },
+      {
+        "condition": "gate_near",
+        "prompt": "✨ Cổng Trời Kim Long sắp mở khóa! Toàn thể tín chủ cùng thả tim bứt phá nào!"
+      },
+      {
+        "condition": "idle",
+        "prompts": [
+          "🪔 Bình luận \"HƯƠNG\" để dâng nén trầm thơm lên Đàn Tràng",
+          "🪷 Bình luận \"HOA\" để dâng đóa sen thanh tịnh cầu bình an",
+          "🪙 Bình luận \"VÀNG\" để dâng thỏi vàng kim bảo chiêu tài tấn bảo",
+          "📜 Bình luận \"BÌNH AN\" hoặc \"TỔ TIÊN\" để dâng sớ cầu gia đạo bình an",
+          "🎋 Bình luận \"XIN QUẺ\" để thỉnh Quẻ Linh Xăm Tài Lộc đầu ngày",
+          "🔥 Thả tim liên tục để tiếp lửa lò hoá vàng và tích luỹ điểm Lộc Đức"
+        ]
+      }
+    ]
+  }
 }

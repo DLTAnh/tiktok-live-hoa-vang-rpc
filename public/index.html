@@ -99,6 +99,16 @@
           <div class="ceremony-timer" id="ceremonyTimer">Còn 05:20</div>
         </div>
 
+        <!-- 2A2. BANNER MINI-EVENT TỰ ĐỘNG (X2 LỘC ĐỨC & ĐẾM NGƯỢC) -->
+        <div class="mini-event-banner" id="miniEventBanner" style="display: none;">
+          <div class="mini-event-badge" id="miniEventBadge">⚡ MINI-EVENT</div>
+          <div class="mini-event-info">
+            <div class="mini-event-title" id="miniEventTitle">🔥 60s THẮP HƯƠNG x2 ĐIỂM CÔNG ĐỨC!</div>
+            <div class="mini-event-desc" id="miniEventDesc">Mọi nén hương dâng lên đều nhân đôi điểm công đức</div>
+          </div>
+          <div class="mini-event-countdown" id="miniEventCountdown">⏳ 00:45</div>
+        </div>
+
         <!-- 2E. TIÊU ĐỀ LỚN HOÀNG KIM CHÍNH GIỮA MÀN HÌNH -->
         <div class="main-sacred-center-title" id="mainSacredCenterTitle">
           <div class="sacred-title-sparkle-left">✨</div>
@@ -153,6 +163,35 @@
           </div>
         </div>
 
+        <!-- 2F2. NHIỆM VỤ TƯƠNG TÁC CỘNG ĐỒNG (CO-OP QUESTS) -->
+        <div class="community-quest-box" id="communityQuestBox">
+          <div class="quest-header-row">
+            <div class="quest-title-left">
+              <span class="quest-icon">🎯</span>
+              <span class="quest-label">NHIỆM VỤ CỘNG ĐỒNG:</span>
+              <strong class="quest-name" id="questName">Dâng 100 Nén Hương Trầm</strong>
+            </div>
+            <div class="quest-score-right">
+              <span class="quest-progress-text" id="questProgressText">42 / 100 🪔</span>
+              <span class="quest-percent-badge" id="questPercentBadge">42%</span>
+            </div>
+          </div>
+          <div class="quest-bar-track">
+            <div class="quest-bar-fill" id="questBarFill" style="width: 42%;">
+              <div class="quest-bar-shimmer"></div>
+            </div>
+          </div>
+          <div class="quest-reward-hint" id="questRewardHint">
+            🎁 Hoàn thành: <span>Kích hoạt Khói Trầm Kim Quang toàn Đàn Tràng!</span>
+          </div>
+        </div>
+
+        <!-- 2F3. GỢI Ý TƯƠNG TÁC THÔNG MINH THEO NGỮ CẢNH (SMART LIVE PROMPTER) -->
+        <div class="smart-prompt-pill" id="smartPromptPill">
+          <span class="prompt-icon-pulse">💡</span>
+          <span class="prompt-text" id="smartPromptText">Thành tâm dâng nén hương trầm — gõ HƯƠNG hoặc thả tim để tích lũy công đức!</span>
+        </div>
+
         <!-- 2C. BẢNG CUỐN THƯ HƯỚNG DẪN NỔI BẬT ĐỂ NGƯỜI VÀO BIẾT NGAY LIVE LÀM GÌ -->
         <aside class="live-guide-overlay" id="liveGuideOverlay">
           <div class="guide-scroll-header">
@@ -183,9 +222,19 @@
         <div class="devotee-welcome-toast" id="devoteeWelcomeToast">
           <div class="welcome-avatar" id="welcomeAvatar">🪙</div>
           <div class="welcome-body">
-            <div class="welcome-title">✨ Hoan hỷ thiện tín đáo Đàn Tràng ✨</div>
+            <div class="welcome-top-line">
+              <span class="welcome-title">✨ Hoan hỷ thiện tín đáo Đàn Tràng ✨</span>
+              <span class="welcome-badge-tag" id="welcomeDevoteeBadge">🪙 Hữu Duyên</span>
+            </div>
             <div class="welcome-name" id="welcomeDevoteeName">@TínChủMinhTâm</div>
-            <div class="welcome-hint">Hãy bình luận [Tên + Lời khấn] để Thầy dâng sớ vào lò!</div>
+            <div class="welcome-keywords-row">
+              <span class="welcome-kw-hint">Gợi ý dâng lễ:</span>
+              <span class="welcome-kw-pill" onclick="simulateKeywordClick('hương')">🪔 HƯƠNG</span>
+              <span class="welcome-kw-pill" onclick="simulateKeywordClick('hoa')">🪷 HOA</span>
+              <span class="welcome-kw-pill" onclick="simulateKeywordClick('vàng')">🪙 VÀNG</span>
+              <span class="welcome-kw-pill" onclick="simulateKeywordClick('bình an')">📜 BÌNH AN</span>
+            </div>
+            <div class="welcome-event-hint" id="welcomeActiveHint">🔥 Đang diễn ra: Thắp Hương x2 Lộc Đức</div>
           </div>
         </div>
 
@@ -404,6 +453,33 @@
             <div class="fortune-devotee" id="fortuneDevotee">Tín chủ xin quẻ: Minh Tâm</div>
             <div class="fortune-poem" id="fortunePoem"></div>
             <div class="fortune-meaning" id="fortuneMeaning"></div>
+          </div>
+        </div>
+
+        <!-- MODAL THẺ SỚ LỤA HOÀNG KIM (CẦU BÌNH AN & TRI ÂN GIA TIÊN) -->
+        <div class="silk-scroll-modal-overlay" id="silkScrollModal" style="display: none;">
+          <div class="silk-scroll-wrapper">
+            <div class="silk-scroll-roller top-roller"></div>
+            <div class="silk-scroll-body">
+              <div class="scroll-stamp-top" id="scrollStampTop">ĐÀN TRÀNG CHỨNG MINH</div>
+              <div class="scroll-heading" id="scrollTitle">SỚ KÍNH BIẾU CỬU HUYỀN THẤT TỔ</div>
+              <div class="scroll-meta-line">
+                <span class="scroll-devotee" id="scrollDevoteeName">Tín chủ: Gia Chủ Minh Tâm</span>
+                <span class="scroll-badge" id="scrollDevoteeBadge">👑 Bảo Trợ Đàn Tràng</span>
+                <span class="scroll-date" id="scrollDate">Giờ Hoàng Đạo • Ngày Cát Khánh</span>
+              </div>
+              <div class="scroll-poem-text" id="scrollWishText">
+                Thành tâm kính bái Cửu Huyền Thất Tổ, nguyện cầu gia tiên phù hộ độ trì toàn gia hưng vượng, con cháu bình an mạnh khỏe.
+              </div>
+              <div class="scroll-footer-seal-row">
+                <div class="scroll-seal-circle" id="scrollSeal">
+                  <span>GIA TIÊN</span>
+                  <span>PHÙ HỘ</span>
+                </div>
+                <div class="scroll-sub-note">Phúc Lộc Dồi Dào • Vạn Sự Cát Tường</div>
+              </div>
+            </div>
+            <div class="silk-scroll-roller bottom-roller"></div>
           </div>
         </div>
       </div>

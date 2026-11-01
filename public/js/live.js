@@ -159,12 +159,14 @@
     layer.innerHTML = VIP_CUSHION_COORDS.map((slot, idx) => {
       const dev = leaderboard[slot.rank - 1];
       if (!dev) return '';
+      const badgeShort = dev.badge ? dev.badge.split(' ')[0] : '🪙';
       return `
         <div class="vip-devotee-slot" style="left: ${slot.x}px; top: ${slot.y}px; z-index: ${12 + idx};">
           <img src="/assets/devotee.png" alt="VIP Devotee" class="devotee-sprite" />
           <div class="vip-rank-pill">
             <span class="vip-rank-num">${slot.rank}</span>
-            <span class="vip-rank-name">${escapeHtml(shortenName(dev.name, 12))}</span>
+            <span class="vip-rank-name">${escapeHtml(shortenName(dev.name, 11))}</span>
+            <span class="companion-badge ${dev.badge?.includes('30') ? 'tier-30d' : dev.badge?.includes('7') ? 'tier-7d' : dev.badge?.includes('Bảo') ? 'tier-vip' : 'tier-3d'}">${badgeShort}</span>
           </div>
         </div>
       `;
@@ -769,6 +771,12 @@
 
     if (st.settings?.stageBg) {
       applyStageBg(st.settings.stageBg);
+    }
+
+    renderQuestsUI(st.communityQuests);
+    renderMiniEventBanner(st.miniEventEngine?.activeEvent);
+    if (st.smartPromptSettings?.activePrompt) {
+      updateSmartPromptUI(st.smartPromptSettings.activePrompt);
     }
 
     const lb = Array.isArray(st.leaderboard) ? st.leaderboard : [];
@@ -1406,17 +1414,146 @@
     }, 4500);
   }
 
+  // 12. Cập nhật Giao diện Nhiệm Vụ Cộng Đồng (Co-op Quests)
+  function renderQuestsUI(quests = []) {
+    const box = document.getElementById('communityQuestBox');
+    if (!box || !Array.isArray(quests) || quests.length === 0) return;
+
+    const activeQuest = quests.find((q) => q.active && !q.completed) || quests[0];
+    if (!activeQuest) return;
+
+    const nameEl = document.getElementById('questName');
+    const progTextEl = document.getElementById('questProgressText');
+    const pctBadgeEl = document.getElementById('questPercentBadge');
+    const fillEl = document.getElementById('questBarFill');
+    const rewardEl = document.getElementById('questRewardHint');
+
+    const cur = Number(activeQuest.currentAmount) || 0;
+    const tgt = Number(activeQuest.targetAmount) || 100;
+    const pct = Math.min(100, Math.max(0, (cur / tgt) * 100));
+
+    const emojiMap = { incense: '🪔', flower: '🪷', hearts: '❤️', votive: '🪙' };
+    const emoji = emojiMap[activeQuest.targetType] || '🎯';
+
+    if (nameEl) nameEl.textContent = activeQuest.title;
+    if (progTextEl) progTextEl.textContent = `${cur.toLocaleString('vi-VN')} / ${tgt.toLocaleString('vi-VN')} ${emoji}`;
+    if (pctBadgeEl) pctBadgeEl.textContent = `${pct.toFixed(0)}%`;
+    if (fillEl) fillEl.style.width = `${pct}%`;
+    if (rewardEl) rewardEl.innerHTML = `🎁 Hoàn thành: <span>${escapeHtml(activeQuest.rewardText || 'Nhận phúc lộc vô lượng!')}</span>`;
+  }
+
+  // 13. Cập nhật Banner Mini-Event Tự Động & Đồng Hồ Đếm Ngược
+  let miniEventCountdownInterval = null;
+  function renderMiniEventBanner(activeEvt) {
+    const banner = document.getElementById('miniEventBanner');
+    if (!banner) return;
+
+    if (!activeEvt || !activeEvt.endsAt || Date.now() >= activeEvt.endsAt) {
+      banner.style.display = 'none';
+      if (miniEventCountdownInterval) {
+        clearInterval(miniEventCountdownInterval);
+        miniEventCountdownInterval = null;
+      }
+      return;
+    }
+
+    const titleEl = document.getElementById('miniEventTitle');
+    const descEl = document.getElementById('miniEventDesc');
+    const cdEl = document.getElementById('miniEventCountdown');
+
+    if (titleEl) titleEl.textContent = activeEvt.bannerText || activeEvt.name;
+    if (descEl) descEl.textContent = activeEvt.description || 'Nhanh tay tương tác để nhận x2 công đức!';
+    banner.style.display = 'flex';
+
+    if (miniEventCountdownInterval) clearInterval(miniEventCountdownInterval);
+    const updateCountdown = () => {
+      const remSec = Math.max(0, Math.ceil((activeEvt.endsAt - Date.now()) / 1000));
+      if (cdEl) {
+        const mm = String(Math.floor(remSec / 60)).padStart(2, '0');
+        const ss = String(remSec % 60).padStart(2, '0');
+        cdEl.textContent = `⏳ ${mm}:${ss}`;
+      }
+      if (remSec <= 0) {
+        banner.style.display = 'none';
+        clearInterval(miniEventCountdownInterval);
+        miniEventCountdownInterval = null;
+      }
+    };
+    updateCountdown();
+    miniEventCountdownInterval = setInterval(updateCountdown, 1000);
+  }
+
+  // 14. Hiển thị Thẻ Sớ Lụa Hoàng Kim (Silk Scroll Card Modal)
+  let silkScrollTimer = null;
+  function showSilkScrollCard(data = {}) {
+    const modal = document.getElementById('silkScrollModal');
+    if (!modal) return;
+
+    const titleEl = document.getElementById('scrollTitle');
+    const devNameEl = document.getElementById('scrollDevoteeName');
+    const devBadgeEl = document.getElementById('scrollDevoteeBadge');
+    const dateEl = document.getElementById('scrollDate');
+    const wishEl = document.getElementById('scrollWishText');
+    const stampTopEl = document.getElementById('scrollStampTop');
+    const sealEl = document.getElementById('scrollSeal');
+
+    if (titleEl) titleEl.textContent = data.title || 'SỚ CẦU BÌNH AN BỐN MÙA';
+    if (stampTopEl) stampTopEl.textContent = data.stamp || 'ĐÀN TRÀNG CHỨNG MINH';
+    if (devNameEl) devNameEl.textContent = `Tín chủ: ${data.devotee?.name || 'Tín Chủ Thành Tâm'}`;
+    if (devBadgeEl) devBadgeEl.textContent = data.devotee?.badge || '🪙 Hữu Duyên';
+    if (dateEl) dateEl.textContent = data.dateString || 'Giờ Hoàng Đạo • Ngày Cát Khánh';
+    if (wishEl) wishEl.textContent = `“${data.wish || 'Thành tâm kính bái, nguyện cầu vạn sự hanh thông'}”`;
+    if (sealEl) {
+      sealEl.innerHTML = `<span>${escapeHtml(data.stamp?.slice(0, 4) || 'GIA')}</span><span>${escapeHtml(data.stamp?.slice(4) || 'TIÊN')}</span>`;
+    }
+
+    modal.style.display = 'flex';
+    audio.playTempleBell(0.9);
+    particles.spawnIncenseBurst(540, 960, 40);
+
+    clearTimeout(silkScrollTimer);
+    silkScrollTimer = setTimeout(() => {
+      modal.style.display = 'none';
+    }, 6500);
+
+    modal.onclick = () => {
+      modal.style.display = 'none';
+      clearTimeout(silkScrollTimer);
+    };
+  }
+
+  // 15. Cập nhật Dòng Gợi Ý Tương Tác Thông Minh (Smart Prompt Pill)
+  function updateSmartPromptUI(text) {
+    const el = document.getElementById('smartPromptText');
+    if (el && text) {
+      el.textContent = text;
+    }
+  }
+
+  window.simulateKeywordClick = (kw) => {
+    callRpc('temple.comment', {
+      user: 'Tín Chủ Trực Tuyến',
+      comment: kw,
+      uniqueId: `click_${Date.now()}`
+    });
+  };
+
   // Hiển thị dải lụa hoàng kim chào mừng tín chủ mới vào phòng Live
   let welcomeToastTimer = null;
-  function showWelcomeDevoteeToast(user, avatar) {
+  function showWelcomeDevoteeToast(user, avatar, badge, template, suggestedKeywords, activeHint) {
     const toast = document.getElementById('devoteeWelcomeToast');
     const nameEl = document.getElementById('welcomeDevoteeName');
     const avatarEl = document.getElementById('welcomeAvatar');
+    const badgeEl = document.getElementById('welcomeDevoteeBadge');
+    const hintEl = document.getElementById('welcomeActiveHint');
     if (!toast || !nameEl || !user) return;
 
     if (welcomeToastTimer) clearTimeout(welcomeToastTimer);
 
     nameEl.textContent = `@${user}`;
+    if (badgeEl) badgeEl.textContent = badge || '🪙 Hữu Duyên';
+    if (hintEl && activeHint) hintEl.textContent = activeHint;
+
     if (avatarEl) {
       if (avatar && avatar.startsWith('http')) {
         avatarEl.innerHTML = `<img src="${escapeHtml(avatar)}" alt="" />`;
@@ -1430,7 +1567,7 @@
 
     welcomeToastTimer = setTimeout(() => {
       toast.classList.remove('active');
-    }, 4200);
+    }, 5500);
   }
 
   // Tự động nhắc nhở phòng Live khi không có bình luận mới (45s) để người mới vào luôn hiểu live làm gì
@@ -1503,6 +1640,44 @@
           audio.playMilestoneChime();
         } else if (msg.method === 'temple.welcome') {
           showWelcomeDevoteeToast(msg.params?.user, msg.params?.avatar);
+        } else if (msg.method === 'temple.welcomeMember') {
+          showWelcomeDevoteeToast(
+            msg.params?.user,
+            msg.params?.avatar,
+            msg.params?.badge,
+            msg.params?.template,
+            msg.params?.suggestedKeywords,
+            msg.params?.activeHint
+          );
+        } else if (msg.method === 'temple.returningDevotee') {
+          const u = msg.params?.user || 'Thiện Tín';
+          const b = msg.params?.badge || '✨ Thiện Tín 7 Ngày';
+          pushPriorityNotification(`Tri ân ${u} — ${b} đã quay lại Đàn Tràng!`, 2, '✨', 5500);
+          audio.playIncenseChime();
+        } else if (msg.method === 'quest.update') {
+          if (msg.params?.quests) renderQuestsUI(msg.params.quests);
+        } else if (msg.method === 'quest.completed') {
+          if (msg.params?.quest) {
+            pushPriorityNotification(`🏆 HOÀN THÀNH: ${msg.params.quest.title}! ${msg.params.quest.rewardText}`, 1, '🏆', 7000);
+            particles.spawnIncenseBurst(520, 1015, 60);
+            audio.playMilestoneChime();
+          }
+        } else if (msg.method === 'miniEvent.start') {
+          if (msg.params?.event) {
+            renderMiniEventBanner(msg.params.event);
+            pushPriorityNotification(`⚡ BẮT ĐẦU: ${msg.params.event.bannerText}`, 1, '⚡', 6000);
+            audio.playMilestoneChime();
+          }
+        } else if (msg.method === 'miniEvent.ended') {
+          renderMiniEventBanner(null);
+        } else if (msg.method === 'notification.priority') {
+          pushPriorityNotification(msg.params?.text, msg.params?.priority, msg.params?.icon, msg.params?.durationMs);
+        } else if (msg.method === 'temple.switchScene') {
+          if (msg.params?.sceneId) applyStageBg(msg.params.sceneId);
+        } else if (msg.method === 'temple.silkScroll') {
+          showSilkScrollCard(msg.params);
+        } else if (msg.method === 'smartPrompt.update') {
+          if (msg.params?.prompt) updateSmartPromptUI(msg.params.prompt);
         } else if (msg.method === 'temple.chat') {
           registerRoomActivity();
           if (msg.params?.comment) {

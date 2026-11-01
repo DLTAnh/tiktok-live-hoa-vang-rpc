@@ -588,6 +588,166 @@ const DEFAULT_STATE = {
     'tổ tiên': 'Uống nước nhớ nguồn, lòng thành kính biếu Cửu Huyền Thất Tổ, nguyện gia tiên phù hộ độ trì con cháu hiếu thuận thành tài.',
     'sức khỏe': 'Cầu cho song thân phụ mẫu và gia đình sức khỏe dồi dào, an khang trường thọ, bình an vô sự.'
   },
+  welcomeSettings: {
+    enabled: true,
+    cooldownMs: 6000,
+    lastWelcomeTime: 0,
+    welcomeTemplate: 'Hoan hỷ thiện tín đáo Đàn Tràng Hoá Vàng Online!',
+    suggestedKeywords: ['HƯƠNG', 'HOA', 'VÀNG', 'BÌNH AN', 'TỔ TIÊN'],
+    showActiveEvent: true
+  },
+  communityQuests: [
+    {
+      id: 'quest_incense_100',
+      title: 'Dâng 100 Nén Hương Trầm',
+      description: 'Cộng đồng cùng dâng 100 nén hương cầu phúc',
+      targetType: 'incense',
+      targetAmount: 100,
+      currentAmount: 42,
+      active: true,
+      completed: false,
+      rewardText: 'Kích hoạt Khói Trầm Kim Quang toàn Đàn Tràng!'
+    },
+    {
+      id: 'quest_flower_300',
+      title: 'Dâng 300 Đóa Hoa Sen',
+      description: 'Cộng đồng cùng thả 300 hoa sen thanh tịnh',
+      targetType: 'flower',
+      targetAmount: 300,
+      currentAmount: 125,
+      active: false,
+      completed: false,
+      rewardText: 'Mưa Cánh Sen Hoàng Kim chúc phúc vạn sự hanh thông!'
+    },
+    {
+      id: 'quest_hearts_10k',
+      title: 'Tích Lũy 10.000 Tim Công Đức',
+      description: 'Cùng chung tay thả tim đạt 10.000 điểm Lộc',
+      targetType: 'hearts',
+      targetAmount: 10000,
+      currentAmount: 4680,
+      active: false,
+      completed: false,
+      rewardText: 'Lò Hoá Vàng Bùng Cháy Hào Quang Cát Tường!'
+    },
+    {
+      id: 'quest_votive_50',
+      title: 'Hoá 50 Thỏi Vàng Kim Bảo',
+      description: 'Cộng đồng cùng hoá 50 thỏi vàng cúng dường',
+      targetType: 'votive',
+      targetAmount: 50,
+      currentAmount: 18,
+      active: false,
+      completed: false,
+      rewardText: 'Khai mở Kim Ngân Tài Lộc nghinh đón Thần Tài!'
+    }
+  ],
+  companionSettings: {
+    enabled: true,
+    tiers: [
+      { id: 'companion_3d', name: 'Hữu Duyên 3 Ngày', badge: '🪙 Hữu Duyên', minDays: 3, minSessions: 3, color: '#f4c150' },
+      { id: 'companion_7d', name: 'Thiện Tín 7 Ngày', badge: '✨ Thiện Tín', minDays: 7, minSessions: 7, color: '#ffb347' },
+      { id: 'companion_30d', name: 'Đại Đạo Tràng 30 Ngày', badge: '🐉 Đại Đạo Tràng', minDays: 30, minSessions: 30, color: '#ff5252' },
+      { id: 'companion_vip', name: 'Bảo Trợ Đàn Tràng', badge: '👑 Hộ Trì', minMerit: 5000, color: '#e0a96d' }
+    ]
+  },
+  silkScrollSettings: {
+    enabled: true,
+    displayDurationMs: 6500,
+    categories: [
+      { key: 'ancestor', name: 'Tri Ân & Tưởng Nhớ Gia Tiên', title: 'SỚ KÍNH BIẾU CỬU HUYỀN THẤT TỔ', stamp: 'GIA TIÊN PHÙ HỘ' },
+      { key: 'peace', name: 'Cầu Bình An & Sức Khỏe', title: 'SỚ CẦU BÌNH AN BỐN MÙA', stamp: 'THÂN TÂM AN LẠC' },
+      { key: 'prosperity', name: 'Cầu Tài Lộc & Kinh Doanh', title: 'SỚ CHIÊU TÀI TẤN BẢO', stamp: 'ĐẮT HÀNG ĐẦY KHO' },
+      { key: 'blessing', name: 'Cầu Công Danh & Đỗ Đạt', title: 'SỚ CẦU VẠN SỰ VIÊN THÀNH', stamp: 'CÔNG THÀNH DANH TOẠI' }
+    ]
+  },
+  miniEventEngine: {
+    enabled: true,
+    intervalMinutes: 10,
+    activeEvent: null,
+    availableEvents: [
+      {
+        id: 'incense_rush',
+        name: 'Thắp Hương Đạo Tràng x2 Lộc Đức',
+        type: 'incense',
+        durationSeconds: 60,
+        multiplier: 2,
+        bannerText: '🔥 ĐANG DIỄN RA: 60s THẮP HƯƠNG x2 ĐIỂM CÔNG ĐỨC!',
+        description: 'Mọi nén hương dâng lên đều nhân đôi điểm công đức và lộc may'
+      },
+      {
+        id: 'golden_heart_storm',
+        name: 'Bão Tim Kim Quang — Mở Cổng Trời',
+        type: 'hearts',
+        durationSeconds: 45,
+        multiplier: 2,
+        bannerText: '✨ BÃO TIM KIM QUANG: Thả tim mở Cổng Trời gấp đôi!',
+        description: 'Tất cả lượt thả tim nhân đôi tiến độ mở Cổng Trời'
+      },
+      {
+        id: 'lotus_offering',
+        name: 'Đại Lễ Dâng Sen Thanh Tịnh',
+        type: 'flower',
+        durationSeconds: 60,
+        multiplier: 2,
+        bannerText: '🪷 60s ĐẠI LỄ DÂNG SEN: Hoa nở khắp đàn tràng!',
+        description: 'Comment HOA để dâng hoa sen x2 công đức'
+      },
+      {
+        id: 'rapid_burn',
+        name: 'Hoá Vàng Thần Tốc — Bùng Sáng Kim Khố',
+        type: 'votive',
+        durationSeconds: 45,
+        multiplier: 2,
+        bannerText: '🪙 45s HOÁ VÀNG THẦN TỐC: Lửa bùng sáng rực rỡ!',
+        description: 'Mọi thỏi vàng hoá đều sinh thêm hào quang kim bảo'
+      }
+    ]
+  },
+  stageScene: {
+    current: 'hoavang',
+    autoSwitchEnabled: true,
+    availableScenes: [
+      { id: 'hoavang', name: 'Sân Hoá Vàng Cổ Kính', icon: '🔥', desc: 'Sân gạch cổ, lò hoá vàng rực sáng hào quang' },
+      { id: 'altar', name: 'Điện Thờ Gia Tiên Trang Nghiêm', icon: '🏛️', desc: 'Bàn thờ sơn son thếp vàng, bát hương trầm, nến sáng' },
+      { id: 'amitabha', name: 'Bảo Điện Quang Minh', icon: '✨', desc: 'Không gian sen vàng, hào quang Phật quang phổ chiếu' },
+      { id: 'temple', name: 'Cổng Tam Quan Chùa Cổ', icon: '⛩️', desc: 'Cổng chùa cổ kính dưới ánh hoàng hôn thiêng liêng' }
+    ]
+  },
+  smartPromptSettings: {
+    enabled: true,
+    intervalSeconds: 25,
+    activePrompt: 'Thành tâm dâng nén hương trầm — gõ HƯƠNG hoặc thả tim để tích lũy công đức!',
+    rules: [
+      {
+        condition: 'poll_active',
+        prompt: '🗳️ Bình chọn đang diễn ra! Hãy bình luận 1, 2, 3 hoặc 4 để chọn vật phẩm hoá tiếp theo!'
+      },
+      {
+        condition: 'mini_event',
+        prompt: '🔥 Đang diễn ra sự kiện nhân đôi công đức! Hãy thả tim và comment ngay!'
+      },
+      {
+        condition: 'quest_active',
+        prompt: '🎯 Đạo tràng đang chung tay hoàn thành nhiệm vụ! Gõ từ khóa để cùng đóng góp!'
+      },
+      {
+        condition: 'gate_near',
+        prompt: '✨ Cổng Trời Kim Long sắp mở khóa! Toàn thể tín chủ cùng thả tim bứt phá nào!'
+      },
+      {
+        condition: 'idle',
+        prompts: [
+          '🪔 Bình luận "HƯƠNG" để dâng nén trầm thơm lên Đàn Tràng',
+          '🪷 Bình luận "HOA" để dâng đóa sen thanh tịnh cầu bình an',
+          '🪙 Bình luận "VÀNG" để dâng thỏi vàng kim bảo chiêu tài tấn bảo',
+          '📜 Bình luận "BÌNH AN" hoặc "TỔ TIÊN" để dâng sớ cầu gia đạo bình an',
+          '🎋 Bình luận "XIN QUẺ" để thỉnh Quẻ Linh Xăm Tài Lộc đầu ngày',
+          '🔥 Thả tim liên tục để tiếp lửa lò hoá vàng và tích luỹ điểm Lộc Đức'
+        ]
+      }
+    ]
+  },
   settings: {
     ttsEnabled: true,
     ttsVoice: 'maichi',
@@ -630,7 +790,14 @@ function loadState() {
         activePoll: { ...DEFAULT_STATE.activePoll, ...(saved.activePoll || {}) },
         communityGate: { ...DEFAULT_STATE.communityGate, ...(saved.communityGate || {}) },
         giftMappings: saved.giftMappings && saved.giftMappings.length > 0 ? saved.giftMappings : DEFAULT_STATE.giftMappings,
-        blessingResponses: { ...DEFAULT_STATE.blessingResponses, ...(saved.blessingResponses || {}) }
+        blessingResponses: { ...DEFAULT_STATE.blessingResponses, ...(saved.blessingResponses || {}) },
+        welcomeSettings: { ...DEFAULT_STATE.welcomeSettings, ...(saved.welcomeSettings || {}) },
+        communityQuests: saved.communityQuests && saved.communityQuests.length > 0 ? saved.communityQuests : DEFAULT_STATE.communityQuests,
+        companionSettings: { ...DEFAULT_STATE.companionSettings, ...(saved.companionSettings || {}) },
+        silkScrollSettings: { ...DEFAULT_STATE.silkScrollSettings, ...(saved.silkScrollSettings || {}) },
+        miniEventEngine: { ...DEFAULT_STATE.miniEventEngine, ...(saved.miniEventEngine || {}) },
+        stageScene: { ...DEFAULT_STATE.stageScene, ...(saved.stageScene || {}) },
+        smartPromptSettings: { ...DEFAULT_STATE.smartPromptSettings, ...(saved.smartPromptSettings || {}) }
       };
     }
   } catch (e) {
@@ -665,12 +832,31 @@ function saveState() {
       ceremonySchedule: state.ceremonySchedule,
       activePoll: state.activePoll,
       communityGate: state.communityGate,
-      giftMappings: state.giftMappings
+      giftMappings: state.giftMappings,
+      welcomeSettings: state.welcomeSettings,
+      communityQuests: state.communityQuests,
+      companionSettings: state.companionSettings,
+      silkScrollSettings: state.silkScrollSettings,
+      miniEventEngine: state.miniEventEngine,
+      stageScene: state.stageScene,
+      smartPromptSettings: state.smartPromptSettings
     };
     fs.promises.writeFile(STATE_FILE, JSON.stringify(toSave, null, 2), 'utf8').catch((e) => {
       console.error('[State] Lỗi lưu file:', e.message);
     });
   }, 1000);
+}
+
+function calculateDevoteeBadge(dev) {
+  if (!dev) return '🪙 Hữu Duyên';
+  const merit = Number(dev.merit) || 0;
+  const sessions = Number(dev.sessionsCount) || 1;
+  const streak = Number(dev.streakDays) || 1;
+  if (merit >= 5000) return '👑 Bảo Trợ Đàn Tràng';
+  if (sessions >= 30 || streak >= 30) return '🐉 Đại Đạo Tràng 30 Ngày';
+  if (sessions >= 7 || streak >= 7) return '✨ Thiện Tín 7 Ngày';
+  if (sessions >= 3 || streak >= 3) return '🪙 Hữu Duyên 3 Ngày';
+  return '🌿 Tín Chủ Thành Tâm';
 }
 
 function getLeaderboard(limit = 24) {
@@ -685,7 +871,10 @@ function getLeaderboard(limit = 24) {
       merit: d.merit,
       incense: d.incense || 0,
       votiveCount: d.votiveCount || 0,
-      lastWish: d.lastWish || ''
+      lastWish: d.lastWish || '',
+      badge: d.badge || calculateDevoteeBadge(d),
+      sessionsCount: d.sessionsCount || 1,
+      streakDays: d.streakDays || 1
     }));
 }
 
@@ -745,10 +934,30 @@ function sanitizeWishText(rawWish) {
   return cleaned;
 }
 
+function pushPriorityNotification(text, priority = 2, icon = '✨', durationMs = 4500) {
+  broadcastNotification('notification.priority', { text, priority, icon, durationMs });
+}
+
+function broadcastReturningDevotee(dev) {
+  if (!state.companionSettings?.enabled) return;
+  const msg = `Tri ân ${dev.name} — ${dev.badge} đã quay lại đồng hành cùng Đàn Tràng!`;
+  pushPriorityNotification(msg, 2, '✨', 5500);
+  broadcastNotification('temple.returningDevotee', {
+    user: dev.name,
+    uniqueId: dev.uniqueId,
+    avatar: dev.avatar,
+    badge: dev.badge,
+    sessionsCount: dev.sessionsCount || 1,
+    streakDays: dev.streakDays || 1,
+    merit: dev.merit
+  });
+}
+
 function recordDevotee(user, uniqueId, avatar, meritDelta, incenseDelta = 0, votiveDelta = 0, giftDelta = 0, wish = '') {
   const displayName = sanitizeUserName(user || uniqueId);
   const cleanWish = sanitizeWishText(wish);
   const key = (uniqueId || displayName).slice(0, 40);
+  const now = Date.now();
   if (!state.devotees[key]) {
     state.devotees[key] = {
       name: displayName,
@@ -758,17 +967,49 @@ function recordDevotee(user, uniqueId, avatar, meritDelta, incenseDelta = 0, vot
       incense: 0,
       votiveCount: 0,
       gifts: 0,
-      lastWish: ''
+      lastWish: '',
+      firstSeen: now,
+      lastSeen: now,
+      sessionsCount: 1,
+      streakDays: 1,
+      badge: '🪙 Hữu Duyên 3 Ngày',
+      greetedThisSession: true
     };
   }
   const dev = state.devotees[key];
   dev.name = displayName;
   if (avatar) dev.avatar = avatar;
+
+  // Cập nhật thống kê gắn bó & chuyên cần
+  if (!dev.firstSeen) dev.firstSeen = now;
+  const lastSeen = dev.lastSeen || 0;
+  if (now - lastSeen > 30 * 60 * 1000) {
+    dev.sessionsCount = (dev.sessionsCount || 1) + 1;
+    const lastDate = new Date(lastSeen).toDateString();
+    const todayDate = new Date(now).toDateString();
+    if (lastDate !== todayDate) {
+      const yesterday = new Date(now - 86400000).toDateString();
+      if (lastDate === yesterday) {
+        dev.streakDays = (dev.streakDays || 1) + 1;
+      } else {
+        dev.streakDays = 1;
+      }
+    }
+  }
+  dev.lastSeen = now;
+
   dev.merit += meritDelta;
   dev.incense += incenseDelta;
   dev.votiveCount = (dev.votiveCount || 0) + votiveDelta;
   dev.gifts += giftDelta;
   if (cleanWish) dev.lastWish = cleanWish;
+  dev.badge = calculateDevoteeBadge(dev);
+
+  // Nếu là thiện tín quay lại (đã tham gia từ 2 phiên hoặc 2 ngày) và chưa được tri ân trong phiên này
+  if ((dev.sessionsCount >= 2 || dev.streakDays >= 2) && !dev.greetedThisSession) {
+    dev.greetedThisSession = true;
+    broadcastReturningDevotee(dev);
+  }
 
   const prevMerit = state.dailyMeritCurrent || state.totalMerit || 0;
   state.totalMerit += meritDelta;
@@ -976,6 +1217,19 @@ function triggerCeremony(ceremonyId) {
   if (!cer) return null;
   cer.status = 'active';
 
+  // Tự động chuyển cảnh phù hợp với từng đại lễ
+  if (state.stageScene?.autoSwitchEnabled) {
+    if (cer.id === 'cer_1' || cer.name.includes('Khai Lễ')) {
+      setStageScene('altar', `Nghi thức: ${cer.name}`);
+    } else if (cer.id === 'cer_2' || cer.name.includes('Hoá Vàng')) {
+      setStageScene('hoavang', `Nghi thức: ${cer.name}`);
+    } else if (cer.id === 'cer_3' || cer.name.includes('Kim Long')) {
+      setStageScene('amitabha', `Nghi thức: ${cer.name}`);
+    } else if (cer.id === 'cer_4' || cer.name.includes('Hồi Hướng')) {
+      setStageScene('temple', `Nghi thức: ${cer.name}`);
+    }
+  }
+
   const ttsText = `Chuông đồng ngân vang! Bắt đầu nghi thức: ${cer.name}! ${cer.script}. Kính mời thiện tín cùng thành tâm phát nguyện!`;
   setFurnaceState('grand_ceremony', `Nghi lễ: ${cer.name}`);
 
@@ -999,6 +1253,230 @@ function triggerCeremony(ceremonyId) {
   }, (cer.durationMin || 15) * 60 * 1000);
 
   return cer;
+}
+
+// ============================================================================
+// 3.5. HỆ THỐNG GIỮ CHÂN NGƯỜI XEM & TƯƠNG TÁC CỘNG ĐỒNG (FEATURES 12-18)
+// ============================================================================
+
+// Feature 12: Chào Đón Người Xem Mới (Welcome New Viewers)
+let lastMemberWelcomeTime = 0;
+function handleMemberJoin(user, uniqueId, avatar) {
+  const dev = recordDevotee(user, uniqueId, avatar, 2, 0, 0, 0, 'Đã vào Đàn Tràng Hoá Vàng');
+  const now = Date.now();
+  const cooldown = state.welcomeSettings?.cooldownMs || 6000;
+  
+  if (state.welcomeSettings?.enabled && (now - lastMemberWelcomeTime >= cooldown)) {
+    lastMemberWelcomeTime = now;
+    
+    let activeHint = '';
+    if (state.miniEventEngine?.activeEvent) {
+      activeHint = state.miniEventEngine.activeEvent.bannerText;
+    } else {
+      const activeQuest = state.communityQuests?.find((q) => q.active && !q.completed);
+      if (activeQuest) {
+        activeHint = `Cộng đồng đang chung tay: ${activeQuest.title}`;
+      } else {
+        activeHint = 'Hãy gõ HƯƠNG hoặc HOA để cùng dâng lễ đầu ngày';
+      }
+    }
+
+    broadcastNotification('temple.welcomeMember', {
+      user: dev.name,
+      uniqueId: dev.uniqueId,
+      avatar: dev.avatar,
+      badge: dev.badge,
+      template: state.welcomeSettings.welcomeTemplate,
+      suggestedKeywords: state.welcomeSettings.suggestedKeywords || ['HƯƠNG', 'HOA', 'VÀNG', 'BÌNH AN'],
+      activeHint
+    });
+  }
+}
+
+// Feature 13: Nhiệm Vụ Tương Tác Cộng Đồng (Community Co-op Quests)
+function updateQuestProgress(targetType, amount = 1) {
+  if (!state.communityQuests || !Array.isArray(state.communityQuests)) return;
+  const activeQuest = state.communityQuests.find((q) => q.active && !q.completed && q.targetType === targetType);
+  if (!activeQuest) return;
+
+  activeQuest.currentAmount = (activeQuest.currentAmount || 0) + amount;
+  if (activeQuest.currentAmount >= activeQuest.targetAmount && !activeQuest.completed) {
+    activeQuest.completed = true;
+    activeQuest.currentAmount = activeQuest.targetAmount;
+    
+    pushPriorityNotification(`🎉 HOÀN THÀNH NHIỆM VỤ: ${activeQuest.title}! ${activeQuest.rewardText}`, 1, '🏆', 7000);
+    broadcastNotification('quest.completed', { quest: activeQuest });
+    
+    if (state.settings.ttsEnabled) {
+      ttsManager.synthesize(`Chúc mừng toàn thể Đạo Tràng đã hoàn thành nhiệm vụ: ${activeQuest.title}! ${activeQuest.rewardText}`, 'maichi').then((res) => {
+        if (res.ok) {
+          broadcastNotification('tts.play', { text: res.text, voice: 'maichi', url: res.url, fallbackBrowserTts: res.fallbackBrowserTts });
+        }
+      });
+    }
+
+    // Tự động chuyển nhiệm vụ tiếp theo sau 12 giây
+    setTimeout(() => {
+      const pendingQuests = state.communityQuests.filter((q) => !q.completed);
+      if (pendingQuests.length > 0) {
+        state.communityQuests.forEach((q) => { q.active = false; });
+        pendingQuests[0].active = true;
+      } else {
+        state.communityQuests.forEach((q) => { q.completed = false; q.currentAmount = 0; q.active = false; });
+        state.communityQuests[0].active = true;
+      }
+      saveState();
+      broadcastNotification('quest.update', { quests: state.communityQuests });
+      broadcastNotification('temple.state', getPublicState());
+    }, 12000);
+  } else {
+    broadcastNotification('quest.update', { quests: state.communityQuests });
+  }
+  saveState();
+}
+
+// Feature 15: Thẻ Sớ Lời Nguyện & Tri Ân (Silk Scroll Prayer Cards)
+function triggerSilkScroll(devotee, categoryKey = 'peace', wishText = '') {
+  if (!state.silkScrollSettings || !state.silkScrollSettings.enabled) return null;
+  const cat = state.silkScrollSettings.categories?.find((c) => c.key === categoryKey) || state.silkScrollSettings.categories?.[0] || {
+    key: 'peace',
+    name: 'Cầu Bình An',
+    title: 'SỚ CẦU BÌNH AN BỐN MÙA',
+    stamp: 'THÂN TÂM AN LẠC'
+  };
+  const scrollData = {
+    id: `scroll_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+    devotee: {
+      name: devotee?.name || 'Tín Chủ Thành Tâm',
+      avatar: devotee?.avatar || '',
+      badge: devotee?.badge || '🪙 Hữu Duyên'
+    },
+    category: cat.key,
+    title: cat.title,
+    stamp: cat.stamp,
+    wish: wishText || devotee?.lastWish || 'Thành tâm kính bái, nguyện cầu vạn sự hanh thông, phúc lộc dồi dào',
+    timestamp: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+    dateString: 'Giờ Hoàng Đạo • Ngày Cát Khánh'
+  };
+
+  broadcastNotification('temple.silkScroll', scrollData);
+  
+  if (state.settings.ttsEnabled) {
+    const ttsText = `Tín chủ ${scrollData.devotee.name} thành tâm dâng sớ ${cat.name}: ${scrollData.wish}`;
+    ttsManager.synthesize(ttsText, 'maichi').then((res) => {
+      if (res.ok) broadcastNotification('tts.play', { text: res.text, voice: 'maichi', url: res.url, fallbackBrowserTts: res.fallbackBrowserTts });
+    });
+  }
+
+  return scrollData;
+}
+
+// Feature 16: Mini-Event Tự Động (Automated Mini-Events)
+let miniEventTimer = null;
+function startMiniEvent(eventId) {
+  if (!state.miniEventEngine || !state.miniEventEngine.enabled) return null;
+  if (state.miniEventEngine.activeEvent) {
+    return state.miniEventEngine.activeEvent;
+  }
+  if (state.activePoll?.active) {
+    console.log('[MiniEvent] Hoãn mini-event do đang có bình chọn trực tiếp');
+    return null;
+  }
+
+  const evtConfig = state.miniEventEngine.availableEvents.find((e) => e.id === eventId) || state.miniEventEngine.availableEvents[0];
+  const endsAt = Date.now() + (evtConfig.durationSeconds || 60) * 1000;
+  
+  const activeEvt = {
+    ...evtConfig,
+    endsAt,
+    startedAt: Date.now()
+  };
+  state.miniEventEngine.activeEvent = activeEvt;
+
+  pushPriorityNotification(`⚡ BẮT ĐẦU SỰ KIỆN: ${activeEvt.bannerText}`, 1, '⚡', 6000);
+  broadcastNotification('miniEvent.start', { event: activeEvt });
+
+  if (state.settings.ttsEnabled) {
+    ttsManager.synthesize(`Bắt đầu sự kiện: ${activeEvt.name}! ${activeEvt.description}!`, 'maichi').then((res) => {
+      if (res.ok) broadcastNotification('tts.play', { text: res.text, voice: 'maichi', url: res.url, fallbackBrowserTts: res.fallbackBrowserTts });
+    });
+  }
+
+  clearTimeout(miniEventTimer);
+  miniEventTimer = setTimeout(() => {
+    endMiniEvent();
+  }, (evtConfig.durationSeconds || 60) * 1000);
+
+  saveState();
+  broadcastNotification('temple.state', getPublicState());
+  return activeEvt;
+}
+
+function endMiniEvent() {
+  clearTimeout(miniEventTimer);
+  const endedEvt = state.miniEventEngine?.activeEvent;
+  if (!endedEvt) return;
+
+  state.miniEventEngine.activeEvent = null;
+  pushPriorityNotification(`✨ Sự kiện ${endedEvt.name} đã kết thúc viên mãn! Tán thán công đức toàn thể đạo tràng!`, 2, '✨', 5000);
+  broadcastNotification('miniEvent.ended', { eventId: endedEvt.id });
+  saveState();
+  broadcastNotification('temple.state', getPublicState());
+}
+
+// Feature 17: Chuyển Cảnh Tự Động (Atmospheric Scene Switcher)
+function setStageScene(sceneId, reason = 'Chuyển cảnh đàn tràng') {
+  if (!state.stageScene) state.stageScene = { current: 'hoavang', autoSwitchEnabled: true, availableScenes: [] };
+  state.stageScene.current = sceneId;
+  state.settings.stageBg = sceneId;
+  broadcastNotification('temple.switchScene', { sceneId, reason });
+  pushPriorityNotification(`🏛️ Đàn tràng chuyển cảnh: ${sceneId} (${reason})`, 3, '🏛️', 3500);
+  saveState();
+  broadcastNotification('temple.state', getPublicState());
+  return { ok: true, sceneId, reason };
+}
+
+// Feature 18: Gợi Ý Tương Tác Theo Trạng Thái Live (Context-Aware Live Prompter)
+let smartPromptIndex = 0;
+function evaluateSmartPrompt() {
+  if (!state.smartPromptSettings || !state.smartPromptSettings.enabled) return;
+  
+  let newPrompt = '';
+  let condition = 'idle';
+
+  if (state.miniEventEngine?.activeEvent) {
+    condition = 'mini_event';
+    newPrompt = state.miniEventEngine.activeEvent.bannerText;
+  } else if (state.activePoll?.active) {
+    condition = 'poll_active';
+    newPrompt = '🗳️ Bình chọn đang mở! Hãy bình luận 1, 2, 3 hoặc 4 để chọn vật phẩm hoá tiếp theo!';
+  } else if (state.communityGate && (state.communityGate.currentHearts / state.communityGate.targetHearts) >= 0.75 && state.communityGate.status !== 'grand_ceremony') {
+    condition = 'gate_near';
+    const remaining = Math.max(0, state.communityGate.targetHearts - state.communityGate.currentHearts);
+    newPrompt = `✨ Cổng Trời Kim Long sắp mở khóa! Còn ${remaining.toLocaleString('vi-VN')} tim nữa, cùng thả tim bứt phá nào!`;
+  } else {
+    const activeQuest = state.communityQuests?.find((q) => q.active && !q.completed);
+    if (activeQuest) {
+      condition = 'quest_active';
+      const remaining = Math.max(0, activeQuest.targetAmount - activeQuest.currentAmount);
+      newPrompt = `🎯 Nhiệm vụ cộng đồng: ${activeQuest.title} (Còn ${remaining.toLocaleString('vi-VN')})! Gõ từ khóa để cùng hoàn thành!`;
+    } else {
+      condition = 'idle';
+      const idlePrompts = [
+        '🪔 Bình luận "HƯƠNG" để dâng nén trầm thơm lên Đàn Tràng',
+        '🪷 Bình luận "HOA" để dâng đóa sen thanh tịnh cầu bình an',
+        '🪙 Bình luận "VÀNG" để dâng thỏi vàng kim bảo chiêu tài tấn bảo',
+        '📜 Bình luận "BÌNH AN" hoặc "TỔ TIÊN" để dâng sớ cầu gia đạo bình an',
+        '🎋 Bình luận "XIN QUẺ" để thỉnh Quẻ Linh Xăm Tài Lộc đầu ngày',
+        '🔥 Thả tim liên tục để tiếp lửa lò hoá vàng và tích luỹ điểm Lộc Đức'
+      ];
+      newPrompt = idlePrompts[smartPromptIndex % idlePrompts.length];
+      smartPromptIndex++;
+    }
+  }
+
+  state.smartPromptSettings.activePrompt = newPrompt;
+  broadcastNotification('smartPrompt.update', { prompt: newPrompt, condition });
 }
 
 function pushEventLog(evt) {
@@ -1041,6 +1519,13 @@ function getPublicState() {
     activePoll: getSanitizedPoll(),
     communityGate: state.communityGate,
     giftMappings: state.giftMappings,
+    welcomeSettings: state.welcomeSettings,
+    communityQuests: state.communityQuests,
+    companionSettings: state.companionSettings,
+    silkScrollSettings: state.silkScrollSettings,
+    miniEventEngine: state.miniEventEngine,
+    stageScene: state.stageScene,
+    smartPromptSettings: state.smartPromptSettings,
     tts: ttsManager ? ttsManager.getStatus() : { ready: true, status: 'ready', voice: 'maichi' }
   };
 }
@@ -1060,12 +1545,32 @@ const Rituals = {
     const wish =
       sanitizeWishText(params.wish) ||
       `Thành tâm hoá ${count} ${itemInfo.name}, cầu gia đạo bình an, tài lộc vượng phát`;
-    const merit = count * itemInfo.baseMerit;
+
+    // Áp dụng hệ số nhân từ Mini-Event đang diễn ra
+    let multiplier = 1;
+    if (state.miniEventEngine?.activeEvent) {
+      const aType = state.miniEventEngine.activeEvent.type;
+      if ((aType === 'incense' && itemKey === 'incense') ||
+          (aType === 'flower' && itemKey === 'flower') ||
+          (aType === 'votive' && (itemKey === 'gold_ingot' || itemKey === 'hell_money' || itemKey === 'royal_robe' || itemKey === 'sacred_horse' || itemKey === 'luxury_villa_car' || itemKey === 'dragon_treasury'))) {
+        multiplier = state.miniEventEngine.activeEvent.multiplier || 2;
+      }
+    }
+    const merit = count * itemInfo.baseMerit * multiplier;
 
     state.totalIncense += 3;
     state.activeIncenseSticks = Math.min(36, state.activeIncenseSticks + 1);
     state.offerings[itemKey] = (state.offerings[itemKey] || 0) + count;
     const devotee = recordDevotee(user, uniqueId, avatar, merit, 3, count, 0, wish);
+
+    // Cập nhật tiến độ nhiệm vụ cộng đồng tương ứng
+    if (itemKey === 'incense') {
+      updateQuestProgress('incense', count);
+    } else if (itemKey === 'flower') {
+      updateQuestProgress('flower', count);
+    } else {
+      updateQuestProgress('votive', count);
+    }
 
     setFurnaceState('burning', `Hoá ${count} ${itemInfo.name}`);
 
@@ -1108,12 +1613,20 @@ const Rituals = {
     const uniqueId = params.uniqueId || '';
     const avatar = params.avatar || '';
     const count = Math.max(1, Math.min(1000, Number(params.count) || 1));
-    const merit = count * 2;
+
+    // Áp dụng hệ số nhân bão tim nếu có mini-event
+    let multiplier = 1;
+    if (state.miniEventEngine?.activeEvent?.type === 'hearts') {
+      multiplier = state.miniEventEngine.activeEvent.multiplier || 2;
+    }
+    const merit = count * 2 * multiplier;
     const tier = count >= 500 ? 4 : count >= 200 ? 3 : count >= 50 ? 2 : 1;
 
     state.woodenFishHits += count;
+    updateQuestProgress('hearts', count * multiplier);
+
     if (state.communityGate) {
-      state.communityGate.currentHearts = (state.communityGate.currentHearts || 0) + count;
+      state.communityGate.currentHearts = (state.communityGate.currentHearts || 0) + count * multiplier;
       for (const lvl of state.communityGate.levels || []) {
         if (state.communityGate.currentHearts >= lvl.threshold && state.communityGate.status !== lvl.code) {
           state.communityGate.status = lvl.code;
@@ -1177,7 +1690,7 @@ const Rituals = {
     return { event, state: getPublicState() };
   },
 
-  // 4.4. Hoá Sớ Cầu Tài Lộc / Đèn Hoa Đăng
+  // 4.4. Hoá Sớ Cầu Tài Lộc / Đèn Hoa Đăng / Thẻ Sớ Lụa Hoàng Kim
   sendPrayer(params = {}) {
     const user = sanitizeUserName(params.user);
     const uniqueId = params.uniqueId || '';
@@ -1189,6 +1702,18 @@ const Rituals = {
 
     state.lanternCount += 1;
     const devotee = recordDevotee(user, uniqueId, avatar, merit, 1, 1, 0, wish);
+
+    // Xác định phân loại sớ lụa để kích hoạt hiệu ứng Thẻ Sớ Hoàng Kim
+    let catKey = 'peace';
+    const lowerWish = wish.toLowerCase();
+    if (lowerWish.includes('tổ tiên') || lowerWish.includes('gia tiên') || lowerWish.includes('tưởng nhớ') || lowerWish.includes('tri ân') || lowerWish.includes('cửu huyền')) {
+      catKey = 'ancestor';
+    } else if (lowerWish.includes('tài lộc') || lowerWish.includes('buôn may') || lowerWish.includes('bán đắt') || lowerWish.includes('kinh doanh') || lowerWish.includes('đơn hàng') || lowerWish.includes('chốt đơn')) {
+      catKey = 'prosperity';
+    } else if (lowerWish.includes('đỗ đạt') || lowerWish.includes('học tập') || lowerWish.includes('thi cử') || lowerWish.includes('công danh') || lowerWish.includes('thăng tiến')) {
+      catKey = 'blessing';
+    }
+    triggerSilkScroll(devotee, catKey, wish);
 
     const ttsText =
       params.readTts === false
@@ -1725,7 +2250,7 @@ async function connectTikTokLive(usernameOrUrl) {
 
   tiktokConn.on(WebcastEvent.MEMBER, (data) => {
     const { user, uniqueId, avatar } = extractUserFromEvent(data);
-    recordDevotee(user, uniqueId, avatar, 2, 0, 0, 0, 'Đã vào Đàn Tràng Hoá Vàng');
+    handleMemberJoin(user, uniqueId, avatar);
     broadcastNotification('temple.state', getPublicState());
     broadcastNotification('temple.welcome', { user, uniqueId, avatar });
   });
@@ -2022,7 +2547,15 @@ async function handleRpcCall(method, params = {}) {
         gate: state.communityGate,
         giftMappings: state.giftMappings,
         furnace: state.furnaceStatus,
-        settings: state.settings
+        settings: state.settings,
+        welcome: state.welcomeSettings,
+        quests: state.communityQuests,
+        miniEvents: state.miniEventEngine,
+        companions: state.companionSettings,
+        silkScroll: state.silkScrollSettings,
+        scenes: state.stageScene,
+        smartPrompts: state.smartPromptSettings,
+        devotees: getLeaderboard(50)
       };
 
     case 'admin.saveKeywords':
@@ -2088,6 +2621,89 @@ async function handleRpcCall(method, params = {}) {
       broadcastNotification('temple.state', getPublicState());
       return { ok: true };
 
+    case 'admin.saveWelcomeSettings':
+      if (params.settings) {
+        state.welcomeSettings = { ...state.welcomeSettings, ...params.settings };
+        saveState();
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, welcome: state.welcomeSettings };
+
+    case 'admin.saveQuests':
+      if (Array.isArray(params.quests)) {
+        state.communityQuests = params.quests;
+        saveState();
+        broadcastNotification('quest.update', { quests: state.communityQuests });
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, count: state.communityQuests.length };
+
+    case 'admin.triggerQuest':
+      if (params.id) {
+        const q = state.communityQuests?.find((x) => x.id === params.id);
+        if (q) {
+          q.currentAmount = q.targetAmount;
+          updateQuestProgress(q.targetType, 0);
+        }
+      }
+      return { ok: true, quests: state.communityQuests };
+
+    case 'admin.resetQuests':
+      if (state.communityQuests) {
+        state.communityQuests.forEach((q, idx) => {
+          q.completed = false;
+          q.currentAmount = 0;
+          q.active = (idx === 0);
+        });
+        saveState();
+        broadcastNotification('quest.update', { quests: state.communityQuests });
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, quests: state.communityQuests };
+
+    case 'admin.startMiniEvent':
+      return { ok: true, event: startMiniEvent(params.eventId || 'incense_rush') };
+
+    case 'admin.endMiniEvent':
+      endMiniEvent();
+      return { ok: true };
+
+    case 'admin.switchScene':
+      return setStageScene(params.sceneId || 'hoavang', params.reason || 'Admin điều khiển');
+
+    case 'admin.saveSilkScrollSettings':
+      if (params.settings) {
+        state.silkScrollSettings = { ...state.silkScrollSettings, ...params.settings };
+        saveState();
+      }
+      return { ok: true, silkScroll: state.silkScrollSettings };
+
+    case 'admin.sendSilkScroll': {
+      const dev = {
+        name: params.user || 'Tín Chủ Minh Tâm',
+        avatar: params.avatar || '',
+        badge: params.badge || '👑 Bảo Trợ Đàn Tràng',
+        lastWish: params.wish || 'Cầu cho gia đạo bình an, buôn may bán đắt'
+      };
+      const scroll = triggerSilkScroll(dev, params.category || 'peace', params.wish);
+      return { ok: true, scroll };
+    }
+
+    case 'admin.saveSmartPrompts':
+      if (params.settings) {
+        state.smartPromptSettings = { ...state.smartPromptSettings, ...params.settings };
+        saveState();
+        evaluateSmartPrompt();
+      }
+      return { ok: true, smartPrompts: state.smartPromptSettings };
+
+    case 'admin.saveCompanionSettings':
+      if (params.settings) {
+        state.companionSettings = { ...state.companionSettings, ...params.settings };
+        saveState();
+      }
+      return { ok: true, companions: state.companionSettings };
+
     case 'admin.simulate': {
       const simType = params.type || 'comment';
       if (simType === 'like') {
@@ -2109,6 +2725,45 @@ async function handleRpcCall(method, params = {}) {
           checkMilestoneProgress(0, m.threshold + 100);
         }
         return { ok: true, milestone: m };
+      } else if (simType === 'welcome') {
+        const testUser = params.user || 'Thiện Tín Mới Đến';
+        handleMemberJoin(testUser, params.uniqueId || `mem_${Date.now()}`, params.avatar || '');
+        return { ok: true, user: testUser };
+      } else if (simType === 'questProgress') {
+        const targetType = params.targetType || 'incense';
+        const amount = Number(params.amount) || 10;
+        updateQuestProgress(targetType, amount);
+        return { ok: true, targetType, amount, quests: state.communityQuests };
+      } else if (simType === 'miniEvent') {
+        const evtId = params.eventId || 'incense_rush';
+        const activeEvt = startMiniEvent(evtId);
+        return { ok: true, event: activeEvt };
+      } else if (simType === 'returningDevotee') {
+        const testDev = {
+          name: params.user || 'Phật Tử Diệu Tâm',
+          uniqueId: params.uniqueId || 'dieutam.77',
+          avatar: params.avatar || '',
+          badge: params.badge || '✨ Thiện Tín 7 Ngày',
+          sessionsCount: 7,
+          streakDays: 7,
+          merit: 2850
+        };
+        broadcastReturningDevotee(testDev);
+        return { ok: true, devotee: testDev };
+      } else if (simType === 'silkScroll') {
+        const catKey = params.category || 'peace';
+        const wish = params.wish || 'Cầu cho gia đạo tứ thời hưng thịnh, tai qua nạn khỏi, tài lộc đầy nhà';
+        const dev = {
+          name: params.user || 'Gia Chủ Minh Tâm',
+          avatar: params.avatar || '',
+          badge: '👑 Bảo Trợ Đàn Tràng',
+          lastWish: wish
+        };
+        const scroll = triggerSilkScroll(dev, catKey, wish);
+        return { ok: true, scroll };
+      } else if (simType === 'switchScene') {
+        const sceneId = params.sceneId || 'altar';
+        return setStageScene(sceneId, params.reason || 'Admin giả lập chuyển cảnh');
       }
       return { ok: true };
     }
@@ -2134,6 +2789,30 @@ setInterval(() => {
     console.warn('[Ceremony Scheduler Error]', err.message);
   }
 }, 10000);
+
+// Chu kỳ cập nhật gợi ý thông minh prompter theo ngữ cảnh phòng Live (mỗi 25 giây)
+setInterval(() => {
+  try {
+    evaluateSmartPrompt();
+  } catch (err) {
+    console.warn('[SmartPrompt Scheduler Error]', err.message);
+  }
+}, 25000);
+
+// Chu kỳ kích hoạt Mini-Event ngẫu nhiên (mỗi 10 phút nếu phòng đang rảnh)
+setInterval(() => {
+  try {
+    if (state.miniEventEngine?.enabled && !state.miniEventEngine.activeEvent && !state.activePoll?.active) {
+      const events = state.miniEventEngine.availableEvents || [];
+      if (events.length > 0) {
+        const randomEvt = events[Math.floor(Math.random() * events.length)];
+        startMiniEvent(randomEvt.id);
+      }
+    }
+  } catch (err) {
+    console.warn('[MiniEvent Auto Loop Error]', err.message);
+  }
+}, 10 * 60 * 1000);
 
 // ============================================================================
 // 8. EXPRESS + WEBSOCKET SERVER
