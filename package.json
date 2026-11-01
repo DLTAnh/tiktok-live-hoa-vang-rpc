@@ -1,0 +1,17 @@
+{
+  "name": "tiktok-live-hoa-vang-rpc",
+  "version": "2.0.0",
+  "description": "Đàn Tràng Hoá Vàng Online — TikTok Live RPC 9:16 (Kiếm Donate Tương Tác Thời Gian Thực)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "bun": "bun run server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "tiktok-live-connector": "^2.1.0",
+    "ws": "^8.18.0"
+  }
+}

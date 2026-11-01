@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đàn Tràng Hoá Vàng Online — TikTok Live RPC (9:16 Kiếm Donate)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Noto+Serif:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/live.css" />
+</head>
+<body>
+  <div class="app-workspace">
+    <!-- ====================================================================
+         KHUNG 9:16 CHUẨN TIKTOK LIVE / OBS BROWSER SOURCE (1080 x 1920)
+         ==================================================================== -->
+    <div class="stage-wrapper" id="stageWrapper">
+      <div class="stage-9x16" id="stage9x16">
+        <!-- 1. HÌNH NỀN ĐÀN TRÀNG HOÁ VÀNG TÀI LỘC 8K SẮC NÉT -->
+        <img
+          src="/assets/hoa_vang_stage.jpg"
+          alt="Đàn Tràng Hoá Vàng Tài Lộc"
+          class="sanctuary-bg-img"
+          id="sanctuaryBgImg"
+        />
+
+        <!-- 1B. HỆ THỐNG HÀO QUANG KIM QUANG XOAY CHUYỂN TRÊN BÀN THỜ -->
+        <div class="buddha-halo-system" id="buddhaHaloSystem">
+          <div class="halo-sunburst"></div>
+          <div class="halo-pulse-ring ring-1"></div>
+          <div class="halo-pulse-ring ring-2"></div>
+          <svg class="halo-dharma-svg" viewBox="0 0 680 680">
+            <g class="dharma-wheel-outer" stroke="#fff2a6" fill="none">
+              <circle cx="340" cy="340" r="295" stroke-width="2.2" stroke-dasharray="14 10" stroke-opacity="0.78" />
+              <circle cx="340" cy="340" r="252" stroke-width="1.8" stroke-dasharray="6 8" stroke-opacity="0.65" />
+              <circle cx="340" cy="340" r="210" stroke-width="2.5" stroke-opacity="0.7" />
+            </g>
+            <g class="dharma-wheel-inner" stroke="#ffe47a" fill="none">
+              <circle cx="340" cy="340" r="168" stroke-width="2.2" stroke-dasharray="20 12" stroke-opacity="0.85" />
+              <circle cx="340" cy="340" r="134" stroke-width="1.6" stroke-opacity="0.65" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- ÁNH LỬA THIÊNG LÒ HOÁ VÀNG ĐỈNH ĐỒNG TRUNG TÂM -->
+        <div class="lotus-hand-halo furnace-glow-halo" id="lotusHandHalo"></div>
+
+        <!-- 2. THANH TRẠNG THÁI MỎNG TRÊN ĐỈNH -->
+        <header class="minimal-top-bar">
+          <div class="live-pill" id="liveStatusPill">
+            <span class="live-dot" id="liveDot"></span>
+            <span id="liveStatusText">ĐÀN TRÀNG HOÁ VÀNG • TÀI LỘC ÂM DƯƠNG</span>
+          </div>
+          <div class="top-Right-badges">
+            <div class="mini-stat-pill">
+              🔥 <strong id="statIncense">688</strong> lễ mã • ✨ <strong id="statMerit">6.880</strong> Lộc Đức
+            </div>
+          </div>
+        </header>
+
+        <!-- 3. CỘT SÁNG KIM QUANG & LÒ HOÁ VÀNG ĐỈNH ĐỒNG TRUNG TÂM -->
+        <div class="sacred-light-beam" id="sacredLightBeam"></div>
+
+        <div class="incense-burner-zone" id="incenseBurnerZone" title="Bấm để Đưa Vàng Mã Vào Lò Hoá">
+          <div class="incense-sticks-holder" id="incenseSticksHolder"></div>
+          <div class="furnace-burning-slot" id="furnaceBurningSlot"></div>
+          <div class="furnace-caption-pill">🔥 ĐƯA LỄ MÃ VÀO LÒ</div>
+        </div>
+
+        <!-- BÀN LỄ VẬT VÀNG MÃ HAI BÊN SÂN & PHÁP KHÍ TƯƠNG TÁC -->
+        <div class="ritual-hotspot bell-hotspot" id="bellStation" title="Bấm để Thỉnh Chuông Khai Lộc">
+          <span class="hotspot-icon">🔔</span>
+          <span class="hotspot-label">Khai Chuông</span>
+        </div>
+
+        <div class="ritual-hotspot left-table-hotspot" id="leftVotiveTable" title="Bấm để Xách Nhà Lầu & Tiền Vàng Đưa Vào Lò">
+          <span class="hotspot-icon">🏯</span>
+          <span class="hotspot-label">Bàn Nhà & Tiền Mã</span>
+        </div>
+
+        <div class="ritual-hotspot right-table-hotspot" id="rightVotiveTable" title="Bấm để Bê Mâm Thoi Vàng & Sớ Đưa Vào Lò">
+          <span class="hotspot-icon">🪙</span>
+          <span class="hotspot-label">Bàn Thoi Vàng & Sớ</span>
+        </div>
+
+        <div class="ritual-hotspot woodfish-hotspot" id="woodenFishStation" title="Bấm để Thả Tim & Quạt Lửa Lò Hoá Vàng">
+          <span class="hotspot-icon">❤️</span>
+          <span class="hotspot-label">Thả Tim (<span id="statWoodenFish">520</span>)</span>
+        </div>
+
+        <div class="ritual-hotspot fortune-hotspot" id="fortuneCylinder" title="Bấm để Xin Quẻ Tài Lộc">
+          <span class="hotspot-icon">🎋</span>
+          <span class="hotspot-label">Xin Quẻ Lộc</span>
+        </div>
+
+        <!-- 4A. CHỦ LỄ (CÔ ĐỒNG / THỦ TỪ) ĐỨNG TRỰC BÊN LÒ ĐỌC SỚ KHẤN HỘ TÍN CHỦ -->
+        <div class="ritual-master" id="ritualMaster" title="Bấm để Chủ Lễ dâng sớ khấn cầu tài lộc">
+          <div class="master-chant-bubble" id="masterChantBubble">
+            📜 “Chứng tâm công đức! Xin chư vị Tôn Thần, Gia Tiên tiếp nhận lễ vật...”
+          </div>
+          <div class="master-character-body">
+            <div class="master-sprite-stack" id="masterSpriteStack">
+              <img src="/assets/master_stand.png" data-pose="stand" class="devotee-sprite master-frame active" alt="Chủ Lễ" />
+              <img src="/assets/master_chant.png" data-pose="chant" class="devotee-sprite master-frame" alt="Chủ Lễ Đọc Sớ" />
+              <img src="/assets/master_bow.png" data-pose="bow" class="devotee-sprite master-frame" alt="Chủ Lễ Vái" />
+            </div>
+            <div class="master-scroll-prop" id="masterScrollProp">📜</div>
+          </div>
+          <div class="name-tag master-name-tag">
+            <div class="tag-avatar master-avatar">📜</div>
+            <div class="tag-texts">
+              <div class="tag-name">Chủ Lễ Đọc Sớ</div>
+              <div class="tag-sub" id="masterStatusText">🔥 Trực đàn khấn lễ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4B. TÍN CHỦ XÁCH LỄ VẬT BƯỚC VÀO ĐƯA VÀO LÒ & ĐỨNG CHẮP TAY VÁI 3 VÁI -->
+        <div class="central-worshipper" id="centralWorshipper">
+          <div class="worshipper-wish-bubble" id="centralWishBubble">
+            “Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt”
+          </div>
+          <div class="central-character-body">
+            <div class="central-sprite-stack" id="centralSpriteStack">
+              <img src="/assets/devotee_walk.png" data-pose="walk1" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_walk_2.png" data-pose="walk2" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_stand_pray.png" data-pose="standPray" class="devotee-sprite pose-frame active" alt="" />
+              <img src="/assets/devotee_stand_bow.png" data-pose="standBow" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_stand_bow_deep.png" data-pose="standBowDeep" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_kneel_down.png" data-pose="kneelDown" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee.png" data-pose="kneel" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_bow.png" data-pose="forehead" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_bow_mid.png" data-pose="bowMid" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_prostrate.png" data-pose="prostrate" class="devotee-sprite pose-frame" alt="" />
+              <img src="/assets/devotee_prostrate_deep.png" data-pose="prostrateDeep" class="devotee-sprite pose-frame" alt="" />
+            </div>
+            <!-- VẬT PHẨM VÀNG MÃ CỤ THỂ TRÊN TAY TÍN CHỦ KHI XÁCH ĐI ĐƯA VÀO LÒ -->
+            <div class="held-votive-prop" id="heldVotiveProp"></div>
+          </div>
+          <div class="name-tag central-name-tag">
+            <div class="tag-avatar" id="centralAvatar">🪙</div>
+            <div class="tag-texts">
+              <div class="tag-name" id="centralName">Gia Chủ Minh Tâm</div>
+              <div class="tag-sub" id="centralAction">🔥 Hoá 9 Thoi Vàng • +135 Lộc Đức</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. HÀNG 6 ĐỆM QUỲ VIP (TOP 6 BẢNG VÀNG LỘC ĐỨC TRÊN BỤC GỖ) -->
+        <div class="vip-cushions-layer" id="vipCushionsLayer"></div>
+
+        <!-- 6. ĐẠO TRÀNG TÍN CHỦ QUỲ LỄ HAI BÊN THẢM ĐỎ (40 CHỖ NGỒI PHỐI CẢNH) -->
+        <div class="congregation-hall" id="congregationHall"></div>
+
+        <!-- 7. TÍN CHỦ ĐANG BƯỚC ĐI TRÊN THẢM ĐỎ TIẾN LÊN LÒ HOÁ VÀNG -->
+        <div class="carpet-walker-layer" id="carpetWalkerLayer"></div>
+
+        <!-- 8. SỚ ĐIỆP CẦU TÀI LỘC / HOA ĐĂNG BAY LÊN TRỜI -->
+        <div class="sky-lanterns-layer" id="skyLanternsLayer"></div>
+
+        <!-- 8B. LUỒNG BÌNH LUẬN TRỰC TIẾP TIKTOK LIVE TRÊN MÀN HÌNH 9:16 -->
+        <div class="live-comment-stream" id="liveCommentStream"></div>
+
+        <!-- 9. LỚP CANVAS HIỆU ỨNG LỬA CHÁY, LỄ VẬT BAY VÀO LÒ, TÀN TRO VÀNG -->
+        <canvas id="templeCanvas"></canvas>
+
+        <!-- 10. THANH HUD GỌN GÀNG DƯỚI ĐÁY (BẢNG GIÁ DONATE HOÁ VÀNG & TOP LỘC ĐỨC) -->
+        <footer class="bottom-hud-bar">
+          <!-- Bên trái: Thông báo hành lễ + 4 ô hướng dẫn Donate Hoá Vàng -->
+          <div class="hud-left-col">
+            <div class="hud-active-notice" id="hudActiveNotice">
+              <span class="flower-bullet">🔥</span>
+              <strong id="devoteeNameLine">Gia Chủ Minh Tâm</strong>
+              <span>—</span>
+              <span id="devoteeActionTag">Hoá 9 Thoi Vàng Kim Nguyên Bảo</span>
+              <span class="flower-bullet">🪙</span>
+            </div>
+
+            <div class="hud-gift-cards hud-gift-cards-4">
+              <div class="hud-gift-card" id="cardIncense" title="Bấm để Hoá Thoi Vàng Kim Nguyên Bảo">
+                <div class="gift-coin-tag">1 XU / CMT</div>
+                <div class="gift-card-body">
+                  <span class="gift-emoji">🪙</span>
+                  <span class="gift-title">Thoi Vàng</span>
+                </div>
+              </div>
+
+              <div class="hud-gift-card" id="cardBlessing" title="Bấm để Hoá Ngựa Thần Xích Thố">
+                <div class="gift-coin-tag">10+ XU</div>
+                <div class="gift-card-body">
+                  <span class="gift-emoji">🐎</span>
+                  <span class="gift-title">Ngựa Thần</span>
+                </div>
+              </div>
+
+              <div class="hud-gift-card" id="cardLotus" title="Bấm để Hoá Biệt Thự & Siêu Xe">
+                <div class="gift-coin-tag">50+ XU</div>
+                <div class="gift-card-body">
+                  <span class="gift-emoji">🏯</span>
+                  <span class="gift-title">Biệt Thự Xe</span>
+                </div>
+              </div>
+
+              <div class="hud-gift-card gold-highlight" id="cardGrand" title="Bấm để Khai Mở Kho Vàng Thiên Đình">
+                <div class="gift-coin-tag">100+ XU</div>
+                <div class="gift-card-body">
+                  <span class="gift-emoji">🐉</span>
+                  <span class="gift-title">Kho Vàng</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bên phải: Bảng TẤM LÒNG THÀNH (Top Lộc Đức) -->
+          <div class="hud-right-leaderboard">
+            <div class="hud-lb-header">BẢNG VÀNG LỘC ĐỨC</div>
+            <div class="hud-lb-list" id="leaderboardList"></div>
+          </div>
+        </footer>
+
+        <!-- BANNER ĐẠI LỄ HOÁ VÀNG KIM LONG KHAI KHỐ -->
+        <div class="grand-ceremony-banner" id="grandCeremonyBanner">
+          <div class="grand-title" id="grandTitle">🐉 ĐẠI LỄ HOÁ VÀNG KIM LONG KHAI KHỐ 🐉</div>
+          <div class="grand-sub" id="grandSub">Lộc đức vô lượng: Đại Tín Chủ khai mở kho vàng</div>
+        </div>
+
+        <!-- MODAL TỜ GIẢI QUẺ TÀI LỘC -->
+        <div class="fortune-modal-overlay" id="fortuneModal">
+          <div class="fortune-scroll-card">
+            <div class="fortune-badge" id="fortuneRankBadge">THƯỢNG THƯỢNG CÁT</div>
+            <div class="fortune-heading" id="fortuneTitle">Quẻ Số 1 — Kim Khố Khai Mở</div>
+            <div class="fortune-devotee" id="fortuneDevotee">Tín chủ xin quẻ: Minh Tâm</div>
+            <div class="fortune-poem" id="fortunePoem"></div>
+            <div class="fortune-meaning" id="fortuneMeaning"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         BẢNG ĐIỀU KHIỂN NHANH RPC & GIẢ LẬP TRỰC TIẾP (ẨN KHI ?obs=1)
+         ==================================================================== -->
+    <aside class="quick-dock" id="quickDock">
+      <div class="dock-header">
+        <div class="dock-title">🔥 Điều Khiển Hoá Vàng Live</div>
+        <a href="/admin" target="_blank" class="dock-link">Mở Admin RPC ↗</a>
+      </div>
+
+      <div class="dock-section">
+        <div class="dock-section-title">🔊 Âm Thanh Lò Lửa & Giọng Đọc Khấn AI</div>
+        <button class="dock-btn gold" id="btnUnlockAudio">
+          🔔 Bật Âm Thanh Lửa Cháy & Giọng Đọc
+        </button>
+        <div class="dock-grid-2">
+          <button class="dock-btn active-toggle" id="btnToggleTts">🎙️ Giọng Đọc: BẬT</button>
+          <button class="dock-btn active-toggle" id="btnToggleMusic">🎵 Nhạc Nền: BẬT</button>
+        </div>
+        <div class="volume-control-row">
+          <div class="volume-label-line">
+            <span>🎵 Âm lượng Nhạc nền (Trầm ấm)</span>
+            <strong id="valMusicVol">30%</strong>
+          </div>
+          <input type="range" id="sliderMusicVol" class="volume-slider" min="0" max="100" value="30" />
+        </div>
+        <div class="volume-control-row">
+          <div class="volume-label-line">
+            <span>🎙️ Âm lượng Giọng đọc Khấn</span>
+            <strong id="valTtsVol">95%</strong>
+          </div>
+          <input type="range" id="sliderTtsVol" class="volume-slider" min="0" max="100" value="95" />
+        </div>
+      </div>
+
+      <div class="dock-section">
+        <div class="dock-section-title">📡 Kết Nối Phòng TikTok Live & Khung Cảnh</div>
+        <div class="dock-input-row">
+          <input type="text" id="inputTikTokUser" class="dock-input" value="@quangvangma1" placeholder="Nhập @username hoặc link TikTok Live..." />
+          <button class="dock-btn gold" id="btnConnectTikTok">Kết Nối</button>
+        </div>
+        <div id="tiktokConnHint" style="font-size: 12px; color: #ffe89e; line-height: 1.35;">
+          💡 Nhập <strong>@quangvangma1</strong> (khi kênh đang phát Live) rồi bấm <strong>Kết Nối</strong>.
+        </div>
+        <div class="dock-input-row">
+          <select id="selectStageBg" class="dock-input">
+            <option value="hoavang">🔥 Cảnh 1: Đài Hoá Vàng Lưỡng Long (Mặc định)</option>
+            <option value="altar">🪙 Cảnh 2: Đàn Tràng Thần Tài & Đỉnh Đồng</option>
+            <option value="amitabha">🪷 Cảnh 3: Chánh Điện Đức Phật A Di Đà</option>
+            <option value="temple">🏯 Cảnh 4: Bảo Điện Linh Ứng Cổ Kính</option>
+          </select>
+        </div>
+        <button class="dock-btn" id="btnToggleAutoSim">
+          🤖 Tự động Giả lập Khách Hoá Vàng: TẮT
+        </button>
+      </div>
+
+      <div class="dock-section">
+        <div class="dock-section-title">💬 Thả Tim & Bình Luận TikTok (Like & Comment)</div>
+        <div class="dock-input-row">
+          <input type="text" id="inputLiveComment" class="dock-input" value="Con xin hoá 9 thoi vàng cầu buôn may bán đắt ạ" placeholder="Nhập bình luận TikTok (vd: xin quẻ, hoá biệt thự...)" />
+          <button class="dock-btn gold" id="btnSendLiveComment">💬 Gửi</button>
+        </div>
+        <div class="dock-grid-2">
+          <button class="dock-btn" id="btnLikeHeart">❤️ Thả Tim (+10 Tim)</button>
+          <button class="dock-btn gold" id="btnBurstHeart">❤️‍🔥 Bão Tim (+50 Tim)</button>
+        </div>
+        <div class="quick-comment-chips">
+          <button class="chip-btn" data-comment="Con thành tâm hoá 9 thoi vàng cầu tài lộc">💬 Hoá 9 thoi vàng</button>
+          <button class="chip-btn" data-comment="Cho mình hoá bộ biệt thự siêu xe cầu chốt đơn lớn">💬 Biệt thự siêu xe</button>
+          <button class="chip-btn" data-comment="Con xin gieo quẻ cầu tài lộc tháng này ạ">💬 Xin quẻ tài lộc</button>
+          <button class="chip-btn" data-comment="Dâng sớ cầu gia đình bình an mạnh khỏe">💬 Dâng sớ cầu an</button>
+        </div>
+      </div>
+
+      <div class="dock-section">
+        <div class="dock-section-title">🪙 Kho Lễ Vật Hoá Vàng Tương Tác (RPC)</div>
+        <input type="text" id="inputDevoteeName" class="dock-input" value="Gia Chủ Minh Tâm" placeholder="Tên người xem / Tín chủ..." />
+        <input type="text" id="inputDevoteeWish" class="dock-input" value="Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà" placeholder="Lời khấn nguyện..." />
+
+        <div class="dock-grid-2">
+          <button class="dock-btn gold" id="btnRpcIncense">🪙 Xách 9 Thoi Vàng</button>
+          <button class="dock-btn" id="btnRpcMoney">💵 Xách Xấp Tiền Vàng</button>
+          <button class="dock-btn" id="btnRpcRobe">👘 Xách Áo Quan Phục</button>
+          <button class="dock-btn" id="btnRpcHorse">🐎 Dắt Ngựa Xích Thố</button>
+          <button class="dock-btn" id="btnRpcVilla">🏯 Xách Nhà Lầu & Xe</button>
+          <button class="dock-btn" id="btnRpcTech">📱 Xách Bộ Táo Vàng</button>
+          <button class="dock-btn" id="btnRpcLantern">📜 Dâng Sớ Cầu Lộc</button>
+          <button class="dock-btn" id="btnRpcFortune">🎋 Xin Quẻ Tài Lộc</button>
+        </div>
+        <button class="dock-btn gold" id="btnRpcGrandCeremony">
+          🐉 Đại Lễ Kim Long Khai Khố (Quà Lớn 100+ Xu)
+        </button>
+      </div>
+
+      <div class="dock-section">
+        <div class="dock-section-title">📜 Nhật Ký Hoá Vàng Gần Nhất</div>
+        <div class="event-feed" id="eventFeed"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/js/audio.js"></script>
+  <script src="/js/particles.js"></script>
+  <script src="/js/live.js"></script>
+</body>
+</html>

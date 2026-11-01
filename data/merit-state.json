@@ -1,0 +1,104 @@
+{
+  "totalIncense": 304,
+  "totalVotiveBurned": 773,
+  "totalMerit": 27860,
+  "woodenFishHits": 680,
+  "bellRings": 69,
+  "lanternCount": 38,
+  "fortuneCount": 22,
+  "activeIncenseSticks": 31,
+  "offerings": {
+    "gold_ingot": 146,
+    "hell_money": 126,
+    "royal_robe": 25,
+    "sacred_horse": 19,
+    "five_elements_tray": 12,
+    "golden_tech": 9,
+    "luxury_villa_car": 10,
+    "dragon_treasury": 4
+  },
+  "devotees": {
+    "minhtam.88": {
+      "name": "Gia Chủ Minh Tâm",
+      "uniqueId": "minhtam.88",
+      "avatar": "",
+      "merit": 1680,
+      "incense": 18,
+      "votiveCount": 25,
+      "gifts": 5,
+      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt"
+    },
+    "hoangnam.bds": {
+      "name": "Hoàng Nam BĐS",
+      "uniqueId": "hoangnam.bds",
+      "avatar": "",
+      "merit": 1250,
+      "incense": 12,
+      "votiveCount": 16,
+      "gifts": 3,
+      "lastWish": "Hoá Biệt Thự & Siêu Xe cầu tháng này chốt 5 lô đất lớn"
+    },
+    "ngocanh.shop": {
+      "name": "Ngọc Anh Chuyên Sỉ",
+      "uniqueId": "ngocanh.shop",
+      "avatar": "",
+      "merit": 890,
+      "incense": 9,
+      "votiveCount": 12,
+      "gifts": 2,
+      "lastWish": "Cầu Thần Tài độ trì đơn đi tấp nập, tiền về đầy kho"
+    },
+    "thanhha.99": {
+      "name": "Thanh Hà Lộc Phát",
+      "uniqueId": "thanhha.99",
+      "avatar": "",
+      "merit": 680,
+      "incense": 9,
+      "votiveCount": 8,
+      "gifts": 1,
+      "lastWish": "Cầu gia đạo bình an, cha mẹ trường thọ bách niên"
+    },
+    "quynh_finn": {
+      "name": "Quỳnh_Finn",
+      "uniqueId": "quynh_finn",
+      "avatar": "",
+      "merit": 520,
+      "incense": 6,
+      "votiveCount": 6,
+      "gifts": 1,
+      "lastWish": "Thành tâm dâng lễ vàng mã cầu vạn sự hanh thông"
+    },
+    "tuan_anh_vip": {
+      "name": "Tuấn Anh 8888",
+      "uniqueId": "tuan_anh_vip",
+      "avatar": "",
+      "merit": 450,
+      "incense": 6,
+      "votiveCount": 5,
+      "gifts": 1,
+      "lastWish": "Cầu tài lộc hanh thông, quý nhân phù trợ"
+    },
+    "Gia Chủ Minh Tâm": {
+      "name": "Gia Chủ Minh Tâm",
+      "uniqueId": "giachủminhtâm",
+      "avatar": "",
+      "merit": 20980,
+      "incense": 38,
+      "votiveCount": 85,
+      "gifts": 5,
+      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
+    }
+  },
+  "settings": {
+    "ttsEnabled": true,
+    "ttsVoice": "maichi",
+    "bgMusicEnabled": true,
+    "sfxEnabled": true,
+    "musicVolume": 0.3,
+    "ttsVolume": 0.95,
+    "smokeDensity": 1,
+    "stageBg": "hoavang",
+    "autoSim": false,
+    "autoSimIntervalMs": 8000
+  }
+}
