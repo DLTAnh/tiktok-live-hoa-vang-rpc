@@ -2045,6 +2045,15 @@
     });
   }
 
+  window.toggleGuideOverlay = function () {
+    const list = document.getElementById('guideScrollList');
+    const icon = document.getElementById('guideToggleIcon');
+    if (!list) return;
+    const isHidden = list.style.display === 'none';
+    list.style.display = isHidden ? 'flex' : 'none';
+    if (icon) icon.textContent = isHidden ? '▾' : '▸';
+  };
+
   function shortenName(name, maxLen = 13) {
     const str = String(name || '');
     return str.length > maxLen ? str.slice(0, maxLen - 1) + '…' : str;

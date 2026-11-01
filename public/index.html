@@ -92,23 +92,6 @@
           </div>
         </div>
 
-        <!-- 2A. THANH COUNTDOWN LỊCH SỰ KIỆN HOÁ VÀNG THEO CHU KỲ -->
-        <div class="ceremony-countdown-bar" id="ceremonyCountdownBar">
-          <div class="ceremony-tag" id="ceremonyTag">⏳ SỰ KIỆN TIẾP THEO</div>
-          <div class="ceremony-name" id="ceremonyName">Đại Lễ Hoá Vàng Kim Long (19:30)</div>
-          <div class="ceremony-timer" id="ceremonyTimer">Còn 05:20</div>
-        </div>
-
-        <!-- 2A2. BANNER MINI-EVENT TỰ ĐỘNG (X2 LỘC ĐỨC & ĐẾM NGƯỢC) -->
-        <div class="mini-event-banner" id="miniEventBanner" style="display: none;">
-          <div class="mini-event-badge" id="miniEventBadge">⚡ MINI-EVENT</div>
-          <div class="mini-event-info">
-            <div class="mini-event-title" id="miniEventTitle">🔥 60s THẮP HƯƠNG x2 ĐIỂM CÔNG ĐỨC!</div>
-            <div class="mini-event-desc" id="miniEventDesc">Mọi nén hương dâng lên đều nhân đôi điểm công đức</div>
-          </div>
-          <div class="mini-event-countdown" id="miniEventCountdown">⏳ 00:45</div>
-        </div>
-
         <!-- 2E. TIÊU ĐỀ LỚN HOÀNG KIM CHÍNH GIỮA MÀN HÌNH -->
         <div class="main-sacred-center-title" id="mainSacredCenterTitle">
           <div class="sacred-title-sparkle-left">✨</div>
@@ -116,12 +99,17 @@
           <div class="sacred-title-sparkle-right">✨</div>
         </div>
 
-        <!-- 2F. DÒNG TIMELINE TIẾN TRÌNH CÔNG ĐỨC CỘNG ĐỒNG NHIỀU CẤP ĐỘ -->
-        <div class="daily-merit-timeline-box" id="dailyMeritTimelineBox">
+        <!-- ====================================================================
+             2F. Ô TIMELINE TÍCH ĐIỂM HỢP NHẤT (UNIFIED ACCUMULATION TIMELINE)
+             Quy tụ toàn bộ chỉ số tích điểm: Tiến Trình 1 Triệu Công Đức,
+             Nhiệm Vụ Cộng Đồng, Thả Tim Tích Đức và Sự Kiện Nhân Điểm.
+             ==================================================================== -->
+        <div class="daily-merit-timeline-box unified-timeline-box" id="dailyMeritTimelineBox">
+          <!-- 1. Header: Mốc Công Đức & Điểm Số Ngày -->
           <div class="timeline-header-row">
             <div class="timeline-title-left">
               <span class="timeline-fire-icon">🔥</span>
-              <span class="timeline-title-text" id="timelineTitleText">CÔNG ĐỨC CỘNG ĐỒNG</span>
+              <span class="timeline-title-text" id="timelineTitleText">TIẾN TRÌNH CÔNG ĐỨC NGÀY</span>
               <span class="next-milestone-pill" id="nextMilestonePill">Mốc tiếp: 50.000 tim (Khói Vàng)</span>
             </div>
             <div class="timeline-score-right">
@@ -129,6 +117,8 @@
               <span class="timeline-percent-badge" id="timelineMeritPercent">36.8%</span>
             </div>
           </div>
+
+          <!-- 2. Thanh Timeline Lớn Với Các Cột Mốc Mở Khóa -->
           <div class="timeline-bar-track">
             <div class="timeline-bar-fill" id="timelineBarFill" style="width: 36.8%;">
               <div class="timeline-bar-glimmer"></div>
@@ -157,51 +147,82 @@
               </div>
             </div>
           </div>
+
+          <!-- 3. Lưới 2 Nhánh Tích Điểm Song Song Gọn Gàng -->
+          <div class="timeline-dual-grid">
+            <!-- Nhánh Trái: Nhiệm Vụ Tương Tác Cộng Đồng (Co-op Quest) -->
+            <div class="community-quest-box" id="communityQuestBox">
+              <div class="quest-header-row">
+                <div class="quest-title-left">
+                  <span class="quest-icon">🎯</span>
+                  <span class="quest-label">NHIỆM VỤ:</span>
+                  <strong class="quest-name" id="questName">Dâng 100 Nén Hương Trầm</strong>
+                </div>
+                <div class="quest-score-right">
+                  <span class="quest-progress-text" id="questProgressText">42 / 100 🪔</span>
+                  <span class="quest-percent-badge" id="questPercentBadge">42%</span>
+                </div>
+              </div>
+              <div class="quest-bar-track">
+                <div class="quest-bar-fill" id="questBarFill" style="width: 42%;">
+                  <div class="quest-bar-shimmer"></div>
+                </div>
+              </div>
+              <div class="quest-reward-hint" id="questRewardHint">
+                🎁 Thưởng: <span>Khói Trầm Kim Quang toàn Đàn Tràng!</span>
+              </div>
+            </div>
+
+            <!-- Nhánh Phải: Thả Tim Tích Đức & Sự Kiện Tăng Điểm -->
+            <div class="timeline-event-card">
+              <!-- Banner Mini-Event X2 Lộc Đức (Nếu đang diễn ra) -->
+              <div class="mini-event-banner" id="miniEventBanner" style="display: none;">
+                <div class="mini-event-badge" id="miniEventBadge">⚡ X2 LỘC</div>
+                <div class="mini-event-info">
+                  <div class="mini-event-title" id="miniEventTitle">🔥 60s THẮP HƯƠNG x2 ĐIỂM!</div>
+                  <div class="mini-event-desc" id="miniEventDesc" style="display: none;">Nhân đôi điểm</div>
+                </div>
+                <div class="mini-event-countdown" id="miniEventCountdown">⏳ 00:45</div>
+              </div>
+
+              <!-- Thanh Countdown Lịch Sự Kiện Hoá Vàng Theo Chu Kỳ -->
+              <div class="ceremony-countdown-bar" id="ceremonyCountdownBar">
+                <div class="ceremony-tag" id="ceremonyTag">⏳ SỰ KIỆN KẾ TIẾP</div>
+                <div class="ceremony-name" id="ceremonyName">Đại Lễ Kim Long (19:30)</div>
+                <div class="ceremony-timer" id="ceremonyTimer">Còn 05:20</div>
+              </div>
+
+              <div class="timeline-heart-earn-sub">
+                <span>❤️ Thả tim = <strong>+2 Điểm</strong></span>
+                <span class="sub-dot">•</span>
+                <span>🪙 Hoá lễ = <strong>Tích Phúc</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Footer Timeline: Cổng Trời & Gợi Ý Thông Minh -->
           <div class="timeline-footer-row">
             <span class="gate-status-hint" id="gateStatusHint">✨ Cổng Trời Kim Long: <strong>Mở một phần (18.650 tim)</strong></span>
-            <span>❤️ Thả tim = <strong>+2 Lộc Đức</strong> • 🪙 Hoá lễ = <strong>Tích Phúc</strong></span>
+            <div class="smart-prompt-pill" id="smartPromptPill">
+              <span class="prompt-icon-pulse">💡</span>
+              <span class="prompt-text" id="smartPromptText">Thành tâm dâng nén hương trầm — gõ HƯƠNG hoặc thả tim để tích lũy công đức!</span>
+            </div>
           </div>
         </div>
 
-        <!-- 2F2. NHIỆM VỤ TƯƠNG TÁC CỘNG ĐỒNG (CO-OP QUESTS) -->
-        <div class="community-quest-box" id="communityQuestBox">
-          <div class="quest-header-row">
-            <div class="quest-title-left">
-              <span class="quest-icon">🎯</span>
-              <span class="quest-label">NHIỆM VỤ CỘNG ĐỒNG:</span>
-              <strong class="quest-name" id="questName">Dâng 100 Nén Hương Trầm</strong>
-            </div>
-            <div class="quest-score-right">
-              <span class="quest-progress-text" id="questProgressText">42 / 100 🪔</span>
-              <span class="quest-percent-badge" id="questPercentBadge">42%</span>
-            </div>
-          </div>
-          <div class="quest-bar-track">
-            <div class="quest-bar-fill" id="questBarFill" style="width: 42%;">
-              <div class="quest-bar-shimmer"></div>
-            </div>
-          </div>
-          <div class="quest-reward-hint" id="questRewardHint">
-            🎁 Hoàn thành: <span>Kích hoạt Khói Trầm Kim Quang toàn Đàn Tràng!</span>
-          </div>
-        </div>
-
-        <!-- 2F3. GỢI Ý TƯƠNG TÁC THÔNG MINH THEO NGỮ CẢNH (SMART LIVE PROMPTER) -->
-        <div class="smart-prompt-pill" id="smartPromptPill">
-          <span class="prompt-icon-pulse">💡</span>
-          <span class="prompt-text" id="smartPromptText">Thành tâm dâng nén hương trầm — gõ HƯƠNG hoặc thả tim để tích lũy công đức!</span>
-        </div>
-
-        <!-- 2C. BẢNG CUỐN THƯ HƯỚNG DẪN NỔI BẬT ĐỂ NGƯỜI VÀO BIẾT NGAY LIVE LÀM GÌ -->
+        <!-- 2C. BẢNG CUỐN THƯ HƯỚNG DẪN GỌN GÀNG GÓC TRÁI (THU GỌN / MỞ RỘNG) -->
         <aside class="live-guide-overlay" id="liveGuideOverlay">
-          <div class="guide-scroll-header">
-            <span class="guide-scroll-icon">📜</span>
-            <span class="guide-scroll-title">CÁCH THAM GIA ĐÀN TRÀNG</span>
+          <div class="guide-scroll-header" onclick="toggleGuideOverlay()" title="Bấm để thu gọn/mở rộng">
+            <div class="guide-header-title-wrap">
+              <span class="guide-scroll-icon">📜</span>
+              <span class="guide-scroll-title">CÁCH THAM GIA</span>
+            </div>
+            <span class="guide-toggle-icon" id="guideToggleIcon">▾</span>
           </div>
-          <div class="guide-scroll-list">
+          <div class="guide-scroll-list" id="guideScrollList">
             <div class="guide-item">
               <span class="guide-badge badge-comment">💬 GÕ</span>
-              <span class="guide-desc"><strong>[Tên] + [Lời khấn]</strong> để Thầy hoá lễ</span>
+              <span class="guide-desc"><strong>[Tên] + [Lời khấn]</strong> để dâng sớ</span>
             </div>
             <div class="guide-item">
               <span class="guide-badge badge-heart">❤️ TIM</span>
@@ -209,16 +230,16 @@
             </div>
             <div class="guide-item">
               <span class="guide-badge badge-gift">🎁 QUÀ</span>
-              <span class="guide-desc">Tặng <strong>1 Xu (Hoa)</strong> dâng Thoi Vàng</span>
+              <span class="guide-desc">Tặng <strong>1 Xu</strong> hoá Thoi Vàng</span>
             </div>
             <div class="guide-item">
               <span class="guide-badge badge-fortune">🎋 QUẺ</span>
-              <span class="guide-desc">Gõ <strong>"xin que"</strong> nhận Linh Xăm Lộc</span>
+              <span class="guide-desc">Gõ <strong>"xin que"</strong> gieo tài lộc</span>
             </div>
           </div>
         </aside>
 
-        <!-- 2D. DẢI LỤA HOÀNG KIM CHÀO ĐÓN THIỆN NAM TÍN NỮ VỪA VÀO LIVE -->
+        <!-- 2D. DẢI LỤA HOÀNG KIM CHÀO ĐÓN THIỆN NAM TÍN NỮ VỪA VÀO LIVE (GÓC DƯỚI AN TOÀN) -->
         <div class="devotee-welcome-toast" id="devoteeWelcomeToast">
           <div class="welcome-avatar" id="welcomeAvatar">🪙</div>
           <div class="welcome-body">

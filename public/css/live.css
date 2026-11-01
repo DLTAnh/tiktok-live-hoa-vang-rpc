@@ -379,7 +379,7 @@ body.indoor-sanctuary .buddha-halo-system.flare {
    ========================================================================== */
 .main-sacred-center-title {
   position: absolute;
-  top: 122px;
+  top: 110px;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
   width: 960px;
@@ -393,7 +393,7 @@ body.indoor-sanctuary .buddha-halo-system.flare {
 
 .sacred-grand-heading {
   font-family: 'Noto Serif', serif;
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 900;
   letter-spacing: 2.2px;
   text-transform: uppercase;
@@ -419,7 +419,7 @@ body.indoor-sanctuary .buddha-halo-system.flare {
 
 .sacred-title-sparkle-left,
 .sacred-title-sparkle-right {
-  font-size: 24px;
+  font-size: 22px;
   color: var(--gold-bright);
   animation: sparkleTwinkle 2s ease-in-out infinite alternate;
 }
@@ -430,21 +430,22 @@ body.indoor-sanctuary .buddha-halo-system.flare {
 }
 
 /* ==========================================================================
-   2F. DÒNG TIMELINE TIẾN TRÌNH 1.000.000 ĐIỂM CÔNG ĐỨC MỖI NGÀY
+   2F. Ô TIMELINE TÍCH ĐIỂM HỢP NHẤT (UNIFIED ACCUMULATION TIMELINE)
    ========================================================================== */
 .daily-merit-timeline-box {
   position: absolute;
-  top: 182px;
+  top: 162px;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
-  width: 780px;
-  background: rgba(20, 5, 4, 0.92);
+  width: 900px;
+  max-width: 96%;
+  background: linear-gradient(180deg, rgba(28, 7, 5, 0.95) 0%, rgba(16, 4, 3, 0.97) 100%);
   border: 1.5px solid rgba(244, 193, 80, 0.75);
   border-radius: 16px;
-  padding: 10px 18px 8px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 18px rgba(244, 193, 80, 0.28);
-  backdrop-filter: blur(8px);
-  z-index: 22;
+  padding: 8px 16px 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.88), 0 0 20px rgba(244, 193, 80, 0.22);
+  backdrop-filter: blur(10px);
+  z-index: 25;
   pointer-events: auto;
 }
 
@@ -452,36 +453,46 @@ body.indoor-sanctuary .buddha-halo-system.flare {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .timeline-title-left {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 }
 
 .timeline-fire-icon {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .timeline-title-text {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.6px;
   color: var(--gold-bright);
   text-transform: uppercase;
 }
 
+.next-milestone-pill {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff4c2;
+  background: rgba(244, 193, 80, 0.16);
+  border: 1px solid rgba(244, 193, 80, 0.45);
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+
 .timeline-score-right {
-  font-size: 15px;
+  font-size: 13.5px;
   color: #fff;
   font-weight: 700;
 }
 
 .timeline-score-right strong {
   color: var(--gold-bright);
-  font-size: 16.5px;
+  font-size: 15.5px;
 }
 
 .timeline-percent-badge {
@@ -489,20 +500,20 @@ body.indoor-sanctuary .buddha-halo-system.flare {
   background: linear-gradient(135deg, #f4c150 0%, #b87e14 100%);
   color: #120403;
   font-weight: 900;
-  font-size: 12.5px;
-  padding: 2px 8px;
+  font-size: 11.5px;
+  padding: 1px 7px;
   border-radius: 999px;
-  margin-left: 8px;
+  margin-left: 6px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .timeline-bar-track {
   position: relative;
-  height: 16px;
+  height: 13px;
   background: rgba(0, 0, 0, 0.75);
   border-radius: 999px;
   border: 1px solid rgba(244, 193, 80, 0.45);
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .timeline-bar-fill {
@@ -554,12 +565,16 @@ body.indoor-sanctuary .buddha-halo-system.flare {
 }
 
 .milestone-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #ffe89e;
   border: 1.5px solid #120403;
   box-shadow: 0 0 5px rgba(244, 193, 80, 0.8);
+}
+.milestone-dot.active {
+  background: #ffd700;
+  box-shadow: 0 0 8px #ffeb3b;
 }
 
 .milestone-dot.golden-dragon {
@@ -567,14 +582,14 @@ body.indoor-sanctuary .buddha-halo-system.flare {
   height: auto;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   margin-top: -3px;
 }
 
 .milestone-tag {
   position: absolute;
-  top: 17px;
-  font-size: 10.5px;
+  top: 14px;
+  font-size: 9.5px;
   font-weight: 800;
   color: var(--muted-gold);
   letter-spacing: 0.3px;
@@ -586,19 +601,300 @@ body.indoor-sanctuary .buddha-halo-system.flare {
   font-weight: 900;
 }
 
+/* ==========================================================================
+   LƯỚI 2 NHÁNH TÍCH ĐIỂM SONG SONG GỌN GÀNG TRONG TIMELINE
+   ========================================================================== */
+.timeline-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+/* Nhánh Trái: Nhiệm Vụ Cộng Đồng */
+.timeline-dual-grid .community-quest-box {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(244, 193, 80, 0.35);
+  border-radius: 10px;
+  padding: 5px 9px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.timeline-dual-grid .quest-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+
+.timeline-dual-grid .quest-title-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;
+}
+
+.timeline-dual-grid .quest-icon {
+  font-size: 12px;
+}
+
+.timeline-dual-grid .quest-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #f4c150;
+  letter-spacing: 0.4px;
+}
+
+.timeline-dual-grid .quest-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline-dual-grid .quest-score-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.timeline-dual-grid .quest-progress-text {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+.timeline-dual-grid .quest-percent-badge {
+  background: linear-gradient(180deg, #f4c150 0%, #c48312 100%);
+  color: #1a0403;
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 999px;
+}
+
+.timeline-dual-grid .quest-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 999px;
+  border: 1px solid rgba(244, 193, 80, 0.25);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.timeline-dual-grid .quest-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9800 0%, #ffc107 50%, #ffe082 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  position: relative;
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.6);
+}
+
+.timeline-dual-grid .quest-reward-hint {
+  font-size: 10px;
+  color: #ffd699;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline-dual-grid .quest-reward-hint span {
+  color: #fff3c4;
+  font-weight: 600;
+}
+
+/* Nhánh Phải: Thẻ Sự Kiện & Thả Tim Tích Điểm */
+.timeline-event-card {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(244, 193, 80, 0.35);
+  border-radius: 10px;
+  padding: 5px 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.timeline-event-card .mini-event-banner {
+  position: static;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  background: linear-gradient(90deg, rgba(140, 25, 18, 0.85) 0%, rgba(60, 10, 8, 0.85) 100%);
+  border: 1px solid #ffd700;
+  border-radius: 8px;
+  padding: 2px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.25);
+}
+
+.timeline-event-card .mini-event-badge {
+  background: linear-gradient(180deg, #ff5252 0%, #b71c1c 100%);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.timeline-event-card .mini-event-info {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline-event-card .mini-event-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #ffe694;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
+}
+
+.timeline-event-card .mini-event-countdown {
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid #ffb300;
+  color: #ffd700;
+  font-size: 10.5px;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 5px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.timeline-event-card .ceremony-countdown-bar {
+  position: static;
+  transform: none;
+  width: 100%;
+  max-width: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(244, 193, 80, 0.35);
+  border-radius: 8px;
+  padding: 2px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  box-shadow: none;
+  animation: none;
+}
+
+.timeline-event-card .ceremony-tag {
+  background: linear-gradient(180deg, #c41e1e 0%, #850d0d 100%);
+  color: #fff9e6;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.timeline-event-card .ceremony-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fce79f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+  flex: 1;
+}
+
+.timeline-event-card .ceremony-timer {
+  background: rgba(244, 193, 80, 0.2);
+  color: #ffd700;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.timeline-heart-earn-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #f5deb3;
+  padding: 2px 4px 0;
+}
+
+.timeline-heart-earn-sub strong {
+  color: #ffd700;
+}
+
+.sub-dot {
+  color: rgba(244, 193, 80, 0.5);
+  margin: 0 4px;
+}
+
+/* ==========================================================================
+   DÒNG FOOTER CỦA TIMELINE (CỔNG TRỜI + GỢI Ý THÔNG MINH)
+   ========================================================================== */
 .timeline-footer-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--muted-gold);
   border-top: 1px dashed rgba(244, 193, 80, 0.22);
-  padding-top: 5px;
+  padding-top: 4px;
   margin-top: 2px;
 }
 
-.timeline-footer-row strong {
+.gate-status-hint {
+  font-size: 10.5px;
+  color: #ffe0b2;
+}
+
+.gate-status-hint strong {
   color: var(--gold-bright);
+}
+
+.timeline-footer-row .smart-prompt-pill {
+  width: auto;
+  max-width: 58%;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(244, 193, 80, 0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  color: #fff3c4;
+  box-shadow: none;
+  animation: none;
+}
+
+.timeline-footer-row .prompt-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ==========================================================================
@@ -606,73 +902,76 @@ body.indoor-sanctuary .buddha-halo-system.flare {
    ========================================================================== */
 .live-guide-overlay {
   position: absolute;
-  top: 318px;
+  top: 338px;
   left: 24px;
-  width: 340px;
-  background: rgba(18, 5, 4, 0.92);
-  border: 1.5px solid rgba(244, 193, 80, 0.75);
-  border-radius: 14px;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.75), 0 0 14px rgba(244, 193, 80, 0.22);
+  width: 240px;
+  background: rgba(18, 5, 4, 0.88);
+  border: 1.5px solid rgba(244, 193, 80, 0.65);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
   z-index: 22;
   overflow: hidden;
   backdrop-filter: blur(8px);
   pointer-events: auto;
-  animation: guideGlowPulse 4s ease-in-out infinite alternate;
-}
-
-@keyframes guideGlowPulse {
-  0% {
-    border-color: rgba(244, 193, 80, 0.65);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 8px rgba(244, 193, 80, 0.18);
-  }
-  100% {
-    border-color: rgba(255, 232, 158, 0.95);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.82), 0 0 18px rgba(244, 193, 80, 0.4);
-  }
+  transition: all 0.3s ease;
 }
 
 .guide-scroll-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: linear-gradient(90deg, rgba(244, 193, 80, 0.28) 0%, rgba(18, 5, 4, 0.4) 100%);
-  border-bottom: 1px solid rgba(244, 193, 80, 0.35);
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: linear-gradient(90deg, rgba(244, 193, 80, 0.25) 0%, rgba(18, 5, 4, 0.4) 100%);
+  border-bottom: 1px solid rgba(244, 193, 80, 0.3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.guide-header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .guide-scroll-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .guide-scroll-title {
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   color: var(--gold-bright);
   text-transform: uppercase;
+}
+
+.guide-toggle-icon {
+  font-size: 13px;
+  color: var(--gold-bright);
+  font-weight: 800;
 }
 
 .guide-scroll-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 8px 10px;
+  gap: 4px;
+  padding: 6px 8px;
 }
 
 .guide-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 6px;
-  border-radius: 8px;
+  gap: 6px;
+  padding: 3px 5px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
 }
 
 .guide-badge {
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 800;
-  padding: 3px 7px;
-  border-radius: 6px;
+  padding: 2px 5px;
+  border-radius: 5px;
   letter-spacing: 0.3px;
   white-space: nowrap;
 }
@@ -695,9 +994,9 @@ body.indoor-sanctuary .buddha-halo-system.flare {
 }
 
 .guide-desc {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--ivory);
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .guide-desc strong {
@@ -2070,61 +2369,14 @@ body.indoor-sanctuary .congregation-hall {
 
 /* 11.1. Thanh Countdown Lịch Sự Kiện Hoá Vàng Theo Chu Kỳ */
 .ceremony-countdown-bar {
-  position: absolute;
-  top: 92px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 980px;
-  background: linear-gradient(90deg, rgba(35, 8, 5, 0.92) 0%, rgba(85, 18, 10, 0.96) 50%, rgba(35, 8, 5, 0.92) 100%);
-  border: 1.5px solid rgba(244, 193, 80, 0.65);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), inset 0 0 12px rgba(244, 193, 80, 0.25);
-  border-radius: 999px;
-  padding: 6px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(244, 193, 80, 0.35);
+  border-radius: 8px;
+  padding: 2px 7px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 105;
-  backdrop-filter: blur(6px);
-  animation: barGlowPulse 3.5s infinite ease-in-out;
-}
-
-@keyframes barGlowPulse {
-  0%, 100% { border-color: rgba(244, 193, 80, 0.55); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7); }
-  50% { border-color: rgba(255, 235, 130, 0.95); box-shadow: 0 4px 22px rgba(244, 193, 80, 0.45); }
-}
-
-.ceremony-tag {
-  background: linear-gradient(180deg, #c41e1e 0%, #850d0d 100%);
-  color: #fff9e6;
-  font-size: 13px;
-  font-weight: 800;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.5px;
-}
-
-.ceremony-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--gold-light);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 10px;
-}
-
-.ceremony-timer {
-  background: rgba(244, 193, 80, 0.18);
-  border: 1px solid rgba(244, 193, 80, 0.55);
-  color: #ffe694;
-  font-size: 14.5px;
-  font-weight: 800;
-  padding: 3px 12px;
-  border-radius: 999px;
-  font-variant-numeric: tabular-nums;
+  gap: 5px;
 }
 
 /* 11.2. Mốc Tiếp Theo & Cổng Trời Kim Long Trong Daily Timeline */
@@ -2321,19 +2573,19 @@ body.indoor-sanctuary .congregation-hall {
 /* 11.5. Thẻ Sớ Lời Chúc Tâm Linh Tự Động (Spiritual Blessing Toast) */
 .spiritual-blessing-toast {
   position: absolute;
-  top: 480px;
-  left: 50%;
-  transform: translateX(-50%) scale(0.9);
-  width: 85%;
-  max-width: 900px;
+  bottom: 290px;
+  right: 24px;
+  transform: translateY(20px) scale(0.9);
+  width: 420px;
+  max-width: 90%;
   background: linear-gradient(135deg, rgba(58, 12, 9, 0.96) 0%, rgba(25, 4, 3, 0.98) 100%);
-  border: 2px solid #f4c150;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(244, 193, 80, 0.2);
-  border-radius: 16px;
-  padding: 18px 24px;
+  border: 1.5px solid #f4c150;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.88), inset 0 0 18px rgba(244, 193, 80, 0.2);
+  border-radius: 14px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   z-index: 120;
   opacity: 0;
   pointer-events: none;
@@ -2343,11 +2595,11 @@ body.indoor-sanctuary .congregation-hall {
 .spiritual-blessing-toast.visible {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .blessing-scroll-ornament {
-  font-size: 44px;
+  font-size: 36px;
   flex-shrink: 0;
   filter: drop-shadow(0 0 8px rgba(244, 193, 80, 0.6));
 }
@@ -2355,37 +2607,36 @@ body.indoor-sanctuary .congregation-hall {
 .blessing-scroll-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .blessing-tag {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: #ffe48a;
 }
 
 .blessing-devotee {
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 800;
   color: #fff9e6;
 }
 
 .blessing-message {
-  font-size: 15px;
+  font-size: 13px;
   color: #fffaee;
-  line-height: 1.4;
+  line-height: 1.35;
   font-style: italic;
 }
 
 /* 11.6. Hàng Đợi Thông Báo Ưu Tiên Realtime (Priority Notification Stack) */
 .priority-notification-stack {
   position: absolute;
-  top: 195px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 980px;
+  top: 338px;
+  right: 24px;
+  width: 350px;
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2398,19 +2649,19 @@ body.indoor-sanctuary .congregation-hall {
   border: 1.5px solid rgba(244, 193, 80, 0.7);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75), inset 0 0 10px rgba(244, 193, 80, 0.2);
   border-radius: 12px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #fff9e6;
-  font-size: 14.5px;
+  font-size: 13px;
   animation: toastFadeIn 0.35s ease-out;
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 @keyframes toastFadeIn {
-  from { opacity: 0; transform: translateY(-12px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateX(20px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
 
 .priority-toast.priority-1 {
@@ -2475,165 +2726,10 @@ body.indoor-sanctuary .congregation-hall {
    12. HỆ THỐNG GIỮ CHÂN NGƯỜI XEM & TƯƠNG TÁC CỘNG ĐỒNG (FEATURES 12-18)
    ============================================================================ */
 
-/* 12.1. Banner Mini-Event Tự Động (Pulsating Golden Countdown) */
-.mini-event-banner {
-  position: absolute;
-  top: 96px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 980px;
-  background: linear-gradient(135deg, rgba(104, 21, 15, 0.95) 0%, rgba(38, 5, 3, 0.96) 100%);
-  border: 2px solid #ffd700;
-  border-radius: 14px;
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 215, 0, 0.45);
-  z-index: 125;
-  animation: miniEventPulse 2s infinite alternate ease-in-out;
-}
-
+/* 12.1. Hiệu ứng Mini-Event Tự Động (Pulsating Golden Countdown) */
 @keyframes miniEventPulse {
-  0% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 15px rgba(255, 215, 0, 0.35); }
-  100% { box-shadow: 0 8px 28px rgba(0, 0, 0, 0.9), 0 0 28px rgba(255, 120, 0, 0.7); }
-}
-
-.mini-event-badge {
-  background: linear-gradient(180deg, #ff5252 0%, #b71c1c 100%);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 900;
-  padding: 4px 10px;
-  border-radius: 999px;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(255, 82, 82, 0.4);
-}
-
-.mini-event-info {
-  flex: 1;
-  text-align: left;
-}
-
-.mini-event-title {
-  font-family: 'Noto Serif', serif;
-  font-size: 15px;
-  font-weight: 800;
-  color: #ffe694;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  margin-bottom: 2px;
-}
-
-.mini-event-desc {
-  font-size: 12px;
-  color: #ffcc80;
-  opacity: 0.95;
-}
-
-.mini-event-countdown {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1.5px solid #ffb300;
-  color: #ffd700;
-  font-size: 16px;
-  font-weight: 900;
-  padding: 6px 12px;
-  border-radius: 10px;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
-/* 12.2. Nhiệm Vụ Tương Tác Cộng Đồng (Co-op Quests Bar) */
-.community-quest-box {
-  width: 90%;
-  max-width: 980px;
-  margin: 8px auto 0;
-  background: linear-gradient(180deg, rgba(38, 5, 3, 0.92) 0%, rgba(20, 3, 2, 0.95) 100%);
-  border: 1.5px solid rgba(244, 193, 80, 0.5);
-  border-radius: 12px;
-  padding: 8px 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
-  z-index: 45;
-  position: relative;
-}
-
-.quest-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 13px;
-}
-
-.quest-title-left {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #fce79f;
-}
-
-.quest-label {
-  font-size: 11px;
-  font-weight: 800;
-  color: #f4c150;
-  letter-spacing: 0.5px;
-}
-
-.quest-name {
-  font-weight: 800;
-  color: #fff;
-}
-
-.quest-score-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.quest-progress-text {
-  font-weight: 700;
-  color: #ffd700;
-}
-
-.quest-percent-badge {
-  background: linear-gradient(180deg, #f4c150 0%, #c48312 100%);
-  color: #1a0403;
-  font-size: 11px;
-  font-weight: 900;
-  padding: 2px 8px;
-  border-radius: 999px;
-}
-
-.quest-bar-track {
-  width: 100%;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.65);
-  border-radius: 999px;
-  border: 1px solid rgba(244, 193, 80, 0.3);
-  overflow: hidden;
-  position: relative;
-}
-
-.quest-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff9800 0%, #ffc107 50%, #ffe082 100%);
-  border-radius: 999px;
-  transition: width 0.4s ease;
-  position: relative;
-  box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
-}
-
-.quest-bar-shimmer {
-  position: absolute;
-  top: 0;
-  left: -50px;
-  width: 40px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-  animation: questShimmer 2.2s infinite;
+  0% { box-shadow: 0 2px 8px rgba(255, 215, 0, 0.25); }
+  100% { box-shadow: 0 4px 14px rgba(255, 120, 0, 0.55); }
 }
 
 @keyframes questShimmer {
@@ -2641,45 +2737,8 @@ body.indoor-sanctuary .congregation-hall {
   100% { left: 100%; }
 }
 
-.quest-reward-hint {
-  margin-top: 4px;
-  font-size: 11.5px;
-  color: #ffe0b2;
-  text-align: left;
-}
-
-.quest-reward-hint span {
-  color: #ffd700;
-  font-weight: 700;
-}
-
-/* 12.3. Gợi Ý Tương Tác Thông Minh (Smart Prompt Pill) */
-.smart-prompt-pill {
-  width: fit-content;
-  max-width: 90%;
-  margin: 6px auto;
-  background: rgba(20, 3, 2, 0.88);
-  border: 1px solid rgba(244, 193, 80, 0.4);
-  border-radius: 999px;
-  padding: 4px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #fff3c4;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  z-index: 40;
-  position: relative;
-  animation: promptFadeIn 0.5s ease-out;
-}
-
-@keyframes promptFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .prompt-icon-pulse {
-  font-size: 14px;
+  font-size: 13px;
   animation: pulseRotate 3s infinite ease-in-out;
 }
 
@@ -2688,24 +2747,27 @@ body.indoor-sanctuary .congregation-hall {
   50% { transform: scale(1.2); }
 }
 
-/* 12.4. Nâng Cấp Dải Lụa Chào Đón Thiện Tín Mới */
+/* 12.4. Dải Lụa Chào Đón Thiện Tín Mới (Định Vị Góc Dưới Trên Khung Chat) */
 .devotee-welcome-toast {
   position: absolute;
-  top: 155px;
-  left: 20px;
-  background: linear-gradient(135deg, rgba(104, 21, 15, 0.94) 0%, rgba(38, 5, 3, 0.96) 100%);
+  bottom: 270px;
+  left: 24px;
+  width: 440px;
+  max-width: 90%;
+  background: linear-gradient(135deg, rgba(88, 18, 14, 0.95) 0%, rgba(30, 5, 4, 0.96) 100%);
   border: 1.5px solid #f4c150;
   border-radius: 14px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 16px rgba(244, 193, 80, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 16px rgba(244, 193, 80, 0.35);
   z-index: 95;
   opacity: 0;
   transform: translateX(-30px);
   pointer-events: none;
   transition: all 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  backdrop-filter: blur(8px);
 }
 
 .devotee-welcome-toast.active {
