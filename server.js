@@ -228,6 +228,58 @@ class HybridTTSManager {
     };
   }
 
+  // Giọng đọc tự nhiên Apple Neural Linh trên macOS (tự nhiên, ngữ điệu chuẩn, không bị giọng chị Google)
+  synthesizeWithMacVoice(text) {
+    return new Promise((resolve) => {
+      const clean = String(text || '').trim().slice(0, 250);
+      if (!clean) return resolve({ ok: false, error: 'Empty text' });
+
+      const hash = crypto.createHash('sha1').update(`mac_linh_v2::${clean}`).digest('hex').slice(0, 20);
+      const fileName = `linh_${hash}.wav`;
+      const filePath = path.join(TTS_CACHE_DIR, fileName);
+
+      if (fs.existsSync(filePath) && fs.statSync(filePath).size > 500) {
+        return resolve({
+          ok: true,
+          cached: true,
+          voice: 'linh',
+          file: fileName,
+          url: `/tts-cache/${fileName}`
+        });
+      }
+
+      const tempAiff = path.join('/tmp', `say_${hash}.aiff`);
+      const say = spawn('/usr/bin/say', ['-v', 'Linh', '-o', tempAiff, clean]);
+
+      say.on('close', (code) => {
+        if (code === 0 && fs.existsSync(tempAiff)) {
+          const conv = spawn('/usr/bin/afconvert', ['-f', 'WAVE', '-d', 'LEI16', tempAiff, filePath]);
+          conv.on('close', (cCode) => {
+            try { fs.unlinkSync(tempAiff); } catch (_) {}
+            if (cCode === 0 && fs.existsSync(filePath) && fs.statSync(filePath).size > 500) {
+              return resolve({
+                ok: true,
+                cached: false,
+                voice: 'linh',
+                file: fileName,
+                url: `/tts-cache/${fileName}`
+              });
+            }
+            resolve({ ok: false });
+          });
+          conv.on('error', () => {
+            try { fs.unlinkSync(tempAiff); } catch (_) {}
+            resolve({ ok: false });
+          });
+        } else {
+          try { if (fs.existsSync(tempAiff)) fs.unlinkSync(tempAiff); } catch (_) {}
+          resolve({ ok: false });
+        }
+      });
+      say.on('error', () => resolve({ ok: false }));
+    });
+  }
+
   fetchGoogleTtsMp3(text) {
     return new Promise((resolve) => {
       const clean = String(text || '').trim().slice(0, 190);
@@ -337,6 +389,10 @@ class HybridTTSManager {
           this.proc.stdin.write(JSON.stringify({ id, text: cleanText, voice }) + '\n');
         });
         if (zeroRes && zeroRes.ok) return zeroRes;
+      }
+      if (process.platform === 'darwin') {
+        const macRes = await this.synthesizeWithMacVoice(cleanText);
+        if (macRes && macRes.ok) return macRes;
       }
       return await this.fetchGoogleTtsMp3(cleanText);
     })().finally(() => {
@@ -701,16 +757,17 @@ const Rituals = {
     });
   },
 
-  // 4.2. Quạt lửa lò hoá vàng / Gõ mõ (Thả tim Like)
+  // 4.2. Quạt lửa lò hoá vàng / Gõ mõ (Thả tim Like phân cấp 4 mức)
   strikeWoodenFish(params = {}) {
     const user = sanitizeUserName(params.user);
     const uniqueId = params.uniqueId || '';
     const avatar = params.avatar || '';
-    const count = Math.max(1, Math.min(50, Number(params.count) || 1));
+    const count = Math.max(1, Math.min(1000, Number(params.count) || 1));
     const merit = count * 2;
+    const tier = count >= 500 ? 4 : count >= 200 ? 3 : count >= 50 ? 2 : 1;
 
     state.woodenFishHits += count;
-    const devotee = recordDevotee(user, uniqueId, avatar, merit, 0, 1, 0, `Thả ${count} tim tích +${merit} công đức`);
+    const devotee = recordDevotee(user, uniqueId, avatar, merit, 0, 1, 0, `Thả ${count} tim tích +${merit} công đức (Cấp ${tier})`);
 
     const event = pushEventLog({
       type: 'strikeWoodenFish',
@@ -719,6 +776,7 @@ const Rituals = {
       avatar: devotee.avatar,
       count,
       merit,
+      tier,
       ttsText: params.ttsText || ''
     });
 
@@ -1242,10 +1300,29 @@ async function connectTikTokLive(usernameOrUrl) {
     parseViewerComment(commentText, user, uniqueId, avatar);
   });
 
+  let likeBatchBuffer = { count: 0, users: new Set(), lastUser: '', lastAvatar: '', lastUniqueId: '', timer: null };
+
   tiktokConn.on(WebcastEvent.LIKE, (data) => {
     const { user, uniqueId, avatar } = extractUserFromEvent(data);
-    const likeCount = Math.min(15, Math.max(1, Number(data?.count ?? data?.likeCount ?? 1)));
-    Rituals.strikeWoodenFish({ user, uniqueId, avatar, count: likeCount });
+    const likeCount = Math.min(25, Math.max(1, Number(data?.count ?? data?.likeCount ?? 1)));
+
+    likeBatchBuffer.count += likeCount;
+    likeBatchBuffer.lastUser = user;
+    likeBatchBuffer.lastUniqueId = uniqueId;
+    likeBatchBuffer.lastAvatar = avatar;
+    likeBatchBuffer.users.add(user);
+
+    if (!likeBatchBuffer.timer) {
+      likeBatchBuffer.timer = setTimeout(() => {
+        const total = likeBatchBuffer.count;
+        const mainUser = likeBatchBuffer.users.size > 1 ? `${likeBatchBuffer.lastUser} & ${likeBatchBuffer.users.size - 1} thiện tín` : likeBatchBuffer.lastUser;
+        const uId = likeBatchBuffer.lastUniqueId;
+        const av = likeBatchBuffer.lastAvatar;
+        likeBatchBuffer = { count: 0, users: new Set(), lastUser: '', lastAvatar: '', lastUniqueId: '', timer: null };
+
+        Rituals.strikeWoodenFish({ user: mainUser, uniqueId: uId, avatar: av, count: total });
+      }, 650);
+    }
   });
 
   const handleSocialEvent = (data) => {

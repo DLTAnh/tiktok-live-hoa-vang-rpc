@@ -1,20 +1,20 @@
 {
-  "totalIncense": 532,
-  "totalVotiveBurned": 1180,
-  "totalMerit": 36043,
+  "totalIncense": 541,
+  "totalVotiveBurned": 1199,
+  "totalMerit": 38178,
   "woodenFishHits": 1169,
   "bellRings": 69,
   "lanternCount": 44,
   "fortuneCount": 22,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 468,
+    "gold_ingot": 477,
     "hell_money": 126,
-    "royal_robe": 25,
+    "royal_robe": 26,
     "sacred_horse": 20,
     "five_elements_tray": 12,
     "golden_tech": 9,
-    "luxury_villa_car": 11,
+    "luxury_villa_car": 12,
     "dragon_treasury": 4
   },
   "devotees": {
@@ -82,11 +82,11 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 25910,
-      "incense": 94,
-      "votiveCount": 281,
-      "gifts": 6,
-      "lastWish": "Thả 10 tim tích 20 công đức"
+      "merit": 26295,
+      "incense": 100,
+      "votiveCount": 295,
+      "gifts": 7,
+      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
     },
     "luklacstore": {
       "name": "user51360464158",
@@ -677,6 +677,16 @@
       "votiveCount": 9,
       "gifts": 0,
       "lastWish": "Con xin gieo một quẻ cầu tài lộc buôn bán tháng này"
+    },
+    "Đại Gia Minh Tâm": {
+      "name": "Đại Gia Minh Tâm",
+      "uniqueId": "đạigiaminhtâm",
+      "avatar": "",
+      "merit": 1750,
+      "incense": 3,
+      "votiveCount": 5,
+      "gifts": 1,
+      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt"
     }
   },
   "settings": {

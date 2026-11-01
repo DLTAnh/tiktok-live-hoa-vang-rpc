@@ -877,16 +877,62 @@
       }
 
       case 'strikeWoodenFish': {
-        audio.playWoodenFish();
-        audio.playFireCrackle(0.8, 0.65);
-        particles.spawnHearts(ev.count || 10);
-        particles.spawnIncenseBurst(520, 1015, 16);
-        pulseHallBowing();
-        particles.spawnFloatingMerit(`❤️ +${ev.merit} Công Đức`, 860, 935, '#ff4757');
+        const count = ev.count || 1;
+        const merit = ev.merit || (count * 2);
+        const tier = ev.tier || (count >= 500 ? 4 : count >= 200 ? 3 : count >= 50 ? 2 : 1);
+
+        audio.playWoodenFish(tier >= 2 ? 1.05 : 0.95);
+        audio.playFireCrackle(0.8 + tier * 0.35, 0.65 + tier * 0.2);
+        particles.spawnTieredHearts(tier, count);
+        particles.spawnIncenseBurst(520, 1015, 12 + tier * 8);
+
+        if (tier === 1) {
+          particles.spawnFloatingMerit(`❤️ +${merit} Công Đức`, 860, 935, '#ff4757');
+        } else if (tier === 2) {
+          audio.playIncenseChime();
+          const halo = document.getElementById('lotusHandHalo');
+          if (halo) {
+            halo.classList.add('flare');
+            setTimeout(() => halo.classList.remove('flare'), 2200);
+          }
+          pulseHallBowing();
+          showHeartTierBanner('CẤP 2 • TIẾP LỬA', '❤️ CƠN MƯA TIM ĐẮC LỘC ❤️', `${ev.user} tiếp lửa đài hoá vàng • Tích +${merit} Công Đức`);
+          particles.spawnFloatingMerit(`🔥 +${merit} CÔNG ĐỨC`, 520, 850, '#ff9f43');
+        } else if (tier === 3) {
+          audio.playTempleBell(1.0);
+          const beam = document.getElementById('sacredLightBeam');
+          if (beam) {
+            beam.classList.add('intense');
+            setTimeout(() => beam.classList.remove('intense'), 3800);
+          }
+          setMasterPose('bow');
+          setTimeout(() => setMasterPose('stand'), 3200);
+          pulseHallBowing();
+          showHeartTierBanner('CẤP 3 • BÃO TIM HOÀNG KIM', '✨ BÃO TIM KIM QUANG TIẾP LỬA ✨', `${ev.user} cùng thiện tín khởi bão tim • Tích +${merit} Công Đức`);
+          particles.spawnFloatingMerit(`✨ +${merit} CÔNG ĐỨC ✨`, 520, 800, '#ffd32a');
+        } else if (tier >= 4) {
+          audio.playTempleBell(1.2);
+          audio.playIncenseChime();
+          const halo = document.getElementById('lotusHandHalo');
+          const beam = document.getElementById('sacredLightBeam');
+          if (halo) halo.classList.add('flare');
+          if (beam) beam.classList.add('intense');
+          setTimeout(() => {
+            if (halo) halo.classList.remove('flare');
+            if (beam) beam.classList.remove('intense');
+          }, 5500);
+
+          setMasterPose('chant');
+          setTimeout(() => setMasterPose('stand'), 5500);
+          pulseHallBowing();
+          showHeartTierBanner('CẤP 4 • VẠN TIM KHAI KHỐ', '🐉 ĐẠI LỄ VẠN TIM KHAI KHỐ 🐉', `Đạo tràng đồng lòng dâng vạn tim • Tích +${merit} Đại Phúc Lộc!`);
+          particles.spawnFloatingMerit(`🐉 +${merit} ĐẠI CÔNG ĐỨC 🐉`, 520, 750, '#ffeaa7');
+        }
+
         const hudName = document.getElementById('devoteeNameLine');
         const hudAct = document.getElementById('devoteeActionTag');
         if (hudName) hudName.textContent = ev.user || 'Tín Chủ';
-        if (hudAct) hudAct.textContent = `❤️ Thả ${ev.count || 10} tim • Tích +${ev.merit} Công Đức`;
+        if (hudAct) hudAct.textContent = `❤️ Thả ${count} tim • Tích +${merit} Công Đức (Cấp ${tier})`;
         break;
       }
 
@@ -1058,6 +1104,26 @@
     grandTimer = setTimeout(() => {
       banner.classList.remove('visible');
     }, 6800);
+  }
+
+  // Hiển thị Banner các mốc Thả Tim (Cấp 2: Mưa Tim, Cấp 3: Bão Tim, Cấp 4: Vạn Tim)
+  let heartTierTimer = null;
+  function showHeartTierBanner(badgeText, titleText, subText) {
+    const banner = document.getElementById('heartTierBanner');
+    const badgeEl = document.getElementById('heartTierBadge');
+    const titleEl = document.getElementById('heartTierTitle');
+    const subEl = document.getElementById('heartTierSub');
+    if (!banner) return;
+
+    if (badgeEl) badgeEl.textContent = badgeText;
+    if (titleEl) titleEl.textContent = titleText;
+    if (subEl) subEl.textContent = subText;
+
+    banner.classList.add('visible');
+    clearTimeout(heartTierTimer);
+    heartTierTimer = setTimeout(() => {
+      banner.classList.remove('visible');
+    }, 4500);
   }
 
   // Hiển thị dải lụa hoàng kim chào mừng tín chủ mới vào phòng Live

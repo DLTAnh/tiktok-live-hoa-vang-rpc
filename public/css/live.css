@@ -1762,6 +1762,63 @@ body.indoor-sanctuary .congregation-hall {
   height: 6px;
 }
 
+/* ==========================================================================
+   BANNER HIỆU ỨNG CÁC MỨC THẢ TIM TÍCH CÔNG ĐỨC (TIER 2, 3, 4)
+   ========================================================================== */
+.heart-tier-banner {
+  position: absolute;
+  top: 680px;
+  left: 50%;
+  transform: translate3d(-50%, -20px, 0) scale(0.92);
+  width: 820px;
+  padding: 18px 28px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(110, 15, 10, 0.96) 0%, rgba(181, 31, 21, 0.96) 50%, rgba(82, 9, 6, 0.96) 100%);
+  border: 3px solid #ffe484;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 71, 87, 0.6);
+  text-align: center;
+  z-index: 47;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  backdrop-filter: blur(10px);
+}
+
+.heart-tier-banner.visible {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0) scale(1);
+}
+
+.heart-tier-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #f4c150 0%, #b87e14 100%);
+  color: #120403;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  padding: 3px 14px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.heart-tier-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff4b8;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95), 0 0 16px rgba(255, 232, 158, 0.7);
+  letter-spacing: 1px;
+}
+
+.heart-tier-sub {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 4px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
 .grand-ceremony-banner {
   position: absolute;
   top: 760px;

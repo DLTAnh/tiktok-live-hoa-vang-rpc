@@ -264,23 +264,46 @@ class TempleParticleEngine {
     });
   }
 
-  // Hiệu ứng Mưa Tim TikTok Live bay lên (Thả tim quạt lửa)
+  // Hiệu ứng Mưa Tim TikTok Live bay lên (Thả tim quạt lửa phân cấp)
   spawnHearts(count = 8) {
-    const emojis = ['❤️', '💖', '🔥', '💛', '🧡'];
-    const safeCount = Math.min(18, Math.max(3, Number(count) || 8));
-    this.furnaceBoost = Math.min(1.5, this.furnaceBoost + 0.45);
+    this.spawnTieredHearts(1, count);
+  }
+
+  spawnTieredHearts(tier = 1, count = 10) {
+    const emojis = ['❤️', '💖', '🔥', '💛', '🧡', '✨'];
+    let safeCount = 8;
+    let boost = 0.45;
+
+    if (tier === 1) {
+      safeCount = Math.min(18, Math.max(4, count));
+      boost = 0.45;
+    } else if (tier === 2) {
+      safeCount = Math.min(40, Math.max(22, count));
+      boost = 0.95;
+    } else if (tier === 3) {
+      safeCount = Math.min(70, Math.max(45, count));
+      boost = 1.45;
+    } else if (tier >= 4) {
+      safeCount = Math.min(110, Math.max(65, count));
+      boost = 2.0;
+      this.spawnGrandCeremonyRain();
+    }
+
+    this.furnaceBoost = Math.min(2.0, this.furnaceBoost + boost);
+
     for (let i = 0; i < safeCount; i++) {
-      if (this.floatingHearts.length > 35) this.floatingHearts.shift();
+      if (this.floatingHearts.length > 90) this.floatingHearts.shift();
+      const isGold = tier >= 3 && Math.random() < 0.45;
       this.floatingHearts.push({
-        emoji: emojis[i % emojis.length],
-        x: 880 + (Math.random() - 0.5) * 140,
-        y: 1580 + Math.random() * 90,
-        vx: (Math.random() - 0.5) * 1.4,
-        vy: -(3.6 + Math.random() * 2.8),
-        size: 30 + Math.random() * 16,
+        emoji: isGold ? '✨' : emojis[i % emojis.length],
+        x: (tier >= 2 ? 520 : 880) + (Math.random() - 0.5) * (tier >= 3 ? 420 : 220),
+        y: (tier >= 2 ? 1150 : 1580) + Math.random() * 120,
+        vx: (Math.random() - 0.5) * (tier >= 2 ? 3.4 : 1.6),
+        vy: -(3.8 + Math.random() * (tier >= 2 ? 4.8 : 2.6)),
+        size: (tier >= 3 ? 36 : 28) + Math.random() * 18,
         sway: Math.random() * Math.PI * 2,
         alpha: 1.0,
-        decay: 0.012 + Math.random() * 0.008
+        decay: (tier >= 3 ? 0.007 : 0.012) + Math.random() * 0.006
       });
     }
   }
