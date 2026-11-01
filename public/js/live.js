@@ -24,24 +24,34 @@
   function fitStage() {
     if (!stageWrapper || !stage9x16) return;
     const isObs = document.body.classList.contains('obs-mode');
-    const w = isObs ? (window.innerWidth || stageWrapper.clientWidth) : (stageWrapper.clientWidth || window.innerWidth || 360);
-    const h = isObs ? (window.innerHeight || stageWrapper.clientHeight) : (stageWrapper.clientHeight || window.innerHeight || 640);
+    let w = (isObs ? window.innerWidth : stageWrapper.clientWidth) || window.innerWidth || 1080;
+    let h = (isObs ? window.innerHeight : stageWrapper.clientHeight) || window.innerHeight || 1920;
+
+    // Tránh bug CEF/WebKit trả về 0px khi mới khởi động nguồn trình duyệt
+    if (w < 100) w = 1080;
+    if (h < 100) h = 1920;
+
+    let scale = isObs ? Math.min(w / 1080, h / 1920) : (w / 1080);
+    if (!isFinite(scale) || scale <= 0.05) {
+      scale = 1;
+    }
 
     if (isObs) {
-      // Chế độ Live: Tự động scale phủ toàn bộ khung 9:16 căn giữa chuẩn xác
-      const scale = Math.min(w / 1080, h / 1920);
       const offsetX = Math.max(0, (w - 1080 * scale) / 2);
       const offsetY = Math.max(0, (h - 1920 * scale) / 2);
       stage9x16.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
     } else {
-      const scale = w / 1080;
       stage9x16.style.transform = `scale(${scale})`;
     }
   }
   window.addEventListener('resize', fitStage);
   window.addEventListener('orientationchange', fitStage);
   window.addEventListener('load', fitStage);
+  document.addEventListener('DOMContentLoaded', fitStage);
   requestAnimationFrame(fitStage);
+  setTimeout(fitStage, 150);
+  setTimeout(fitStage, 600);
+  setTimeout(fitStage, 1800);
   fitStage();
 
   // 2. Khởi tạo Particle Engine & Audio Engine
