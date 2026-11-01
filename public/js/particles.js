@@ -58,6 +58,20 @@ class TempleParticleEngine {
     sctx.arc(32, 32, 30, 0, Math.PI * 2);
     sctx.fill();
 
+    // 1B. Pre-render Golden Smoke Sprite (64x64)
+    this.goldenSmokeSprite = document.createElement('canvas');
+    this.goldenSmokeSprite.width = 64;
+    this.goldenSmokeSprite.height = 64;
+    const gsctx = this.goldenSmokeSprite.getContext('2d');
+    const gsgrad = gsctx.createRadialGradient(32, 32, 2, 32, 32, 30);
+    gsgrad.addColorStop(0, 'rgba(255, 235, 130, 0.92)');
+    gsgrad.addColorStop(0.45, 'rgba(255, 180, 25, 0.65)');
+    gsgrad.addColorStop(1, 'rgba(210, 140, 10, 0)');
+    gsctx.fillStyle = gsgrad;
+    gsctx.beginPath();
+    gsctx.arc(32, 32, 30, 0, Math.PI * 2);
+    gsctx.fill();
+
     // 2. Pre-render Furnace Flame Sprite (72x96)
     this.flameSprite = document.createElement('canvas');
     this.flameSprite.width = 72;
@@ -330,6 +344,51 @@ class TempleParticleEngine {
     }
   }
 
+  // Hiệu ứng Khói Vàng Hoàng Kim khi đạt mốc công đức hoặc đại lễ
+  spawnGoldenSmoke(count = 25) {
+    this.furnaceBoost = 1.4;
+    for (let i = 0; i < count; i++) {
+      this.smokeParticles.push({
+        x: this.furnaceCenter.x + (Math.random() - 0.5) * 60,
+        y: this.furnaceCenter.y - 40 - Math.random() * 30,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: -(2.5 + Math.random() * 1.8),
+        radius: 18 + Math.random() * 12,
+        maxRadius: 55 + Math.random() * 25,
+        alpha: 0.85,
+        age: 0,
+        maxAge: 75 + Math.random() * 30,
+        seed: Math.random() * 50,
+        isGolden: true
+      });
+    }
+  }
+
+  // Kích hoạt hiệu ứng visual tương ứng với từng mốc công đức
+  triggerMilestoneVisual(effectType = 'furnace_glow') {
+    if (effectType === 'golden_smoke') {
+      this.spawnGoldenSmoke(35);
+    } else if (effectType === 'grand_ceremony') {
+      this.spawnGrandCeremonyRain();
+      this.spawnGoldenSmoke(40);
+    } else if (effectType === 'dragon_blessing') {
+      this.spawnGrandCeremonyRain();
+      this.spawnTieredHearts(4, 80);
+      this.spawnGoldenSmoke(50);
+    } else if (effectType === 'ultimate_merit') {
+      this.spawnGrandCeremonyRain();
+      this.spawnTieredHearts(4, 120);
+      this.spawnGoldenSmoke(60);
+      for (let i = 0; i < 30; i++) {
+        this.lotusPetals.push(this.createLotusPetal(false));
+      }
+    } else {
+      // furnace_glow
+      this.furnaceBoost = 1.5;
+      this.spawnIncenseBurst(this.furnaceCenter.x, this.furnaceCenter.y, 30);
+    }
+  }
+
   animate(timestamp) {
     requestAnimationFrame(this.animate);
 
@@ -375,7 +434,7 @@ class TempleParticleEngine {
       const r = p.radius + (p.maxRadius - p.radius) * progress;
       const fade = Math.sin(progress * Math.PI) * p.alpha * (1 - progress * 0.6);
       ctx.globalAlpha = Math.max(0, fade);
-      ctx.drawImage(this.smokeSprite, p.x - r, p.y - r, r * 2, r * 2);
+      ctx.drawImage(p.isGolden ? this.goldenSmokeSprite : this.smokeSprite, p.x - r, p.y - r, r * 2, r * 2);
     }
 
     // 3. Ngọn lửa thiêng bập bùng trong Lò Hoá Vàng Đỉnh Đồng

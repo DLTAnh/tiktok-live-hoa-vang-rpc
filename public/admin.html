@@ -3,36 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bảng Điều Khiển JSON-RPC 2.0 — Đàn Tràng Hoá Vàng TikTok Live</title>
+  <title>Bảng Điều Khiển Quản Trị Đàn Tràng Hoá Vàng TikTok Live</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Noto+Serif:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Serif:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #120504;
-      --card: #210906;
+      --card: #1f0806;
+      --card-alt: #280b08;
       --border: rgba(244, 193, 80, 0.38);
+      --border-bright: rgba(244, 193, 80, 0.75);
       --gold: #f4c150;
       --gold-light: #ffe694;
+      --gold-bright: #ffd700;
       --text: #fff8eb;
       --muted: #d6ba8a;
+      --danger: #e53935;
+      --success: #43a047;
+      --info: #0288d1;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at 50% 0%, #330c08 0%, #100302 80%);
+      background: radial-gradient(circle at 50% 0%, #3a0d09 0%, #100302 85%);
       color: var(--text);
       font-family: 'Be Vietnam Pro', sans-serif;
       min-height: 100vh;
-      padding: 28px;
+      padding: 24px 20px;
     }
     .container {
-      max-width: 1280px;
+      max-width: 1360px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 18px;
     }
-    .top-bar {
+    header.top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -40,89 +46,274 @@
       border: 1.5px solid var(--border);
       border-radius: 18px;
       padding: 18px 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
     }
     .top-title {
       font-family: 'Noto Serif', serif;
-      font-size: 25px;
+      font-size: 24px;
+      font-weight: 900;
       color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .top-sub {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--muted);
       margin-top: 4px;
     }
     .top-links {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
     .btn {
       cursor: pointer;
       border: 1px solid var(--border);
       background: linear-gradient(180deg, #6b140e 0%, #3d0906 100%);
       color: var(--gold-light);
-      padding: 10px 16px;
+      padding: 9px 15px;
       border-radius: 10px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13.5px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn:hover {
+      background: linear-gradient(180deg, #871a12 0%, #4f0c08 100%);
+      border-color: var(--gold-bright);
     }
     .btn.gold {
       background: linear-gradient(180deg, #f4c150 0%, #c48312 100%);
-      color: #1f0604;
+      color: #1a0403;
       border-color: #fff3b0;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+    .btn.gold:hover {
+      background: linear-gradient(180deg, #ffd700 0%, #d49018 100%);
     }
+    .btn.danger {
+      background: linear-gradient(180deg, #b71c1c 0%, #660e0e 100%);
+      color: #fff;
+      border-color: #ef5350;
+    }
+    .btn.success {
+      background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+      color: #fff;
+      border-color: #66bb6a;
+    }
+
+    /* Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 6px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: var(--gold-light);
+      background: rgba(244, 193, 80, 0.1);
+    }
+    .tab-btn.active {
+      color: #1a0403;
+      background: linear-gradient(180deg, #f4c150 0%, #c48312 100%);
+      box-shadow: 0 4px 12px rgba(244, 193, 80, 0.35);
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .tab-panel.active {
+      display: flex;
+    }
+
     .card {
       background: var(--card);
       border: 1.5px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 16px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     }
-    .card h2 {
+    .card-title {
       font-size: 18px;
       color: var(--gold-light);
       border-bottom: 1px solid rgba(244, 193, 80, 0.2);
       padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+    .card-title-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
     .row {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
     input, select, textarea {
       width: 100%;
-      background: #120403;
+      background: #110302;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 10px 14px;
       color: var(--text);
       font-family: inherit;
       font-size: 14px;
+      outline: none;
     }
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 8px rgba(244, 193, 80, 0.3);
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+    th {
+      background: #2b0b07;
+      color: var(--gold-light);
+      padding: 12px 14px;
+      font-weight: 800;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(244, 193, 80, 0.15);
+      background: #190504;
+    }
+    tr:nth-child(even) td {
+      background: #200705;
+    }
+    tr:hover td {
+      background: #2a0b07;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .badge.success { background: rgba(76, 175, 80, 0.2); color: #81c784; border: 1px solid #4caf50; }
+    .badge.gold { background: rgba(244, 193, 80, 0.2); color: #ffe694; border: 1px solid #f4c150; }
+    .badge.danger { background: rgba(244, 67, 54, 0.2); color: #ef9a9a; border: 1px solid #f44336; }
+
+    /* Live Poll Card In Admin */
+    .admin-poll-preview {
+      background: #140403;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
+    .admin-poll-option {
+      background: #210806;
+      border-radius: 8px;
+      padding: 10px 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+    .admin-poll-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background: rgba(244, 193, 80, 0.25);
+      z-index: 1;
+      transition: width 0.3s;
+    }
+    .admin-poll-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Console / Logs */
     pre {
-      background: #0b0202;
+      background: #0d0202;
       border: 1px solid rgba(244, 193, 80, 0.25);
       border-radius: 10px;
       padding: 12px;
       font-size: 12.5px;
       color: #9ef0c0;
       overflow-x: auto;
-      max-height: 280px;
+      max-height: 240px;
+      font-family: monospace;
+    }
+
+    .hint-text {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -131,113 +322,687 @@
     <header class="top-bar">
       <div>
         <div class="top-title">🔥 BẢNG ĐIỀU KHIỂN ĐÀN TRÀNG HOÁ VÀNG TIKTOK LIVE RPC</div>
-        <div class="top-sub" id="statusBanner">Đang tải trạng thái hệ thống...</div>
+        <div class="top-sub" id="statusBanner">Đang kết nối hệ thống...</div>
       </div>
       <div class="top-links">
-        <a class="btn" href="/?obs=1" target="_blank">📺 Mở Màn Hình OBS 9:16 Sạch (?obs=1)</a>
-        <a class="btn gold" href="/" target="_blank">🔥 Mở Màn Hình Live Chính</a>
+        <a class="btn" href="/?obs=1" target="_blank">📺 Màn Hình OBS (?obs=1)</a>
+        <a class="btn gold" href="/" target="_blank">🔥 Màn Hình Live Chính</a>
       </div>
     </header>
 
-    <div class="grid">
-      <section class="card">
-        <h2>📡 1. Kết Nối Phòng TikTok Live & Giọng Đọc AI Tiếng Việt</h2>
-        <div class="row">
-          <input type="text" id="ttUser" value="@quangvangma1" placeholder="Nhập @username TikTok đang phát Live..." />
-          <button class="btn gold" id="btnConn">Kết Nối Live</button>
-          <button class="btn" id="btnDisc">Ngắt</button>
-        </div>
-        <div class="row">
-          <input type="text" id="ttsDirectText" value="Đàn Tràng Hoá Vàng Online xin kính chào quý tín chủ thập phương. Chúc quý vị buôn may bán đắt, tài lộc đầy nhà." />
-          <button class="btn gold" id="btnSpeakMaiChi">🎙️ Đọc thử Giọng AI</button>
-        </div>
-        <audio id="adminAudioPreview" controls style="width: 100%; height: 38px;"></audio>
-      </section>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-keywords')">🏷️ Từ Khóa & Vật Phẩm</button>
+      <button class="tab-btn" onclick="switchTab('tab-milestones')">🏆 Mốc Công Đức & Cổng Trời</button>
+      <button class="tab-btn" onclick="switchTab('tab-schedule')">⏰ Lịch Sự Kiện & Countdown</button>
+      <button class="tab-btn" onclick="switchTab('tab-poll')">🗳️ Bình Chọn Realtime</button>
+      <button class="tab-btn" onclick="switchTab('tab-furnace')">🔥 Trạng Thái Lò & Donate</button>
+      <button class="tab-btn" onclick="switchTab('tab-simulator')">🎮 Bộ Giả Lập & Test Live</button>
+    </nav>
 
-      <section class="card">
-        <h2>🪙 2. Gửi Lệnh Hoá Vàng JSON-RPC 2.0</h2>
-        <div class="row">
-          <input type="text" id="rpcUser" value="Đại Gia Minh Tâm" placeholder="Tên người xem..." />
-          <input type="text" id="rpcWish" value="Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt" placeholder="Lời khấn nguyện..." />
+    <!-- TAB 1: QUẢN LÝ TỪ KHÓA & VẬT PHẨM -->
+    <section class="tab-panel active" id="tab-keywords">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title-text">🏷️ Danh Sách Từ Khóa Comment Tương Tác Vật Phẩm</span>
+          <button class="btn gold" onclick="saveKeywordsToServer()">💾 Lưu Thay Đổi Từ Khóa</button>
         </div>
-        <div class="action-grid">
-          <button class="btn gold" onclick="sendRpc('hoavang.burnVotive', { itemKey: 'gold_ingot', count: 9 })">🪙 Hoá 9 Thoi Vàng</button>
-          <button class="btn" onclick="sendRpc('hoavang.burnVotive', { itemKey: 'hell_money', count: 10 })">💵 Hoá 10 Xấp Tiền Vàng</button>
-          <button class="btn" onclick="sendRpc('hoavang.burnScroll', {})">📜 Hoá Sớ Cầu Tài Lộc</button>
-          <button class="btn" onclick="sendRpc('hoavang.offerGift', { itemKey: 'sacred_horse', coins: 15, giftName: 'Ngựa Đỏ Xích Thố Thần Hành' })">🐎 Hoá Ngựa Đỏ Xích Thố</button>
-          <button class="btn" onclick="sendRpc('hoavang.offerGift', { itemKey: 'luxury_villa_car', coins: 50, giftName: 'Biệt Thự Phố & Siêu Xe Vàng' })">🏯 Hoá Biệt Thự & Siêu Xe</button>
-          <button class="btn" onclick="sendRpc('hoavang.drawFortune', {})">🎋 Xin Quẻ Tài Lộc</button>
-          <button class="btn gold" onclick="sendRpc('hoavang.grandCeremony', { coins: 500, giftName: 'Đại Lễ Hoá Vàng Kim Long Khai Khố' })">🐉 Đại Lễ Kim Long Khai Khố</button>
-          <button class="btn" onclick="sendRpc('hoavang.resetMerit', {})">♻️ Đặt Lại Bảng Lộc Đức</button>
+        <div class="table-container">
+          <table id="keywordsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Từ Khóa Kích Hoạt (phân cách bằng dấu phẩy)</th>
+                <th>Vật Phẩm Liên Kết</th>
+                <th>Số Lượng</th>
+                <th>Hiệu Ứng</th>
+                <th>Âm Thanh</th>
+                <th>Cooldown (ms)</th>
+                <th>Bật/Tắt</th>
+                <th>Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="keywordsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
         </div>
-      </section>
 
-      <section class="card">
-        <h2>💬 3. Giả Lập Bình Luận Người Xem TikTok</h2>
-        <div class="row">
-          <input type="text" id="simComment" value="Cho mình hoá 1 bộ biệt thự siêu xe cầu tháng này chốt 5 lô đất nhé" placeholder="Nhập nội dung bình luận TikTok..." />
-          <button class="btn gold" id="btnSendComment">Gửi Comment</button>
+        <div class="card" style="background: var(--card-alt); border-color: rgba(244, 193, 80, 0.2);">
+          <div class="card-title" style="font-size: 15px;">➕ Thêm Từ Khóa Vật Phẩm Mới</div>
+          <div class="grid-4">
+            <input type="text" id="newKwId" placeholder="Mã ID (vd: kw_trang_suc)" />
+            <input type="text" id="newKwList" placeholder="Từ khóa (vd: trang sức, vòng vàng)" />
+            <select id="newKwItem">
+              <option value="gold_ingot">🪙 Thỏi Vàng Kim Bảo</option>
+              <option value="hell_money">💵 Xấp Tiền Vàng</option>
+              <option value="incense">🪔 Nén Hương Trầm</option>
+              <option value="flower">🪷 Đoá Sen Lễ</option>
+              <option value="sacred_horse">🐎 Ngựa Xích Thố</option>
+              <option value="royal_robe">👘 Mũ Áo Quan Thần</option>
+              <option value="luxury_villa_car">🏯 Biệt Thự & Siêu Xe</option>
+              <option value="golden_tech">📱 Bộ Táo Vàng</option>
+              <option value="five_elements_tray">👑 Mâm Lễ Ngũ Phương</option>
+              <option value="prayer_scroll">📜 Sớ Bình An & Cầu Lộc</option>
+            </select>
+            <input type="number" id="newKwCount" value="1" min="1" max="99" placeholder="Số lượng" />
+          </div>
+          <div class="grid-3">
+            <select id="newKwEffect">
+              <option value="votive">🔥 Hoá Vàng Vào Lò (Parabol Flight)</option>
+              <option value="blessing">📜 Lời Chúc & Dâng Sớ Bình An</option>
+              <option value="furnace_boost">⚡ Bùng Lửa Lò Hoá Vàng</option>
+            </select>
+            <select id="newKwSound">
+              <option value="crackle">🔥 Tiếng Lửa Cháy (Crackle)</option>
+              <option value="chime">🔔 Tiếng Chuông Khánh (Chime)</option>
+              <option value="bell">🔔 Tiếng Đại Hồng Chung (Temple Bell)</option>
+            </select>
+            <button class="btn gold" onclick="addNewKeywordRule()">➕ Thêm Vào Danh Sách</button>
+          </div>
         </div>
-        <p style="font-size: 13px; color: var(--muted);">
-          Từ khóa tự động nhận diện: <code>hoá vàng</code>, <code>thoi vàng</code>, <code>tiền vàng</code>, <code>ngựa</code>, <code>biệt thự / siêu xe</code>, <code>iphone / táo</code>, <code>sớ / cầu ...</code>, <code>xin xăm / gieo quẻ</code>.
-        </p>
-      </section>
+      </div>
+    </section>
 
-      <section class="card">
-        <h2>🔌 4. Nhật Ký Phản Hồi JSON-RPC 2.0 (`/rpc`)</h2>
-        <pre id="rpcOutput">{ "status": "Sẵn sàng nhận lệnh JSON-RPC 2.0" }</pre>
-      </section>
-    </div>
+    <!-- TAB 2: MỐC CÔNG ĐỨC & CỔNG TRỜI CỘNG ĐỒNG -->
+    <section class="tab-panel" id="tab-milestones">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🏆 5 Mốc Công Đức Cộng Đồng Livestream</span>
+            <button class="btn gold" onclick="saveMilestonesToServer()">💾 Lưu Mốc</button>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ngưỡng (Tim/Điểm)</th>
+                  <th>Tên Cột Mốc</th>
+                  <th>Hiệu Ứng Lò</th>
+                  <th>Trạng Thái</th>
+                  <th>Bật</th>
+                </tr>
+              </thead>
+              <tbody id="milestonesTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+          <div class="hint-text">
+            💡 Khi người xem đạt đến từng mốc tim/điểm: Lò hoá vàng tự động bùng hiệu ứng tương ứng (Khói vàng, Rồng vàng, Đại lễ) kèm giọng đọc AI chúc mừng toàn thể đạo tràng!
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">✨ Cổng Trời Kim Long Khai Khố (Community Gate)</span>
+            <button class="btn danger" onclick="resetCommunityGoals()">♻️ Reset Mục Tiêu</button>
+          </div>
+          <div class="row">
+            <label style="width: 140px; font-weight: 700;">Mục Tiêu Tim:</label>
+            <input type="number" id="gateTargetHearts" value="50000" />
+            <button class="btn gold" onclick="saveGateTarget()">Cập Nhật</button>
+          </div>
+          <div id="gateStatusBox" style="background: #140302; padding: 14px; border-radius: 12px; border: 1px solid var(--border);">
+            <div style="font-weight: 800; font-size: 16px; color: var(--gold-light);" id="gateCurrentStatus">
+              Trạng thái: Cổng Mở Một Phần (18.650 / 50.000 tim)
+            </div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 6px;">
+              • 5.000 Tim: Cổng bắt đầu phát sáng linh ứng.<br/>
+              • 20.000 Tim: Cổng mở một phần đón tài lộc.<br/>
+              • 50.000 Tim: Cổng mở hoàn toàn.<br/>
+              • 100.000 Tim: Kích hoạt Đại Lễ Kim Long Giáng Phúc.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: LỊCH SỰ KIỆN & COUNTDOWN -->
+    <section class="tab-panel" id="tab-schedule">
+      <div class="card">
+        <div class="card-title">
+          <span class="card-title-text">⏰ Lịch Sự Kiện Tự Động & Countdown Livestream</span>
+          <button class="btn gold" onclick="saveScheduleToServer()">💾 Lưu Lịch Sự Kiện</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Giờ (HH:mm)</th>
+                <th>Tên Sự Kiện / Đại Lễ</th>
+                <th>Thời Lượng (phút)</th>
+                <th>Tự Động Kích Hoạt</th>
+                <th>Trạng Thái</th>
+                <th>Kịch Bản Khấn Lễ</th>
+                <th>Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+        <div class="hint-text">
+          💡 Hệ thống quét lịch mỗi 10 giây. Khi đến giờ hẹn, sự kiện tự động kích hoạt: chuông ngân vang, lò hoá vàng bùng đại lễ và countdown trên màn hình live chuyển sang sự kiện kế tiếp.
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: BÌNH CHỌN REALTIME (LIVE POLL) -->
+    <section class="tab-panel" id="tab-poll">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🗳️ Thiết Lập Cuộc Bình Chọn Mới</span>
+          </div>
+          <div class="row">
+            <input type="text" id="pollQuestionInput" value="Bình chọn vật phẩm hoá vàng đợt tiếp theo (Bình luận 1, 2, 3, 4):" placeholder="Câu hỏi bình chọn..." />
+          </div>
+          <div class="grid-2">
+            <div>
+              <label style="font-size: 12px; color: var(--muted);">Lựa chọn 1 (Gõ 1):</label>
+              <input type="text" id="pollOpt1" value="🪙 Thỏi Vàng Kim Bảo" />
+            </div>
+            <div>
+              <label style="font-size: 12px; color: var(--muted);">Lựa chọn 2 (Gõ 2):</label>
+              <input type="text" id="pollOpt2" value="🏯 Biệt Thự & Siêu Xe" />
+            </div>
+            <div>
+              <label style="font-size: 12px; color: var(--muted);">Lựa chọn 3 (Gõ 3):</label>
+              <input type="text" id="pollOpt3" value="👘 Mũ Áo Quan Thần" />
+            </div>
+            <div>
+              <label style="font-size: 12px; color: var(--muted);">Lựa chọn 4 (Gõ 4):</label>
+              <input type="text" id="pollOpt4" value="🐎 Ngựa Xe Thần Tốc" />
+            </div>
+          </div>
+          <div class="row">
+            <label style="width: 120px; font-weight: 700;">Thời gian (giây):</label>
+            <select id="pollDurationSec">
+              <option value="30">30 Giây (Nhanh)</option>
+              <option value="60" selected>60 Giây (Chuẩn)</option>
+              <option value="90">90 Giây</option>
+              <option value="120">120 Giây</option>
+            </select>
+          </div>
+          <div class="row">
+            <button class="btn gold" style="flex: 1;" onclick="startPollFromAdmin()">🚀 Bắt Đầu Bình Chọn Ngay</button>
+            <button class="btn danger" onclick="endPollFromAdmin()">🛑 Kết Thúc & Công Bố</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">📊 Trạng Thái Bình Chọn Trực Tiếp</span>
+            <span class="badge gold" id="pollLiveBadge">CHƯA BẬT</span>
+          </div>
+          <div class="admin-poll-preview" id="adminPollPreviewBox">
+            <div style="font-weight: 800; font-size: 15px;" id="adminPollQ">Bình chọn vật phẩm:</div>
+            <div id="adminPollOptsList" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Realtime options -->
+            </div>
+            <div class="row" style="margin-top: 6px;">
+              <button class="btn" onclick="simulateVote('1')">Gõ Vote 1</button>
+              <button class="btn" onclick="simulateVote('2')">Gõ Vote 2</button>
+              <button class="btn" onclick="simulateVote('3')">Gõ Vote 3</button>
+              <button class="btn" onclick="simulateVote('4')">Gõ Vote 4</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: TRẠNG THÁI LÒ & MỨC DONATE -->
+    <section class="tab-panel" id="tab-furnace">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🔥 Điều Khiển Trạng Thái Lò Hoá Vàng Realtime</span>
+          </div>
+          <div class="row" style="flex-wrap: wrap;">
+            <button class="btn" onclick="setFurnaceState('idle')">💤 Nghỉ (Idle - 350°C)</button>
+            <button class="btn" onclick="setFurnaceState('heating')">🔥 Nóng Lên (Heating - 480°C)</button>
+            <button class="btn" onclick="setFurnaceState('preparing')">✨ Chuẩn Bị (Preparing - 600°C)</button>
+            <button class="btn gold" onclick="setFurnaceState('burning')">⚡ Đang Hoá Vàng (Burning - 750°C)</button>
+            <button class="btn success" onclick="setFurnaceState('completed')">🎉 Hoàn Thành Đợt Hoá</button>
+            <button class="btn gold" onclick="setFurnaceState('grand_ceremony')">🐉 ĐẠI LỄ KIM LONG (999°C)</button>
+          </div>
+          <div class="hint-text">
+            Lò hoá vàng phản ứng realtime bằng ánh sáng, lửa bập bùng, khói vàng và nhiệt độ khi nhận được comment dâng lễ hoặc donate!
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🎁 Cấu Hình Phân Hạng Quà Tặng Donate</span>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mức Quà</th>
+                  <th>Số Xu</th>
+                  <th>Vật Phẩm Kích Hoạt</th>
+                  <th>Âm Thanh</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge">Quà Nhỏ</span></td>
+                  <td>1 – 9 Xu (Hoa, Tim)</td>
+                  <td>🪙 3 Thỏi Vàng Kim Bảo</td>
+                  <td>Tiếng Lửa Bùng</td>
+                </tr>
+                <tr>
+                  <td><span class="badge gold">Quà Vừa</span></td>
+                  <td>10 – 49 Xu (Nước Hoa)</td>
+                  <td>🐎 Ngựa Thần Xích Thố</td>
+                  <td>Chuông Đồng</td>
+                </tr>
+                <tr>
+                  <td><span class="badge gold">Quà Lớn</span></td>
+                  <td>50 – 99 Xu (Bắn Tim, Corgi)</td>
+                  <td>🏯 Biệt Thự & Siêu Xe</td>
+                  <td>Khánh Vàng</td>
+                </tr>
+                <tr>
+                  <td><span class="badge danger">Đại Quà</span></td>
+                  <td>100+ Xu (Mũ, Kim Long)</td>
+                  <td>🐉 Đại Lễ Kim Long Khai Khố</td>
+                  <td>Đại Lễ Fanfare</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: BỘ GIẢ LẬP TEST LIVE TOÀN DIỆN -->
+    <section class="tab-panel" id="tab-simulator">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">🎮 Giả Lập Tương Tác Người Xem Livestream</span>
+          </div>
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">❤️ Thả Tim Tích Công Đức & Cổng Trời:</label>
+            <div class="row" style="margin-top: 6px;">
+              <button class="btn" onclick="simLike(10)">❤️ +10 Tim (Gõ mõ)</button>
+              <button class="btn" onclick="simLike(50)">❤️ +50 Tim (Cấp 2 Mưa Tim)</button>
+              <button class="btn gold" onclick="simLike(200)">✨ +200 Tim (Cấp 3 Bão Tim)</button>
+              <button class="btn gold" onclick="simLike(500)">🐉 +500 Tim (Cấp 4 Vạn Tim)</button>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">💬 Bình Luận Từ Khóa Dâng Vật Phẩm:</label>
+            <div class="row" style="margin-top: 6px; flex-wrap: wrap;">
+              <button class="btn" onclick="simComment('hương')">🪔 Gõ "hương"</button>
+              <button class="btn" onclick="simComment('hoa')">🪷 Gõ "hoa"</button>
+              <button class="btn gold" onclick="simComment('vàng')">🪙 Gõ "vàng"</button>
+              <button class="btn" onclick="simComment('nhà')">🏯 Gõ "nhà"</button>
+              <button class="btn" onclick="simComment('ngựa')">🐎 Gõ "ngựa"</button>
+              <button class="btn" onclick="simComment('hóa vàng')">🔥 Gõ "hóa vàng"</button>
+              <button class="btn success" onclick="simComment('bình an')">📜 Gõ "bình an"</button>
+              <button class="btn" onclick="simComment('xin quẻ')">🎋 Gõ "xin quẻ"</button>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">🎁 Tặng Quà Donate TikTok:</label>
+            <div class="row" style="margin-top: 6px;">
+              <button class="btn" onclick="simGift(1, 'Hoa Hồng')">🌹 1 Xu (Hoa Hồng)</button>
+              <button class="btn" onclick="simGift(15, 'Nước Hoa')">💎 15 Xu (Nước Hoa)</button>
+              <button class="btn gold" onclick="simGift(50, 'Bắn Tim Cực Đại')">💖 50 Xu (Bắn Tim)</button>
+              <button class="btn gold" onclick="simGift(199, 'Kim Long Hoàng Gia')">🐉 199 Xu (Kim Long)</button>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">🏆 Test Mở Khóa Mốc Công Đức:</label>
+            <div class="row" style="margin-top: 6px;">
+              <button class="btn" onclick="simMilestone('m1')">Mốc 1 (10K)</button>
+              <button class="btn gold" onclick="simMilestone('m2')">Mốc 2 (50K Khói Vàng)</button>
+              <button class="btn gold" onclick="simMilestone('m3')">Mốc 3 (100K Đại Lễ)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text">📜 Nhật Ký Phản Hồi JSON-RPC 2.0</span>
+            <button class="btn" onclick="document.getElementById('rpcOutput').textContent = '{}'">Xóa Log</button>
+          </div>
+          <pre id="rpcOutput">{ "status": "Hệ thống sẵn sàng nhận lệnh" }</pre>
+
+          <div style="margin-top: 10px;">
+            <label style="font-size: 13px; font-weight: 700; color: var(--gold-light);">🎙️ Thử Nghiệm Giọng Đọc AI Tiếng Việt:</label>
+            <div class="row" style="margin-top: 6px;">
+              <input type="text" id="ttsDirectText" value="Chứng tâm công đức! Nguyện cầu chư vị tôn thần gia hộ cho tín chủ đại cát đại lợi, tài lộc đầy nhà." />
+              <button class="btn gold" onclick="speakAiDirect()">🎙️ Đọc</button>
+            </div>
+            <audio id="adminAudioPreview" controls style="width: 100%; height: 36px; margin-top: 8px;"></audio>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
-    async function sendRpc(method, extraParams = {}) {
-      const user = document.getElementById('rpcUser').value.trim() || 'Tín Chủ';
-      const wish = document.getElementById('rpcWish').value.trim();
+    let detailedConfig = null;
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+
+    async function sendRpc(method, params = {}) {
       const body = {
         jsonrpc: '2.0',
         id: Date.now(),
         method,
-        params: { user, wish, ...extraParams }
+        params
       };
-      const res = await fetch('/rpc', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const data = await res.json();
-      document.getElementById('rpcOutput').textContent = JSON.stringify(data, null, 2);
-      refreshStatus();
-      return data;
+      try {
+        const res = await fetch('/rpc', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        document.getElementById('rpcOutput').textContent = JSON.stringify(data, null, 2);
+        return data;
+      } catch (e) {
+        document.getElementById('rpcOutput').textContent = JSON.stringify({ error: e.message }, null, 2);
+      }
     }
 
-    document.getElementById('btnConn').onclick = () => {
-      const username = document.getElementById('ttUser').value.trim();
-      sendRpc('live.connect', { username });
-    };
-    document.getElementById('btnDisc').onclick = () => sendRpc('live.disconnect', {});
-    document.getElementById('btnSendComment').onclick = () => {
-      const comment = document.getElementById('simComment').value.trim();
-      sendRpc('hoavang.comment', { comment });
-    };
-    document.getElementById('btnSpeakMaiChi').onclick = async () => {
-      const text = document.getElementById('ttsDirectText').value.trim();
-      const data = await sendRpc('hoavang.speak', { text, voice: 'maichi', broadcast: true });
-      if (data?.result?.url) {
-        const player = document.getElementById('adminAudioPreview');
-        player.src = data.result.url;
-        player.play().catch(() => {});
+    async function loadConfig() {
+      const data = await sendRpc('admin.getDetailedConfig');
+      if (data?.result) {
+        detailedConfig = data.result;
+        renderKeywordsTable(detailedConfig.keywords || []);
+        renderMilestonesTable(detailedConfig.milestones || []);
+        renderScheduleTable(detailedConfig.schedule || []);
+        renderPollTab(detailedConfig.poll);
       }
-    };
+    }
+
+    function renderKeywordsTable(rules) {
+      const tbody = document.getElementById('keywordsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = rules.map((r, i) => `
+        <tr>
+          <td><strong>${escapeHtml(r.id)}</strong></td>
+          <td><input type="text" value="${escapeHtml((r.keywords || []).join(', '))}" id="kwList_${i}" /></td>
+          <td>
+            <select id="kwItem_${i}">
+              <option value="gold_ingot" ${r.itemKey === 'gold_ingot' ? 'selected' : ''}>🪙 Thỏi Vàng</option>
+              <option value="hell_money" ${r.itemKey === 'hell_money' ? 'selected' : ''}>💵 Tiền Vàng</option>
+              <option value="incense" ${r.itemKey === 'incense' ? 'selected' : ''}>🪔 Hương Trầm</option>
+              <option value="flower" ${r.itemKey === 'flower' ? 'selected' : ''}>🪷 Đoá Hoa Lễ</option>
+              <option value="sacred_horse" ${r.itemKey === 'sacred_horse' ? 'selected' : ''}>🐎 Ngựa Xích Thố</option>
+              <option value="royal_robe" ${r.itemKey === 'royal_robe' ? 'selected' : ''}>👘 Mũ Áo Quan</option>
+              <option value="luxury_villa_car" ${r.itemKey === 'luxury_villa_car' ? 'selected' : ''}>🏯 Biệt Thự Xe</option>
+              <option value="golden_tech" ${r.itemKey === 'golden_tech' ? 'selected' : ''}>📱 Bộ Táo Vàng</option>
+              <option value="five_elements_tray" ${r.itemKey === 'five_elements_tray' ? 'selected' : ''}>👑 Mâm Lễ Ngũ Phương</option>
+              <option value="prayer_scroll" ${r.itemKey === 'prayer_scroll' ? 'selected' : ''}>📜 Sớ Bình An</option>
+            </select>
+          </td>
+          <td><input type="number" style="width: 60px;" value="${r.count || 1}" id="kwCount_${i}" /></td>
+          <td>
+            <select id="kwEffect_${i}">
+              <option value="votive" ${r.effect === 'votive' ? 'selected' : ''}>Hoá Lễ Lò</option>
+              <option value="blessing" ${r.effect === 'blessing' ? 'selected' : ''}>Lời Chúc An</option>
+              <option value="furnace_boost" ${r.effect === 'furnace_boost' ? 'selected' : ''}>Bùng Lửa</option>
+            </select>
+          </td>
+          <td><input type="text" style="width: 80px;" value="${r.sound || 'crackle'}" id="kwSound_${i}" /></td>
+          <td><input type="number" style="width: 75px;" value="${r.cooldownMs || 3000}" id="kwCooldown_${i}" /></td>
+          <td><input type="checkbox" ${r.enabled ? 'checked' : ''} id="kwEnabled_${i}" style="width: 20px; height: 20px;" /></td>
+          <td><button class="btn danger" onclick="deleteKeywordRule(${i})">Xóa</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function addNewKeywordRule() {
+      const id = document.getElementById('newKwId').value.trim() || `kw_${Date.now()}`;
+      const rawKws = document.getElementById('newKwList').value.trim();
+      const keywords = rawKws ? rawKws.split(',').map((s) => s.trim().toLowerCase()) : ['mới'];
+      const itemKey = document.getElementById('newKwItem').value;
+      const count = Number(document.getElementById('newKwCount').value) || 1;
+      const effect = document.getElementById('newKwEffect').value;
+      const sound = document.getElementById('newKwSound').value;
+
+      if (!detailedConfig.keywords) detailedConfig.keywords = [];
+      detailedConfig.keywords.push({
+        id,
+        keywords,
+        itemKey,
+        name: id,
+        emoji: '🪙',
+        count,
+        sound,
+        effect,
+        enabled: true,
+        cooldownMs: 3000
+      });
+
+      renderKeywordsTable(detailedConfig.keywords);
+      document.getElementById('newKwId').value = '';
+      document.getElementById('newKwList').value = '';
+    }
+
+    function deleteKeywordRule(index) {
+      if (!confirm('Xác nhận xóa từ khóa này?')) return;
+      detailedConfig.keywords.splice(index, 1);
+      renderKeywordsTable(detailedConfig.keywords);
+    }
+
+    async function saveKeywordsToServer() {
+      const rows = detailedConfig.keywords || [];
+      rows.forEach((r, i) => {
+        const rawKws = document.getElementById(`kwList_${i}`)?.value || '';
+        r.keywords = rawKws.split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+        r.itemKey = document.getElementById(`kwItem_${i}`)?.value || r.itemKey;
+        r.count = Number(document.getElementById(`kwCount_${i}`)?.value) || 1;
+        r.effect = document.getElementById(`kwEffect_${i}`)?.value || r.effect;
+        r.sound = document.getElementById(`kwSound_${i}`)?.value || r.sound;
+        r.cooldownMs = Number(document.getElementById(`kwCooldown_${i}`)?.value) || 3000;
+        r.enabled = document.getElementById(`kwEnabled_${i}`)?.checked ?? true;
+      });
+      await sendRpc('admin.saveKeywords', { keywords: rows });
+      alert('Đã lưu cấu hình từ khóa thành công!');
+    }
+
+    function renderMilestonesTable(milestones) {
+      const tbody = document.getElementById('milestonesTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = milestones.map((m, i) => `
+        <tr>
+          <td><input type="number" value="${m.threshold}" id="mThresh_${i}" style="width: 100px;" /></td>
+          <td><input type="text" value="${escapeHtml(m.name)}" id="mName_${i}" /></td>
+          <td>
+            <select id="mEffect_${i}">
+              <option value="furnace_glow" ${m.effect === 'furnace_glow' ? 'selected' : ''}>Lò Rực Sáng</option>
+              <option value="golden_smoke" ${m.effect === 'golden_smoke' ? 'selected' : ''}>Khói Vàng Hoàng Kim</option>
+              <option value="grand_ceremony" ${m.effect === 'grand_ceremony' ? 'selected' : ''}>Đại Lễ Khai Khố</option>
+              <option value="dragon_blessing" ${m.effect === 'dragon_blessing' ? 'selected' : ''}>Kim Long Triệu Phúc</option>
+              <option value="ultimate_merit" ${m.effect === 'ultimate_merit' ? 'selected' : ''}>Đại Viên Mãn (1M)</option>
+            </select>
+          </td>
+          <td>${m.unlocked ? '<span class="badge success">ĐÃ MỞ</span>' : '<span class="badge">CHƯA</span>'}</td>
+          <td><input type="checkbox" ${m.enabled ? 'checked' : ''} id="mEnabled_${i}" style="width: 20px; height: 20px;" /></td>
+        </tr>
+      `).join('');
+    }
+
+    async function saveMilestonesToServer() {
+      const rows = detailedConfig.milestones || [];
+      rows.forEach((m, i) => {
+        m.threshold = Number(document.getElementById(`mThresh_${i}`)?.value) || m.threshold;
+        m.name = document.getElementById(`mName_${i}`)?.value || m.name;
+        m.effect = document.getElementById(`mEffect_${i}`)?.value || m.effect;
+        m.enabled = document.getElementById(`mEnabled_${i}`)?.checked ?? true;
+      });
+      await sendRpc('admin.saveMilestones', { milestones: rows });
+      alert('Đã lưu cấu hình mốc công đức!');
+    }
+
+    function renderScheduleTable(schedule) {
+      const tbody = document.getElementById('scheduleTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = schedule.map((s, i) => `
+        <tr>
+          <td><input type="text" value="${escapeHtml(s.time)}" id="sTime_${i}" style="width: 80px;" /></td>
+          <td><input type="text" value="${escapeHtml(s.name)}" id="sName_${i}" /></td>
+          <td><input type="number" value="${s.durationMin || 15}" id="sDur_${i}" style="width: 65px;" /></td>
+          <td><input type="checkbox" ${s.autoTrigger ? 'checked' : ''} id="sAuto_${i}" style="width: 20px; height: 20px;" /></td>
+          <td><span class="badge ${s.status === 'active' ? 'danger' : s.status === 'completed' ? 'success' : 'gold'}">${s.status}</span></td>
+          <td><input type="text" value="${escapeHtml(s.script || '')}" id="sScript_${i}" /></td>
+          <td><button class="btn gold" onclick="triggerCeremony('${s.id}')">Kích Hoạt</button></td>
+        </tr>
+      `).join('');
+    }
+
+    async function saveScheduleToServer() {
+      const rows = detailedConfig.schedule || [];
+      rows.forEach((s, i) => {
+        s.time = document.getElementById(`sTime_${i}`)?.value || s.time;
+        s.name = document.getElementById(`sName_${i}`)?.value || s.name;
+        s.durationMin = Number(document.getElementById(`sDur_${i}`)?.value) || 15;
+        s.autoTrigger = document.getElementById(`sAuto_${i}`)?.checked ?? true;
+        s.script = document.getElementById(`sScript_${i}`)?.value || s.script;
+      });
+      await sendRpc('admin.saveSchedule', { schedule: rows });
+      alert('Đã lưu lịch sự kiện thành công!');
+    }
+
+    async function triggerCeremony(id) {
+      await sendRpc('admin.triggerCeremony', { id });
+      refreshStatus();
+    }
+
+    function renderPollTab(poll) {
+      const q = document.getElementById('adminPollQ');
+      const list = document.getElementById('adminPollOptsList');
+      const badge = document.getElementById('pollLiveBadge');
+      if (!poll) return;
+
+      if (badge) {
+        badge.textContent = poll.active ? `ĐANG BÌNH CHỌN (${poll.remainingSeconds || 0}s)` : 'ĐANG DỪNG';
+        badge.className = `badge ${poll.active ? 'danger' : 'gold'}`;
+      }
+      if (q) q.textContent = poll.question || 'Bình chọn vật phẩm:';
+
+      if (list && Array.isArray(poll.options)) {
+        const total = Math.max(1, poll.totalVotes || 0);
+        list.innerHTML = poll.options.map((opt) => {
+          const pct = Math.round((opt.votes / total) * 100);
+          return `
+            <div class="admin-poll-option">
+              <div class="admin-poll-bar" style="width: ${pct}%;"></div>
+              <div class="admin-poll-content">
+                <span>Phím ${opt.id}: ${opt.emoji || '🪙'} ${escapeHtml(opt.text)}</span>
+                <span><strong>${opt.votes}</strong> phiếu (${pct}%)</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    async function startPollFromAdmin() {
+      const question = document.getElementById('pollQuestionInput').value.trim();
+      const options = [
+        { id: 1, text: document.getElementById('pollOpt1').value.trim(), itemKey: 'gold_ingot', emoji: '🪙', votes: 0 },
+        { id: 2, text: document.getElementById('pollOpt2').value.trim(), itemKey: 'luxury_villa_car', emoji: '🏯', votes: 0 },
+        { id: 3, text: document.getElementById('pollOpt3').value.trim(), itemKey: 'royal_robe', emoji: '👘', votes: 0 },
+        { id: 4, text: document.getElementById('pollOpt4').value.trim(), itemKey: 'sacred_horse', emoji: '🐎', votes: 0 }
+      ];
+      const durationSeconds = Number(document.getElementById('pollDurationSec').value) || 60;
+      await sendRpc('admin.startPoll', { question, options, durationSeconds });
+      refreshStatus();
+    }
+
+    async function endPollFromAdmin() {
+      await sendRpc('admin.endPoll', {});
+      refreshStatus();
+    }
+
+    async function simulateVote(choice) {
+      await sendRpc('admin.simulate', { type: 'pollVote', choice });
+      refreshStatus();
+    }
+
+    async function setFurnaceState(state) {
+      await sendRpc('admin.setFurnaceState', { state, reason: `Admin đổi: ${state}` });
+      refreshStatus();
+    }
+
+    async function resetCommunityGoals() {
+      if (!confirm('Xác nhận đặt lại toàn bộ mốc cộng đồng và cổng trời?')) return;
+      await sendRpc('admin.resetCommunityGoals', {});
+      refreshStatus();
+    }
+
+    async function simLike(count) {
+      await sendRpc('admin.simulate', { type: 'like', count });
+      refreshStatus();
+    }
+
+    async function simComment(comment) {
+      await sendRpc('admin.simulate', { type: 'comment', comment });
+      refreshStatus();
+    }
+
+    async function simGift(coins, giftName) {
+      await sendRpc('admin.simulate', { type: 'gift', coins, giftName });
+      refreshStatus();
+    }
+
+    async function simMilestone(id) {
+      await sendRpc('admin.simulate', { type: 'milestone', id });
+      refreshStatus();
+    }
+
+    async function speakAiDirect() {
+      const text = document.getElementById('ttsDirectText').value.trim();
+      const data = await sendRpc('temple.speak', { text, voice: 'maichi', broadcast: true });
+      if (data?.result?.url) {
+        const p = document.getElementById('adminAudioPreview');
+        p.src = data.result.url;
+        p.play().catch(() => {});
+      }
+    }
 
     async function refreshStatus() {
       const res = await fetch('/api/state');
       const st = await res.json();
       document.getElementById('statusBanner').textContent =
-        `Lễ mã đã hoá: ${st.totalVotiveBurned || st.totalIncense} | Tổng Lộc Đức: ${st.totalMerit} | Giọng đọc: ${st.tts?.engine}`;
+        `Lễ mã đã hoá: ${st.totalVotiveBurned || st.totalIncense} | Lộc Đức: ${Number(st.totalMerit || 0).toLocaleString('vi-VN')} | Lò: ${st.furnaceStatus?.label || 'Hoạt động'} | Giọng đọc: ${st.tts?.voice || 'maichi'}`;
+
+      if (st.communityGate) {
+        document.getElementById('gateCurrentStatus').textContent =
+          `Trạng thái: ${st.communityGate.status} (${Number(st.communityGate.currentHearts || 0).toLocaleString('vi-VN')} / ${Number(st.communityGate.targetHearts || 50000).toLocaleString('vi-VN')} tim)`;
+      }
+      if (st.activePoll) {
+        renderPollTab(st.activePoll);
+      }
     }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+    }
+
+    loadConfig();
     refreshStatus();
-    setInterval(refreshStatus, 4000);
+    setInterval(refreshStatus, 3000);
   </script>
 </body>
 </html>

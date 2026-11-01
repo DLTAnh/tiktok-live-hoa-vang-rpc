@@ -1,4 +1,4 @@
 node_modules/
 .DS_Store
-data/tts-cache/*.mp3
+data/tts-cache/
 *.log

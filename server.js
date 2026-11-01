@@ -20,6 +20,27 @@ fs.mkdirSync(TTS_CACHE_DIR, { recursive: true });
 // 1. KHO LỄ VẬT VÀNG MÃ & BỘ QUẺ LINH XĂM TÀI LỘC
 // ============================================================================
 const VOTIVE_CATALOG = {
+  incense: {
+    key: 'incense',
+    name: 'Nén Hương Trầm Linh Ứng',
+    emoji: '🪔',
+    baseMerit: 10,
+    coins: 0
+  },
+  flower: {
+    key: 'flower',
+    name: 'Đoá Sen Lễ Thanh Tịnh',
+    emoji: '🪷',
+    baseMerit: 12,
+    coins: 0
+  },
+  prayer_scroll: {
+    key: 'prayer_scroll',
+    name: 'Sớ Điệp Cầu Bình An & Tài Lộc',
+    emoji: '📜',
+    baseMerit: 20,
+    coins: 0
+  },
   gold_ingot: {
     key: 'gold_ingot',
     name: 'Thoi Vàng Kim Nguyên Bảo',
@@ -493,6 +514,80 @@ const DEFAULT_STATE = {
     }
   },
   recentEvents: [],
+  communityMilestones: [
+    { id: 'm1', threshold: 10000, name: 'Lò Sáng Khai Lộc', effect: 'furnace_glow', unlocked: true, enabled: true, description: 'Lò hoá vàng rực sáng hào quang kim bảo' },
+    { id: 'm2', threshold: 50000, name: 'Khói Vàng Chiêu Tài', effect: 'golden_smoke', unlocked: false, enabled: true, description: 'Xuất hiện hiệu ứng khói vàng linh ứng' },
+    { id: 'm3', threshold: 100000, name: 'Đại Lễ Hoá Vàng', effect: 'grand_ceremony', unlocked: false, enabled: true, description: 'Kích hoạt đại lễ hoá vàng mã toàn đàn' },
+    { id: 'm4', threshold: 500000, name: 'Kim Long Triệu Phúc', effect: 'dragon_blessing', unlocked: false, enabled: true, description: 'Mở khoá sự kiện hoá vàng Kim Long đặc biệt' },
+    { id: 'm5', threshold: 1000000, name: 'Đại Viên Mãn', effect: 'ultimate_merit', unlocked: false, enabled: true, description: 'Hoàn thành 1 triệu điểm công đức ngày' }
+  ],
+  votiveKeywordRules: [
+    { id: 'kw_huong', keywords: ['hương', 'huong', 'thắp hương', 'dâng hương', 'thap huong'], itemKey: 'incense', name: 'Nén Hương Trầm', emoji: '🪔', count: 3, sound: 'chime', effect: 'incense', enabled: true, cooldownMs: 3000, replyText: 'thành tâm dâng nén hương trầm' },
+    { id: 'kw_hoa', keywords: ['hoa', 'dâng hoa', 'bông hoa', 'hoa lễ', 'dang hoa'], itemKey: 'flower', name: 'Đoá Hoa Lễ', emoji: '🪷', count: 1, sound: 'chime', effect: 'flower', enabled: true, cooldownMs: 3000, replyText: 'thành tâm dâng đóa hoa tươi' },
+    { id: 'kw_vang', keywords: ['vàng', 'vang', 'thỏi vàng', 'kim bảo', 'thoi vang'], itemKey: 'gold_ingot', name: 'Thỏi Vàng Kim Bảo', emoji: '🪙', count: 3, sound: 'crackle', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'hoá 3 thỏi vàng kim nguyên bảo' },
+    { id: 'kw_tien', keywords: ['tiền', 'tien', 'tiền vàng', 'đô la', 'dola', 'tiền âm phủ'], itemKey: 'hell_money', name: 'Xấp Tiền Vàng Phú Quý', emoji: '💵', count: 5, sound: 'crackle', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'hoá xấp tiền vàng phú quý' },
+    { id: 'kw_nha', keywords: ['nhà', 'nha', 'biệt thự', 'biet thu', 'nhà lầu', 'siêu xe', 'ô tô', 'oto'], itemKey: 'luxury_villa_car', name: 'Biệt Thự & Siêu Xe', emoji: '🏯', count: 1, sound: 'crackle', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'hoá biệt thự phố và siêu xe' },
+    { id: 'kw_ngua', keywords: ['ngựa', 'ngua', 'xích thố', 'ngựa giấy'], itemKey: 'sacred_horse', name: 'Ngựa Giấy Xích Thố', emoji: '🐎', count: 1, sound: 'crackle', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'hoá ngựa thần xích thố' },
+    { id: 'kw_ao', keywords: ['áo', 'ao', 'quần áo', 'áo quan', 'mũ áo', 'hia quan'], itemKey: 'royal_robe', name: 'Bộ Mũ Áo Quan Thần', emoji: '👘', count: 1, sound: 'crackle', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'hoá bộ mũ áo hia quan thần' },
+    { id: 'kw_hoa_act', keywords: ['hóa', 'hoá', 'đốt', 'đốt vàng', 'dot vang', 'hoá vàng', 'hoa vang'], itemKey: 'gold_ingot', name: 'Lễ Hoá Vàng', emoji: '🔥', count: 3, sound: 'fire_burst', effect: 'furnace_boost', enabled: true, cooldownMs: 2500, replyText: 'tiếp lửa lò hoá vàng bùng sáng' },
+    { id: 'kw_le', keywords: ['lễ', 'le', 'mâm lễ', 'dâng lễ', 'bàn lễ', 'ngũ phương'], itemKey: 'five_elements_tray', name: 'Mâm Lễ Ngũ Phương', emoji: '👑', count: 1, sound: 'chime', effect: 'votive', enabled: true, cooldownMs: 3000, replyText: 'dâng mâm lễ vàng mã ngũ phương' },
+    { id: 'kw_binh_an', keywords: ['bình an', 'binh an', 'an lành', 'sức khỏe', 'suc khoe', 'mạnh khỏe'], itemKey: 'prayer_scroll', name: 'Sớ Cầu Bình An', emoji: '📜', count: 1, sound: 'chime', effect: 'blessing', enabled: true, cooldownMs: 3000, replyText: 'dâng sớ cầu nguyện gia quyến bình an' },
+    { id: 'kw_tai_loc', keywords: ['tài lộc', 'tai loc', 'buôn may bán đắt', 'đắt hàng', 'dat hang', 'kinh doanh', 'chốt đơn'], itemKey: 'prayer_scroll', name: 'Sớ Cầu Tài Lộc', emoji: '📜', count: 1, sound: 'chime', effect: 'blessing', enabled: true, cooldownMs: 3000, replyText: 'dâng sớ cầu kinh doanh buôn may bán đắt' },
+    { id: 'kw_to_tien', keywords: ['tổ tiên', 'to tien', 'gia tiên', 'tưởng nhớ', 'cửu huyền', 'ông bà', 'cha mẹ'], itemKey: 'prayer_scroll', name: 'Sớ Tưởng Nhớ Gia Tiên', emoji: '📜', count: 1, sound: 'chime', effect: 'blessing', enabled: true, cooldownMs: 3000, replyText: 'thành kính tưởng nhớ Cửu Huyền Thất Tổ' }
+  ],
+  furnaceStatus: {
+    state: 'idle',
+    label: 'Lò đang hoạt động',
+    temperature: 368,
+    itemsBurnedThisSession: 688,
+    lastAction: 'Hoạt động bình thường'
+  },
+  ceremonySchedule: [
+    { id: 'cer_1', time: '19:00', name: 'Khai Lễ & Nghinh Phúc', durationMin: 15, autoTrigger: true, status: 'completed', script: 'Đại Hồng Chung ngân vang khai mở đàn tràng hoá vàng' },
+    { id: 'cer_2', time: '19:15', name: 'Hoá Vàng Đợt 1 — Chiêu Tài', durationMin: 15, autoTrigger: true, status: 'active', script: 'Hoá vàng mã kim bảo nghinh đón tài lộc cho gia quyến' },
+    { id: 'cer_3', time: '19:30', name: 'Đại Lễ Hoá Vàng Kim Long', durationMin: 15, autoTrigger: true, status: 'pending', script: 'Khai mở kim khố thiên đình, trăm điều đại cát' },
+    { id: 'cer_4', time: '19:45', name: 'Hồi Hướng Công Đức & Tri Ân', durationMin: 15, autoTrigger: true, status: 'pending', script: 'Tạ ơn Gia Tiên và Thần Tài, hồi hướng công đức bình an' }
+  ],
+  activePoll: {
+    id: null,
+    active: false,
+    question: 'Bình chọn vật phẩm hoá vàng đợt tiếp theo (Bình luận 1, 2, 3, 4):',
+    options: [
+      { id: 1, text: 'Vàng Bạc Kim Bảo', itemKey: 'gold_ingot', emoji: '🪙', votes: 12 },
+      { id: 2, text: 'Biệt Thự & Siêu Xe', itemKey: 'luxury_villa_car', emoji: '🏯', votes: 8 },
+      { id: 3, text: 'Mũ Áo Quan Thần', itemKey: 'royal_robe', emoji: '👘', votes: 5 },
+      { id: 4, text: 'Ngựa Xe Thần Tốc', itemKey: 'sacred_horse', emoji: '🐎', votes: 9 }
+    ],
+    voters: {},
+    totalVotes: 34,
+    expiresAt: 0,
+    durationSeconds: 60,
+    winner: null
+  },
+  communityGate: {
+    name: 'Cổng Trời Kim Long Khai Khố',
+    targetHearts: 50000,
+    currentHearts: 18650,
+    status: 'half_open',
+    levels: [
+      { threshold: 5000, name: 'Cổng Bắt Đầu Phát Sáng', code: 'charging' },
+      { threshold: 20000, name: 'Cổng Mở Một Phần', code: 'half_open' },
+      { threshold: 50000, name: 'Cổng Mở Hoàn Toàn', code: 'fully_open' },
+      { threshold: 100000, name: 'Kích Hoạt Đại Lễ Kim Long', code: 'grand_ceremony' }
+    ]
+  },
+  giftMappings: [
+    { id: 'tier_small', name: 'Quà Nhỏ (1-9 Xu: Hoa, Tim)', minCoins: 1, maxCoins: 9, itemKey: 'gold_ingot', count: 3, effectTier: 'tier1', sound: 'crackle', announcement: 'Hoá 3 Thoi Vàng Kim Bảo' },
+    { id: 'tier_medium', name: 'Quà Vừa (10-49 Xu: Nước hoa, Kẹo)', minCoins: 10, maxCoins: 49, itemKey: 'sacred_horse', count: 1, effectTier: 'tier2', sound: 'bell', announcement: 'Hoá Ngựa Thần Xích Thố' },
+    { id: 'tier_large', name: 'Quà Lớn (50-99 Xu: Bắn tim, Corgi)', minCoins: 50, maxCoins: 99, itemKey: 'luxury_villa_car', count: 1, effectTier: 'tier3', sound: 'chime', announcement: 'Hoá Biệt Thự & Siêu Xe Vàng' },
+    { id: 'tier_grand', name: 'Đại Quà (100+ Xu: Trống, Kim Long, Mũ)', minCoins: 100, maxCoins: 999999, itemKey: 'dragon_treasury', count: 1, effectTier: 'tier4', sound: 'grand_fanfare', announcement: 'Đại Lễ Kim Long Khai Khố' }
+  ],
+  blessingResponses: {
+    'bình an': 'Nguyện cầu chư vị Tôn Thần và Gia Tiên gia hộ cho gia quyến bốn mùa thân tâm an lạc, tai qua nạn khỏi, vạn sự hanh thông.',
+    'tài lộc': 'Tâm thành dâng lễ, kính chúc gia chủ buôn may bán đắt, khách khứa nườm nượp, tiền tài sung túc đầy kho.',
+    'tổ tiên': 'Uống nước nhớ nguồn, lòng thành kính biếu Cửu Huyền Thất Tổ, nguyện gia tiên phù hộ độ trì con cháu hiếu thuận thành tài.',
+    'sức khỏe': 'Cầu cho song thân phụ mẫu và gia đình sức khỏe dồi dào, an khang trường thọ, bình an vô sự.'
+  },
   settings: {
     ttsEnabled: true,
     ttsVoice: 'maichi',
@@ -527,7 +622,15 @@ function loadState() {
         devotees: saved.devotees && Object.keys(saved.devotees).length > 0 ? saved.devotees : DEFAULT_STATE.devotees,
         offerings: { ...DEFAULT_STATE.offerings, ...(saved.offerings || {}) },
         settings: { ...DEFAULT_STATE.settings, ...(saved.settings || {}) },
-        tiktok: { ...DEFAULT_STATE.tiktok }
+        tiktok: { ...DEFAULT_STATE.tiktok },
+        communityMilestones: saved.communityMilestones && saved.communityMilestones.length > 0 ? saved.communityMilestones : DEFAULT_STATE.communityMilestones,
+        votiveKeywordRules: saved.votiveKeywordRules && saved.votiveKeywordRules.length > 0 ? saved.votiveKeywordRules : DEFAULT_STATE.votiveKeywordRules,
+        furnaceStatus: { ...DEFAULT_STATE.furnaceStatus, ...(saved.furnaceStatus || {}) },
+        ceremonySchedule: saved.ceremonySchedule && saved.ceremonySchedule.length > 0 ? saved.ceremonySchedule : DEFAULT_STATE.ceremonySchedule,
+        activePoll: { ...DEFAULT_STATE.activePoll, ...(saved.activePoll || {}) },
+        communityGate: { ...DEFAULT_STATE.communityGate, ...(saved.communityGate || {}) },
+        giftMappings: saved.giftMappings && saved.giftMappings.length > 0 ? saved.giftMappings : DEFAULT_STATE.giftMappings,
+        blessingResponses: { ...DEFAULT_STATE.blessingResponses, ...(saved.blessingResponses || {}) }
       };
     }
   } catch (e) {
@@ -546,6 +649,8 @@ function saveState() {
       totalIncense: state.totalIncense,
       totalVotiveBurned: state.totalVotiveBurned,
       totalMerit: state.totalMerit,
+      dailyMeritTarget: state.dailyMeritTarget,
+      dailyMeritCurrent: state.dailyMeritCurrent,
       woodenFishHits: state.woodenFishHits,
       bellRings: state.bellRings,
       lanternCount: state.lanternCount,
@@ -553,7 +658,14 @@ function saveState() {
       activeIncenseSticks: state.activeIncenseSticks,
       offerings: state.offerings,
       devotees: state.devotees,
-      settings: state.settings
+      settings: state.settings,
+      communityMilestones: state.communityMilestones,
+      votiveKeywordRules: state.votiveKeywordRules,
+      furnaceStatus: state.furnaceStatus,
+      ceremonySchedule: state.ceremonySchedule,
+      activePoll: state.activePoll,
+      communityGate: state.communityGate,
+      giftMappings: state.giftMappings
     };
     fs.promises.writeFile(STATE_FILE, JSON.stringify(toSave, null, 2), 'utf8').catch((e) => {
       console.error('[State] Lỗi lưu file:', e.message);
@@ -658,11 +770,235 @@ function recordDevotee(user, uniqueId, avatar, meritDelta, incenseDelta = 0, vot
   dev.gifts += giftDelta;
   if (cleanWish) dev.lastWish = cleanWish;
 
+  const prevMerit = state.dailyMeritCurrent || state.totalMerit || 0;
   state.totalMerit += meritDelta;
   state.dailyMeritCurrent = (state.dailyMeritCurrent || 0) + meritDelta;
   state.totalVotiveBurned = (state.totalVotiveBurned || 0) + votiveDelta;
   state.haloIntensity = Math.min(1.0, 0.45 + (state.totalMerit % 1000) / 1400);
+
+  checkMilestoneProgress(prevMerit, state.dailyMeritCurrent);
   return dev;
+}
+
+function checkMilestoneProgress(previousMerit, newMerit) {
+  if (!state.communityMilestones || !Array.isArray(state.communityMilestones)) return;
+  for (const m of state.communityMilestones) {
+    if (m.enabled && !m.unlocked && newMerit >= m.threshold) {
+      m.unlocked = true;
+      const tts = `Đại công đức viên mãn! Đàn tràng vừa mở khóa mốc ${m.name}, đạt ${Number(m.threshold).toLocaleString('vi-VN')} điểm Lộc Đức! Xin tán thán công đức toàn thể đạo tràng!`;
+      const event = pushEventLog({
+        type: 'milestoneUnlocked',
+        milestone: m,
+        user: 'Toàn Đạo Tràng',
+        ttsText: tts,
+        merit: 0,
+        wish: m.description
+      });
+      if (m.effect === 'golden_smoke') {
+        setFurnaceState('burning', 'Mở khoá Khói Vàng Chiêu Tài');
+      } else if (m.effect === 'grand_ceremony' || m.effect === 'dragon_blessing' || m.effect === 'ultimate_merit') {
+        setFurnaceState('grand_ceremony', `Mở khoá ${m.name}`);
+      }
+      broadcastNotification('temple.milestoneUnlocked', { milestone: m, state: getPublicState() });
+      broadcastNotification('temple.event', { event, state: getPublicState() });
+    }
+  }
+}
+
+let furnaceResetTimer = null;
+function setFurnaceState(newState, reason = '') {
+  if (!state.furnaceStatus) {
+    state.furnaceStatus = {
+      state: 'idle',
+      label: 'Lò đang hoạt động',
+      temperature: 368,
+      itemsBurnedThisSession: 688,
+      lastAction: ''
+    };
+  }
+  state.furnaceStatus.state = newState;
+  state.furnaceStatus.lastAction = reason || newState;
+  const labels = {
+    idle: 'Lò đang hoạt động',
+    heating: 'Lò đang nóng lên',
+    preparing: 'Chuẩn bị hoá vàng',
+    burning: 'Lò đang hoá vàng',
+    completed: 'Hoàn thành đợt hoá',
+    grand_ceremony: 'Đại Lễ Hoá Vàng Kim Long'
+  };
+  state.furnaceStatus.label = labels[newState] || newState;
+
+  if (newState === 'burning') {
+    state.furnaceStatus.temperature = Math.min(999, (state.furnaceStatus.temperature || 368) + 40);
+    clearTimeout(furnaceResetTimer);
+    furnaceResetTimer = setTimeout(() => {
+      setFurnaceState('heating', 'Lò giữ nhiệt sau khi hoá');
+      furnaceResetTimer = setTimeout(() => {
+        setFurnaceState('idle', 'Lò hoạt động bình thường');
+      }, 5000);
+    }, 4500);
+  } else if (newState === 'grand_ceremony') {
+    state.furnaceStatus.temperature = 999;
+    clearTimeout(furnaceResetTimer);
+    furnaceResetTimer = setTimeout(() => {
+      setFurnaceState('heating', 'Hoàn tất đại lễ');
+      furnaceResetTimer = setTimeout(() => {
+        setFurnaceState('idle', 'Lò hoạt động bình thường');
+      }, 7000);
+    }, 12000);
+  }
+
+  broadcastNotification('furnace.update', { furnace: state.furnaceStatus });
+  saveState();
+}
+
+let pollExpireTimer = null;
+function startLivePoll(question, options, durationSeconds = 60) {
+  clearTimeout(pollExpireTimer);
+  const now = Date.now();
+  const durSec = Math.max(15, Math.min(300, Number(durationSeconds) || 60));
+  state.activePoll = {
+    id: `poll_${now}`,
+    active: true,
+    question: question || 'Bình chọn vật phẩm hoá vàng đợt tiếp theo (Bình luận 1, 2, 3, 4):',
+    options: (options && options.length === 4 ? options : [
+      { id: 1, text: 'Vàng Bạc Kim Bảo', itemKey: 'gold_ingot', emoji: '🪙', votes: 0 },
+      { id: 2, text: 'Biệt Thự & Siêu Xe', itemKey: 'luxury_villa_car', emoji: '🏯', votes: 0 },
+      { id: 3, text: 'Mũ Áo Quan Thần', itemKey: 'royal_robe', emoji: '👘', votes: 0 },
+      { id: 4, text: 'Ngựa Xe Thần Tốc', itemKey: 'sacred_horse', emoji: '🐎', votes: 0 }
+    ]),
+    voters: {},
+    totalVotes: 0,
+    expiresAt: now + durSec * 1000,
+    durationSeconds: durSec,
+    winner: null
+  };
+  saveState();
+  broadcastNotification('poll.update', { poll: getSanitizedPoll() });
+  broadcastNotification('tts.play', {
+    text: `Đàn tràng mở cuộc bình chọn: ${state.activePoll.question}. Thiện tín hãy bình luận phím 1, 2, 3 hoặc 4 để bình chọn!`,
+    voice: state.settings?.ttsVoice || 'maichi'
+  });
+
+  pollExpireTimer = setTimeout(() => {
+    endLivePoll();
+  }, durSec * 1000);
+
+  return state.activePoll;
+}
+
+function endLivePoll(manualWinnerId = null) {
+  clearTimeout(pollExpireTimer);
+  if (!state.activePoll || !state.activePoll.active) return state.activePoll;
+
+  state.activePoll.active = false;
+  let winner = null;
+  if (manualWinnerId) {
+    winner = state.activePoll.options.find((o) => o.id === Number(manualWinnerId));
+  }
+  if (!winner) {
+    winner = [...state.activePoll.options].sort((a, b) => b.votes - a.votes)[0];
+  }
+  state.activePoll.winner = winner;
+
+  // Tự động hoá vật phẩm chiến thắng vào lò!
+  if (winner) {
+    const ttsText = `Kết quả bình chọn: Vật phẩm ${winner.text} đã chiến thắng với số phiếu áp đảo! Xin kính mời toàn thể đạo tràng chứng kiến nghi thức hoá vàng!`;
+    Rituals.burnVotive({
+      user: 'Cộng Đồng Bình Chọn',
+      uniqueId: 'poll_community',
+      avatar: '',
+      itemKey: winner.itemKey || 'gold_ingot',
+      count: 5,
+      wish: `Hoá 5 ${winner.text} do cộng đồng livestream đồng tâm bình chọn`,
+      readTts: false
+    });
+    broadcastNotification('tts.play', {
+      text: ttsText,
+      voice: state.settings?.ttsVoice || 'maichi'
+    });
+  }
+
+  saveState();
+  broadcastNotification('poll.ended', { poll: getSanitizedPoll(), winner });
+  return state.activePoll;
+}
+
+function castVote(uniqueId, voteChoice, voterName = 'Tín chủ') {
+  if (!state.activePoll || !state.activePoll.active) return false;
+  if (Date.now() > state.activePoll.expiresAt) {
+    endLivePoll();
+    return false;
+  }
+  const userKey = uniqueId || voterName;
+  let chosenOption = null;
+  const num = parseInt(voteChoice, 10);
+  if (num >= 1 && num <= 4) {
+    chosenOption = state.activePoll.options.find((o) => o.id === num);
+  } else {
+    const lower = String(voteChoice).toLowerCase();
+    chosenOption = state.activePoll.options.find(
+      (o) => lower.includes(o.text.toLowerCase()) || lower.includes(o.itemKey.toLowerCase())
+    );
+  }
+  if (!chosenOption) return false;
+
+  const previousVote = state.activePoll.voters[userKey];
+  if (previousVote === chosenOption.id) {
+    return false; // Đã vote rồi
+  }
+  if (previousVote) {
+    const prevOpt = state.activePoll.options.find((o) => o.id === previousVote);
+    if (prevOpt && prevOpt.votes > 0) prevOpt.votes -= 1;
+  } else {
+    state.activePoll.totalVotes += 1;
+  }
+
+  chosenOption.votes += 1;
+  state.activePoll.voters[userKey] = chosenOption.id;
+
+  broadcastNotification('poll.update', { poll: getSanitizedPoll() });
+  return true;
+}
+
+function getSanitizedPoll() {
+  if (!state.activePoll) return null;
+  const { voters, ...rest } = state.activePoll;
+  return {
+    ...rest,
+    votersCount: Object.keys(voters || {}).length,
+    remainingSeconds: Math.max(0, Math.ceil((state.activePoll.expiresAt - Date.now()) / 1000))
+  };
+}
+
+function triggerCeremony(ceremonyId) {
+  const cer = state.ceremonySchedule?.find((c) => c.id === ceremonyId);
+  if (!cer) return null;
+  cer.status = 'active';
+
+  const ttsText = `Chuông đồng ngân vang! Bắt đầu nghi thức: ${cer.name}! ${cer.script}. Kính mời thiện tín cùng thành tâm phát nguyện!`;
+  setFurnaceState('grand_ceremony', `Nghi lễ: ${cer.name}`);
+
+  const event = pushEventLog({
+    type: 'ceremony',
+    ceremony: cer,
+    user: 'Đàn Tràng Hoá Vàng',
+    ttsText,
+    merit: 50,
+    wish: cer.script
+  });
+
+  broadcastNotification('ceremony.start', { ceremony: cer, state: getPublicState() });
+  broadcastNotification('temple.event', { event, state: getPublicState() });
+  saveState();
+
+  setTimeout(() => {
+    cer.status = 'completed';
+    saveState();
+    broadcastNotification('ceremony.update', { ceremony: cer });
+  }, (cer.durationMin || 15) * 60 * 1000);
+
+  return cer;
 }
 
 function pushEventLog(evt) {
@@ -698,6 +1034,13 @@ function getPublicState() {
     recentEvents: state.recentEvents.slice(0, 15),
     settings: state.settings,
     tiktok: state.tiktok,
+    communityMilestones: state.communityMilestones,
+    votiveKeywordRules: state.votiveKeywordRules,
+    furnaceStatus: state.furnaceStatus,
+    ceremonySchedule: state.ceremonySchedule,
+    activePoll: getSanitizedPoll(),
+    communityGate: state.communityGate,
+    giftMappings: state.giftMappings,
     tts: ttsManager ? ttsManager.getStatus() : { ready: true, status: 'ready', voice: 'maichi' }
   };
 }
@@ -723,6 +1066,8 @@ const Rituals = {
     state.activeIncenseSticks = Math.min(36, state.activeIncenseSticks + 1);
     state.offerings[itemKey] = (state.offerings[itemKey] || 0) + count;
     const devotee = recordDevotee(user, uniqueId, avatar, merit, 3, count, 0, wish);
+
+    setFurnaceState('burning', `Hoá ${count} ${itemInfo.name}`);
 
     const ttsText =
       params.readTts === false
@@ -767,6 +1112,18 @@ const Rituals = {
     const tier = count >= 500 ? 4 : count >= 200 ? 3 : count >= 50 ? 2 : 1;
 
     state.woodenFishHits += count;
+    if (state.communityGate) {
+      state.communityGate.currentHearts = (state.communityGate.currentHearts || 0) + count;
+      for (const lvl of state.communityGate.levels || []) {
+        if (state.communityGate.currentHearts >= lvl.threshold && state.communityGate.status !== lvl.code) {
+          state.communityGate.status = lvl.code;
+          broadcastNotification('gate.unlocked', { level: lvl, gate: state.communityGate });
+          if (lvl.code === 'grand_ceremony') {
+            setFurnaceState('grand_ceremony', 'Cổng Trời Khai Mở Đại Lễ');
+          }
+        }
+      }
+    }
     const devotee = recordDevotee(user, uniqueId, avatar, merit, 0, 1, 0, `Thả ${count} tim tích +${merit} công đức (Cấp ${tier})`);
 
     const event = pushEventLog({
@@ -876,7 +1233,10 @@ const Rituals = {
     if (legacyMap[itemKey]) itemKey = legacyMap[itemKey];
 
     if (!VOTIVE_CATALOG[itemKey]) {
-      if (coins >= 100) itemKey = 'dragon_treasury';
+      const matchedTier = (state.giftMappings || []).find((t) => coins >= t.minCoins && coins <= t.maxCoins);
+      if (matchedTier && matchedTier.itemKey && VOTIVE_CATALOG[matchedTier.itemKey]) {
+        itemKey = matchedTier.itemKey;
+      } else if (coins >= 100) itemKey = 'dragon_treasury';
       else if (coins >= 50) itemKey = 'luxury_villa_car';
       else if (coins >= 30) itemKey = 'golden_tech';
       else if (coins >= 20) itemKey = 'five_elements_tray';
@@ -899,6 +1259,11 @@ const Rituals = {
     const devotee = recordDevotee(user, uniqueId, avatar, merit, 3, 5, 1, wish);
 
     const isGrand = itemKey === 'dragon_treasury' || coins >= 100;
+    if (isGrand) {
+      setFurnaceState('grand_ceremony', `Đại Lễ Donate: ${giftName}`);
+    } else {
+      setFurnaceState('burning', `Hoá Lễ Donate: ${giftName}`);
+    }
     const ttsText =
       params.readTts === false
         ? ''
@@ -1061,6 +1426,78 @@ function parseViewerComment(commentText, user, uniqueId, avatar, bypassCooldown 
     avatar: avatar || '',
     comment: cleanWish
   });
+
+  // 0. Bình chọn Realtime (Live Poll): Nếu đang có bình chọn, kiểm tra phím 1, 2, 3, 4 hoặc tên lựa chọn
+  if (state.activePoll && state.activePoll.active) {
+    const trimmed = cleanWish.trim();
+    if (trimmed === '1' || trimmed === '2' || trimmed === '3' || trimmed === '4' ||
+        trimmed.startsWith('1') || trimmed.startsWith('2') || trimmed.startsWith('3') || trimmed.startsWith('4')) {
+      const voteChoice = trimmed.charAt(0);
+      const voted = castVote(userKey, voteChoice, cleanUser);
+      if (voted) {
+        return {
+          type: 'pollVote',
+          user: cleanUser,
+          choice: voteChoice,
+          state: getPublicState()
+        };
+      }
+    }
+  }
+
+  // 1. Kiểm tra danh sách Từ khóa cấu hình động (Configurable Keyword Rules)
+  if (state.votiveKeywordRules && Array.isArray(state.votiveKeywordRules)) {
+    for (const rule of state.votiveKeywordRules) {
+      if (!rule.enabled) continue;
+      const matched = (rule.keywords || []).some((kw) => lower.includes(String(kw).toLowerCase()));
+      if (matched) {
+        // Nếu là sớ / lời chúc tâm linh
+        if (rule.effect === 'blessing') {
+          let blessingReply = '';
+          for (const [bKey, bVal] of Object.entries(state.blessingResponses || {})) {
+            if (lower.includes(bKey)) {
+              blessingReply = bVal;
+              break;
+            }
+          }
+          if (!blessingReply) {
+            blessingReply = 'Tâm thành sở cầu tất ứng, sở nguyện tòng tâm, gia đạo tứ thời bình an vượng phát.';
+          }
+          return Rituals.sendPrayer({
+            user: cleanUser,
+            uniqueId,
+            avatar,
+            wish: `${cleanWish}. (${blessingReply})`,
+            itemKey: rule.itemKey || 'prayer_scroll'
+          });
+        }
+
+        // Nếu là lệnh kích hoạt bùng lò hoá vàng
+        if (rule.effect === 'furnace_boost') {
+          setFurnaceState('burning', 'Tiếp lửa lò hoá vàng bùng sáng');
+          return Rituals.burnVotive({
+            user: cleanUser,
+            uniqueId,
+            avatar,
+            itemKey: 'gold_ingot',
+            count: rule.count || 3,
+            wish: cleanWish
+          });
+        }
+
+        // Mặc định dâng vật phẩm tương ứng theo rule
+        const targetItemKey = rule.itemKey || 'gold_ingot';
+        return Rituals.burnVotive({
+          user: cleanUser,
+          uniqueId,
+          avatar,
+          itemKey: targetItemKey,
+          count: rule.count || 1,
+          wish: cleanWish
+        });
+      }
+    }
+  }
 
   // 1. Xin xăm / Gieo quẻ Tài Lộc
   if (
@@ -1576,10 +2013,127 @@ async function handleRpcCall(method, params = {}) {
       broadcastNotification('temple.state', getPublicState());
       return getPublicState();
 
+    case 'admin.getDetailedConfig':
+      return {
+        milestones: state.communityMilestones,
+        keywords: state.votiveKeywordRules,
+        schedule: state.ceremonySchedule,
+        poll: getSanitizedPoll(),
+        gate: state.communityGate,
+        giftMappings: state.giftMappings,
+        furnace: state.furnaceStatus,
+        settings: state.settings
+      };
+
+    case 'admin.saveKeywords':
+      if (Array.isArray(params.keywords)) {
+        state.votiveKeywordRules = params.keywords;
+        saveState();
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, count: state.votiveKeywordRules.length };
+
+    case 'admin.saveMilestones':
+      if (Array.isArray(params.milestones)) {
+        state.communityMilestones = params.milestones;
+        saveState();
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, count: state.communityMilestones.length };
+
+    case 'admin.saveSchedule':
+      if (Array.isArray(params.schedule)) {
+        state.ceremonySchedule = params.schedule;
+        saveState();
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true, count: state.ceremonySchedule.length };
+
+    case 'admin.triggerCeremony':
+      return triggerCeremony(params.id);
+
+    case 'admin.startPoll':
+      return startLivePoll(params.question, params.options, params.durationSeconds);
+
+    case 'admin.endPoll':
+      return endLivePoll(params.winnerId);
+
+    case 'admin.votePoll': {
+      const ok = castVote(params.uniqueId || `admin_${Date.now()}`, params.optionId, params.user || 'Admin');
+      return { ok, poll: getSanitizedPoll() };
+    }
+
+    case 'admin.setFurnaceState':
+      setFurnaceState(params.state, params.reason || 'Admin điều khiển');
+      return state.furnaceStatus;
+
+    case 'admin.saveGiftMappings':
+      if (Array.isArray(params.giftMappings)) {
+        state.giftMappings = params.giftMappings;
+        saveState();
+        broadcastNotification('temple.state', getPublicState());
+      }
+      return { ok: true };
+
+    case 'admin.resetCommunityGoals':
+      if (state.communityMilestones) {
+        state.communityMilestones.forEach((m) => { m.unlocked = false; });
+      }
+      if (state.communityGate) {
+        state.communityGate.currentHearts = 0;
+        state.communityGate.status = 'locked';
+      }
+      state.dailyMeritCurrent = 0;
+      saveState();
+      broadcastNotification('temple.state', getPublicState());
+      return { ok: true };
+
+    case 'admin.simulate': {
+      const simType = params.type || 'comment';
+      if (simType === 'like') {
+        const c = Number(params.count) || 50;
+        return Rituals.strikeWoodenFish({ user: params.user || 'Tín Chủ Thả Tim', count: c });
+      } else if (simType === 'comment') {
+        return parseViewerComment(params.comment || 'Con xin hoá thỏi vàng cầu bình an', params.user || 'Tín Chủ Thành Tâm', params.uniqueId || 'sim_user', '', true);
+      } else if (simType === 'gift') {
+        const coins = Number(params.coins) || 20;
+        return Rituals.offerGift({ user: params.user || 'Đại Tín Chủ', coins, giftName: params.giftName || 'Lễ Vật Đại Cát' });
+      } else if (simType === 'pollVote') {
+        const choice = String(params.choice || '1');
+        castVote(`voter_${Date.now()}`, choice, params.user || 'Người Xem Live');
+        return getSanitizedPoll();
+      } else if (simType === 'milestone') {
+        const m = state.communityMilestones?.find((x) => x.id === params.id) || state.communityMilestones?.[1];
+        if (m) {
+          m.unlocked = false;
+          checkMilestoneProgress(0, m.threshold + 100);
+        }
+        return { ok: true, milestone: m };
+      }
+      return { ok: true };
+    }
+
     default:
       throw new Error(`Không tìm thấy phương thức JSON-RPC: ${method}`);
   }
 }
+
+// Bắt đầu chu kỳ quét lịch sự kiện tự động
+setInterval(() => {
+  try {
+    const now = new Date();
+    const currentHHMM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    if (state.ceremonySchedule && Array.isArray(state.ceremonySchedule)) {
+      for (const c of state.ceremonySchedule) {
+        if (c.autoTrigger && c.time === currentHHMM && c.status === 'pending') {
+          triggerCeremony(c.id);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[Ceremony Scheduler Error]', err.message);
+  }
+}, 10000);
 
 // ============================================================================
 // 8. EXPRESS + WEBSOCKET SERVER

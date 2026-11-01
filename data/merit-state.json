@@ -1,21 +1,24 @@
 {
-  "totalIncense": 541,
-  "totalVotiveBurned": 1199,
-  "totalMerit": 38178,
-  "woodenFishHits": 1169,
-  "bellRings": 69,
-  "lanternCount": 44,
-  "fortuneCount": 22,
+  "totalIncense": 616,
+  "totalVotiveBurned": 1417,
+  "totalMerit": 43385,
+  "dailyMeritTarget": 1000000,
+  "dailyMeritCurrent": 43385,
+  "woodenFishHits": 1279,
+  "bellRings": 71,
+  "lanternCount": 47,
+  "fortuneCount": 24,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 477,
+    "gold_ingot": 684,
     "hell_money": 126,
     "royal_robe": 26,
     "sacred_horse": 20,
     "five_elements_tray": 12,
     "golden_tech": 9,
-    "luxury_villa_car": 12,
-    "dragon_treasury": 4
+    "luxury_villa_car": 13,
+    "dragon_treasury": 4,
+    "flower": 1
   },
   "devotees": {
     "minhtam.88": {
@@ -82,10 +85,10 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 26295,
-      "incense": 100,
-      "votiveCount": 295,
-      "gifts": 7,
+      "merit": 31270,
+      "incense": 174,
+      "votiveCount": 510,
+      "gifts": 8,
       "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
     },
     "luklacstore": {
@@ -687,6 +690,26 @@
       "votiveCount": 5,
       "gifts": 1,
       "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt"
+    },
+    "sim_user": {
+      "name": "Tín Chủ Thành Tâm",
+      "uniqueId": "sim_user",
+      "avatar": "",
+      "merit": 32,
+      "incense": 4,
+      "votiveCount": 2,
+      "gifts": 0,
+      "lastWish": "Cầu chúc gia quyến bình an vạn sự như ý. Nguyện cầu chư vị Tôn Thần và Gia Tiên gia hộ cho gia quyến bốn mùa thân tâm an"
+    },
+    "Tín Chủ Thả Tim": {
+      "name": "Tín Chủ Thả Tim",
+      "uniqueId": "tínchủthảtim",
+      "avatar": "",
+      "merit": 200,
+      "incense": 0,
+      "votiveCount": 1,
+      "gifts": 0,
+      "lastWish": "Thả 100 tim tích 200 công đức Cấp 2"
     }
   },
   "settings": {
@@ -700,5 +723,455 @@
     "stageBg": "hoavang",
     "autoSim": false,
     "autoSimIntervalMs": 8000
-  }
+  },
+  "communityMilestones": [
+    {
+      "id": "m1",
+      "threshold": 10000,
+      "name": "Lò Sáng Khai Lộc",
+      "effect": "furnace_glow",
+      "unlocked": true,
+      "enabled": true,
+      "description": "Lò hoá vàng rực sáng hào quang kim bảo"
+    },
+    {
+      "id": "m2",
+      "threshold": 50000,
+      "name": "Khói Vàng Chiêu Tài",
+      "effect": "golden_smoke",
+      "unlocked": true,
+      "enabled": true,
+      "description": "Xuất hiện hiệu ứng khói vàng linh ứng"
+    },
+    {
+      "id": "m3",
+      "threshold": 100000,
+      "name": "Đại Lễ Hoá Vàng",
+      "effect": "grand_ceremony",
+      "unlocked": false,
+      "enabled": true,
+      "description": "Kích hoạt đại lễ hoá vàng mã toàn đàn"
+    },
+    {
+      "id": "m4",
+      "threshold": 500000,
+      "name": "Kim Long Triệu Phúc",
+      "effect": "dragon_blessing",
+      "unlocked": false,
+      "enabled": true,
+      "description": "Mở khoá sự kiện hoá vàng Kim Long đặc biệt"
+    },
+    {
+      "id": "m5",
+      "threshold": 1000000,
+      "name": "Đại Viên Mãn",
+      "effect": "ultimate_merit",
+      "unlocked": false,
+      "enabled": true,
+      "description": "Hoàn thành 1 triệu điểm công đức ngày"
+    }
+  ],
+  "votiveKeywordRules": [
+    {
+      "id": "kw_huong",
+      "keywords": [
+        "hương",
+        "huong",
+        "thắp hương",
+        "dâng hương",
+        "thap huong"
+      ],
+      "itemKey": "incense",
+      "name": "Nén Hương Trầm",
+      "emoji": "🪔",
+      "count": 3,
+      "sound": "chime",
+      "effect": "incense",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "thành tâm dâng nén hương trầm"
+    },
+    {
+      "id": "kw_hoa",
+      "keywords": [
+        "hoa",
+        "dâng hoa",
+        "bông hoa",
+        "hoa lễ",
+        "dang hoa"
+      ],
+      "itemKey": "flower",
+      "name": "Đoá Hoa Lễ",
+      "emoji": "🪷",
+      "count": 1,
+      "sound": "chime",
+      "effect": "flower",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "thành tâm dâng đóa hoa tươi"
+    },
+    {
+      "id": "kw_vang",
+      "keywords": [
+        "vàng",
+        "vang",
+        "thỏi vàng",
+        "kim bảo",
+        "thoi vang"
+      ],
+      "itemKey": "gold_ingot",
+      "name": "Thỏi Vàng Kim Bảo",
+      "emoji": "🪙",
+      "count": 3,
+      "sound": "crackle",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "hoá 3 thỏi vàng kim nguyên bảo"
+    },
+    {
+      "id": "kw_tien",
+      "keywords": [
+        "tiền",
+        "tien",
+        "tiền vàng",
+        "đô la",
+        "dola",
+        "tiền âm phủ"
+      ],
+      "itemKey": "hell_money",
+      "name": "Xấp Tiền Vàng Phú Quý",
+      "emoji": "💵",
+      "count": 5,
+      "sound": "crackle",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "hoá xấp tiền vàng phú quý"
+    },
+    {
+      "id": "kw_nha",
+      "keywords": [
+        "nhà",
+        "nha",
+        "biệt thự",
+        "biet thu",
+        "nhà lầu",
+        "siêu xe",
+        "ô tô",
+        "oto"
+      ],
+      "itemKey": "luxury_villa_car",
+      "name": "Biệt Thự & Siêu Xe",
+      "emoji": "🏯",
+      "count": 1,
+      "sound": "crackle",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "hoá biệt thự phố và siêu xe"
+    },
+    {
+      "id": "kw_ngua",
+      "keywords": [
+        "ngựa",
+        "ngua",
+        "xích thố",
+        "ngựa giấy"
+      ],
+      "itemKey": "sacred_horse",
+      "name": "Ngựa Giấy Xích Thố",
+      "emoji": "🐎",
+      "count": 1,
+      "sound": "crackle",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "hoá ngựa thần xích thố"
+    },
+    {
+      "id": "kw_ao",
+      "keywords": [
+        "áo",
+        "ao",
+        "quần áo",
+        "áo quan",
+        "mũ áo",
+        "hia quan"
+      ],
+      "itemKey": "royal_robe",
+      "name": "Bộ Mũ Áo Quan Thần",
+      "emoji": "👘",
+      "count": 1,
+      "sound": "crackle",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "hoá bộ mũ áo hia quan thần"
+    },
+    {
+      "id": "kw_hoa_act",
+      "keywords": [
+        "hóa",
+        "hoá",
+        "đốt",
+        "đốt vàng",
+        "dot vang",
+        "hoá vàng",
+        "hoa vang"
+      ],
+      "itemKey": "gold_ingot",
+      "name": "Lễ Hoá Vàng",
+      "emoji": "🔥",
+      "count": 3,
+      "sound": "fire_burst",
+      "effect": "furnace_boost",
+      "enabled": true,
+      "cooldownMs": 2500,
+      "replyText": "tiếp lửa lò hoá vàng bùng sáng"
+    },
+    {
+      "id": "kw_le",
+      "keywords": [
+        "lễ",
+        "le",
+        "mâm lễ",
+        "dâng lễ",
+        "bàn lễ",
+        "ngũ phương"
+      ],
+      "itemKey": "five_elements_tray",
+      "name": "Mâm Lễ Ngũ Phương",
+      "emoji": "👑",
+      "count": 1,
+      "sound": "chime",
+      "effect": "votive",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "dâng mâm lễ vàng mã ngũ phương"
+    },
+    {
+      "id": "kw_binh_an",
+      "keywords": [
+        "bình an",
+        "binh an",
+        "an lành",
+        "sức khỏe",
+        "suc khoe",
+        "mạnh khỏe"
+      ],
+      "itemKey": "prayer_scroll",
+      "name": "Sớ Cầu Bình An",
+      "emoji": "📜",
+      "count": 1,
+      "sound": "chime",
+      "effect": "blessing",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "dâng sớ cầu nguyện gia quyến bình an"
+    },
+    {
+      "id": "kw_tai_loc",
+      "keywords": [
+        "tài lộc",
+        "tai loc",
+        "buôn may bán đắt",
+        "đắt hàng",
+        "dat hang",
+        "kinh doanh",
+        "chốt đơn"
+      ],
+      "itemKey": "prayer_scroll",
+      "name": "Sớ Cầu Tài Lộc",
+      "emoji": "📜",
+      "count": 1,
+      "sound": "chime",
+      "effect": "blessing",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "dâng sớ cầu kinh doanh buôn may bán đắt"
+    },
+    {
+      "id": "kw_to_tien",
+      "keywords": [
+        "tổ tiên",
+        "to tien",
+        "gia tiên",
+        "tưởng nhớ",
+        "cửu huyền",
+        "ông bà",
+        "cha mẹ"
+      ],
+      "itemKey": "prayer_scroll",
+      "name": "Sớ Tưởng Nhớ Gia Tiên",
+      "emoji": "📜",
+      "count": 1,
+      "sound": "chime",
+      "effect": "blessing",
+      "enabled": true,
+      "cooldownMs": 3000,
+      "replyText": "thành kính tưởng nhớ Cửu Huyền Thất Tổ"
+    }
+  ],
+  "furnaceStatus": {
+    "state": "idle",
+    "label": "Lò đang hoạt động",
+    "temperature": 488,
+    "itemsBurnedThisSession": 688,
+    "lastAction": "Lò hoạt động bình thường"
+  },
+  "ceremonySchedule": [
+    {
+      "id": "cer_1",
+      "time": "19:00",
+      "name": "Khai Lễ & Nghinh Phúc",
+      "durationMin": 15,
+      "autoTrigger": true,
+      "status": "completed",
+      "script": "Đại Hồng Chung ngân vang khai mở đàn tràng hoá vàng"
+    },
+    {
+      "id": "cer_2",
+      "time": "19:15",
+      "name": "Hoá Vàng Đợt 1 — Chiêu Tài",
+      "durationMin": 15,
+      "autoTrigger": true,
+      "status": "active",
+      "script": "Hoá vàng mã kim bảo nghinh đón tài lộc cho gia quyến"
+    },
+    {
+      "id": "cer_3",
+      "time": "19:30",
+      "name": "Đại Lễ Hoá Vàng Kim Long",
+      "durationMin": 15,
+      "autoTrigger": true,
+      "status": "pending",
+      "script": "Khai mở kim khố thiên đình, trăm điều đại cát"
+    },
+    {
+      "id": "cer_4",
+      "time": "19:45",
+      "name": "Hồi Hướng Công Đức & Tri Ân",
+      "durationMin": 15,
+      "autoTrigger": true,
+      "status": "pending",
+      "script": "Tạ ơn Gia Tiên và Thần Tài, hồi hướng công đức bình an"
+    }
+  ],
+  "activePoll": {
+    "id": "poll_1793522852269",
+    "active": true,
+    "question": "Chọn vật phẩm hoá vàng:",
+    "options": [
+      {
+        "id": 1,
+        "text": "Vàng Bạc Kim Bảo",
+        "itemKey": "gold_ingot",
+        "emoji": "🪙",
+        "votes": 0
+      },
+      {
+        "id": 2,
+        "text": "Biệt Thự & Siêu Xe",
+        "itemKey": "luxury_villa_car",
+        "emoji": "🏯",
+        "votes": 1
+      },
+      {
+        "id": 3,
+        "text": "Mũ Áo Quan Thần",
+        "itemKey": "royal_robe",
+        "emoji": "👘",
+        "votes": 0
+      },
+      {
+        "id": 4,
+        "text": "Ngựa Xe Thần Tốc",
+        "itemKey": "sacred_horse",
+        "emoji": "🐎",
+        "votes": 0
+      }
+    ],
+    "voters": {
+      "voter_1793522852270": 2
+    },
+    "totalVotes": 1,
+    "expiresAt": 1793522912269,
+    "durationSeconds": 60,
+    "winner": null
+  },
+  "communityGate": {
+    "name": "Cổng Trời Kim Long Khai Khố",
+    "targetHearts": 50000,
+    "currentHearts": 18750,
+    "status": "charging",
+    "levels": [
+      {
+        "threshold": 5000,
+        "name": "Cổng Bắt Đầu Phát Sáng",
+        "code": "charging"
+      },
+      {
+        "threshold": 20000,
+        "name": "Cổng Mở Một Phần",
+        "code": "half_open"
+      },
+      {
+        "threshold": 50000,
+        "name": "Cổng Mở Hoàn Toàn",
+        "code": "fully_open"
+      },
+      {
+        "threshold": 100000,
+        "name": "Kích Hoạt Đại Lễ Kim Long",
+        "code": "grand_ceremony"
+      }
+    ]
+  },
+  "giftMappings": [
+    {
+      "id": "tier_small",
+      "name": "Quà Nhỏ (1-9 Xu: Hoa, Tim)",
+      "minCoins": 1,
+      "maxCoins": 9,
+      "itemKey": "gold_ingot",
+      "count": 3,
+      "effectTier": "tier1",
+      "sound": "crackle",
+      "announcement": "Hoá 3 Thoi Vàng Kim Bảo"
+    },
+    {
+      "id": "tier_medium",
+      "name": "Quà Vừa (10-49 Xu: Nước hoa, Kẹo)",
+      "minCoins": 10,
+      "maxCoins": 49,
+      "itemKey": "sacred_horse",
+      "count": 1,
+      "effectTier": "tier2",
+      "sound": "bell",
+      "announcement": "Hoá Ngựa Thần Xích Thố"
+    },
+    {
+      "id": "tier_large",
+      "name": "Quà Lớn (50-99 Xu: Bắn tim, Corgi)",
+      "minCoins": 50,
+      "maxCoins": 99,
+      "itemKey": "luxury_villa_car",
+      "count": 1,
+      "effectTier": "tier3",
+      "sound": "chime",
+      "announcement": "Hoá Biệt Thự & Siêu Xe Vàng"
+    },
+    {
+      "id": "tier_grand",
+      "name": "Đại Quà (100+ Xu: Trống, Kim Long, Mũ)",
+      "minCoins": 100,
+      "maxCoins": 999999,
+      "itemKey": "dragon_treasury",
+      "count": 1,
+      "effectTier": "tier4",
+      "sound": "grand_fanfare",
+      "announcement": "Đại Lễ Kim Long Khai Khố"
+    }
+  ]
 }

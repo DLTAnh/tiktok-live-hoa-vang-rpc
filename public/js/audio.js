@@ -450,6 +450,68 @@ class TempleAudioEngine {
   }
 
   // --------------------------------------------------------------------------
+  // 5B. TIẾNG CHUÔNG KHÁNH KHI ĐẠT MỐC CÔNG ĐỨC (MILESTONE CHIME)
+  // --------------------------------------------------------------------------
+  playMilestoneChime() {
+    if (!this.sfxEnabled) return;
+    try {
+      const ctx = this.ensureContext();
+      const now = ctx.currentTime;
+      const notes = [264, 330, 396, 528];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+
+        gain.gain.setValueAtTime(0.0001, now + idx * 0.14);
+        gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.14 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 1.8);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.onended = () => {
+          osc.disconnect();
+          gain.disconnect();
+        };
+        osc.start(now + idx * 0.14);
+        osc.stop(now + idx * 0.14 + 1.85);
+      });
+    } catch (_) {}
+  }
+
+  // --------------------------------------------------------------------------
+  // 5C. TIẾNG ĐẠI HỒNG CHUNG & ĐẠI LỄ KIM LONG (ROYAL CEREMONY FANFARE)
+  // --------------------------------------------------------------------------
+  playFanfare() {
+    if (!this.sfxEnabled) return;
+    try {
+      const ctx = this.ensureContext();
+      const now = ctx.currentTime;
+      const notes = [198, 264, 330, 396, 528, 660];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+
+        gain.gain.setValueAtTime(0.0001, now + idx * 0.15);
+        gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.15 + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 2.2);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.onended = () => {
+          osc.disconnect();
+          gain.disconnect();
+        };
+        osc.start(now + idx * 0.15);
+        osc.stop(now + idx * 0.15 + 2.3);
+      });
+    } catch (_) {}
+  }
+
+  // --------------------------------------------------------------------------
   // 6. AI TTS VOICE QUEUE & PREFETCHER
   // --------------------------------------------------------------------------
   enqueueTts(text, options = {}) {

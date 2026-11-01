@@ -92,6 +92,13 @@
           </div>
         </div>
 
+        <!-- 2A. THANH COUNTDOWN LỊCH SỰ KIỆN HOÁ VÀNG THEO CHU KỲ -->
+        <div class="ceremony-countdown-bar" id="ceremonyCountdownBar">
+          <div class="ceremony-tag" id="ceremonyTag">⏳ SỰ KIỆN TIẾP THEO</div>
+          <div class="ceremony-name" id="ceremonyName">Đại Lễ Hoá Vàng Kim Long (19:30)</div>
+          <div class="ceremony-timer" id="ceremonyTimer">Còn 05:20</div>
+        </div>
+
         <!-- 2E. TIÊU ĐỀ LỚN HOÀNG KIM CHÍNH GIỮA MÀN HÌNH -->
         <div class="main-sacred-center-title" id="mainSacredCenterTitle">
           <div class="sacred-title-sparkle-left">✨</div>
@@ -99,12 +106,13 @@
           <div class="sacred-title-sparkle-right">✨</div>
         </div>
 
-        <!-- 2F. DÒNG TIMELINE TIẾN TRÌNH 1.000.000 ĐIỂM CÔNG ĐỨC MỖI NGÀY -->
+        <!-- 2F. DÒNG TIMELINE TIẾN TRÌNH CÔNG ĐỨC CỘNG ĐỒNG NHIỀU CẤP ĐỘ -->
         <div class="daily-merit-timeline-box" id="dailyMeritTimelineBox">
           <div class="timeline-header-row">
             <div class="timeline-title-left">
               <span class="timeline-fire-icon">🔥</span>
-              <span class="timeline-title-text">TIẾN TRÌNH CÔNG ĐỨC HÔM NAY</span>
+              <span class="timeline-title-text" id="timelineTitleText">CÔNG ĐỨC CỘNG ĐỒNG</span>
+              <span class="next-milestone-pill" id="nextMilestonePill">Mốc tiếp: 50.000 tim (Khói Vàng)</span>
             </div>
             <div class="timeline-score-right">
               <strong id="timelineMeritCurrent">368.880</strong> / <span id="timelineMeritTarget">1.000.000</span>
@@ -115,29 +123,33 @@
             <div class="timeline-bar-fill" id="timelineBarFill" style="width: 36.8%;">
               <div class="timeline-bar-glimmer"></div>
             </div>
-            <!-- CÁC CỘT MỐC CÔNG ĐỨC QUAN TRỌNG -->
-            <div class="timeline-milestones">
-              <div class="milestone-pip pip-25" style="left: 25%;" title="250K: Khai Lộc">
-                <span class="milestone-dot"></span>
-                <span class="milestone-tag">250K</span>
+            <!-- CÁC CỘT MỐC CÔNG ĐỨC CỘNG ĐỒNG -->
+            <div class="timeline-milestones" id="timelineMilestones">
+              <div class="milestone-pip" style="left: 10%;" title="10K: Lò Sáng">
+                <span class="milestone-dot active"></span>
+                <span class="milestone-tag">10K</span>
               </div>
-              <div class="milestone-pip pip-50" style="left: 50%;" title="500K: Chiêu Tài">
+              <div class="milestone-pip" style="left: 25%;" title="50K: Khói Vàng">
+                <span class="milestone-dot"></span>
+                <span class="milestone-tag">50K</span>
+              </div>
+              <div class="milestone-pip" style="left: 50%;" title="100K: Đại Lễ">
+                <span class="milestone-dot"></span>
+                <span class="milestone-tag">100K</span>
+              </div>
+              <div class="milestone-pip" style="left: 75%;" title="500K: Kim Long">
                 <span class="milestone-dot"></span>
                 <span class="milestone-tag">500K</span>
               </div>
-              <div class="milestone-pip pip-75" style="left: 75%;" title="750K: Phúc Vượng">
-                <span class="milestone-dot"></span>
-                <span class="milestone-tag">750K</span>
-              </div>
-              <div class="milestone-pip pip-100" style="left: 100%;" title="1 Triệu: Đại Viên Mãn">
+              <div class="milestone-pip" style="left: 100%;" title="1 Triệu: Đại Viên Mãn">
                 <span class="milestone-dot golden-dragon">🐉</span>
                 <span class="milestone-tag gold">1 TRIỆU</span>
               </div>
             </div>
           </div>
           <div class="timeline-footer-row">
-            <span>❤️ Thả tim nhấp màn hình = <strong>+2 Điểm Công Đức</strong></span>
-            <span>🪙 Dâng vàng mã & quà xu = <strong>Tích Đại Phúc Lộc</strong></span>
+            <span class="gate-status-hint" id="gateStatusHint">✨ Cổng Trời Kim Long: <strong>Mở một phần (18.650 tim)</strong></span>
+            <span>❤️ Thả tim = <strong>+2 Lộc Đức</strong> • 🪙 Hoá lễ = <strong>Tích Phúc</strong></span>
           </div>
         </div>
 
@@ -183,7 +195,10 @@
         <div class="incense-burner-zone" id="incenseBurnerZone" title="Bấm để Đưa Vàng Mã Vào Lò Hoá">
           <div class="incense-sticks-holder" id="incenseSticksHolder"></div>
           <div class="furnace-burning-slot" id="furnaceBurningSlot"></div>
-          <div class="furnace-caption-pill">🔥 ĐƯA LỄ MÃ VÀO LÒ</div>
+          <div class="furnace-caption-pill" id="furnaceStatusPill">
+            <span class="furnace-pulse-dot" id="furnacePulseDot"></span>
+            <span id="furnaceStatusText">🔥 LÒ ĐANG HOẠT ĐỘNG • 368°C</span>
+          </div>
         </div>
 
         <!-- BÀN LỄ VẬT VÀNG MÃ HAI BÊN SÂN & PHÁP KHÍ TƯƠNG TÁC -->
@@ -280,6 +295,30 @@
         <!-- 8B. LUỒNG BÌNH LUẬN TRỰC TIẾP TIKTOK LIVE TRÊN MÀN HÌNH 9:16 -->
         <div class="live-comment-stream" id="liveCommentStream"></div>
 
+        <!-- 8C. WIDGET BÌNH CHỌN VẬT PHẨM REALTIME QUA COMMENT -->
+        <div class="live-poll-card" id="livePollCard" style="display: none;">
+          <div class="poll-header">
+            <div class="poll-badge">🗳️ BÌNH CHỌN TRỰC TIẾP</div>
+            <div class="poll-timer" id="pollTimerBadge">⏳ 00:45</div>
+          </div>
+          <div class="poll-question" id="pollQuestionText">Bình chọn vật phẩm hoá vàng đợt tiếp theo:</div>
+          <div class="poll-options-list" id="pollOptionsList"></div>
+          <div class="poll-footer-hint">💬 Bình luận <strong>1, 2, 3</strong> hoặc <strong>4</strong> để bình chọn ngay</div>
+        </div>
+
+        <!-- 8D. THẺ SỚ LỜI CHÚC TÂM LINH TỰ ĐỘNG KHI COMMENT TỪ KHÓA BÌNH AN -->
+        <div class="spiritual-blessing-toast" id="spiritualBlessingToast">
+          <div class="blessing-scroll-ornament">📜</div>
+          <div class="blessing-scroll-body">
+            <div class="blessing-tag">✨ SỞ CẦU TẤT ỨNG — VẠN SỰ BÌNH AN ✨</div>
+            <div class="blessing-devotee" id="blessingDevoteeLine">Tín chủ: Minh Tâm</div>
+            <div class="blessing-message" id="blessingMessageLine">Cầu cho gia quyến bốn mùa thân tâm an lạc, tai qua nạn khỏi, vạn sự hanh thông.</div>
+          </div>
+        </div>
+
+        <!-- 8E. HÀNG ĐỢI THÔNG BÁO ƯU TIÊN REALTIME (PRIORITY NOTIFICATION STACK) -->
+        <div class="priority-notification-stack" id="priorityNotificationStack"></div>
+
         <!-- 9. LỚP CANVAS HIỆU ỨNG LỬA CHÁY, LỄ VẬT BAY VÀO LÒ, TÀN TRO VÀNG -->
         <canvas id="templeCanvas"></canvas>
 
@@ -348,6 +387,13 @@
         <div class="grand-ceremony-banner" id="grandCeremonyBanner">
           <div class="grand-title" id="grandTitle">🐉 ĐẠI LỄ HOÁ VÀNG KIM LONG KHAI KHỐ 🐉</div>
           <div class="grand-sub" id="grandSub">Lộc đức vô lượng: Đại Tín Chủ khai mở kho vàng</div>
+        </div>
+
+        <!-- BANNER CHÚC MỪNG MỞ KHOÁ MỐC CÔNG ĐỨC CỘNG ĐỒNG -->
+        <div class="milestone-unlocked-banner" id="milestoneUnlockedBanner">
+          <div class="milestone-banner-badge" id="milestoneBannerBadge">🏆 MỞ KHOÁ MỐC CÔNG ĐỨC</div>
+          <div class="milestone-banner-title" id="milestoneBannerTitle">✨ 50.000 TIM: KHÓI VÀNG CHIÊU TÀI ✨</div>
+          <div class="milestone-banner-sub" id="milestoneBannerSub">Toàn thể đạo tràng đồng tâm tích đức khai thông linh khí!</div>
         </div>
 
         <!-- MODAL TỜ GIẢI QUẺ TÀI LỘC -->

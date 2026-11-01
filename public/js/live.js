@@ -722,6 +722,49 @@
     if (pctEl) pctEl.textContent = `${pct.toFixed(1)}%`;
     if (barEl) barEl.style.width = `${pct}%`;
 
+    // Cập nhật Mốc Công Đức & Cổng Trời
+    const nextM = (st.communityMilestones || []).find((m) => !m.unlocked);
+    const nextPill = document.getElementById('nextMilestonePill');
+    if (nextPill) {
+      if (nextM) {
+        nextPill.textContent = `Mốc tiếp: ${Number(nextM.threshold).toLocaleString('vi-VN')} tim (${nextM.name})`;
+      } else {
+        nextPill.textContent = `🏆 Đạt tất cả các mốc đại lễ!`;
+      }
+    }
+
+    const mTrack = document.getElementById('timelineMilestones');
+    if (mTrack && Array.isArray(st.communityMilestones)) {
+      mTrack.innerHTML = st.communityMilestones.map((m) => {
+        const leftPct = Math.min(100, Math.max(5, (m.threshold / target) * 100));
+        const isUnlocked = m.unlocked || current >= m.threshold;
+        return `
+          <div class="milestone-pip" style="left: ${leftPct}%;" title="${escapeHtml(m.name)} (${Number(m.threshold).toLocaleString('vi-VN')})">
+            <span class="milestone-dot ${isUnlocked ? 'active' : ''}"></span>
+            <span class="milestone-tag ${isUnlocked ? 'gold' : ''}">${m.threshold >= 1000000 ? '1 TRIỆU' : (m.threshold / 1000) + 'K'}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    const gateHint = document.getElementById('gateStatusHint');
+    if (gateHint && st.communityGate) {
+      const statusLabels = {
+        locked: 'Đang tích luỹ',
+        charging: 'Cổng phát sáng',
+        half_open: 'Mở một phần',
+        fully_open: 'Mở hoàn toàn',
+        grand_ceremony: 'Đại Lễ Khai Mở'
+      };
+      const lbl = statusLabels[st.communityGate.status] || st.communityGate.status;
+      gateHint.innerHTML = `✨ Cổng Trời Kim Long: <strong>${lbl} (${Number(st.communityGate.currentHearts || 0).toLocaleString('vi-VN')} tim)</strong>`;
+    }
+
+    updateFurnaceUI(st.furnaceStatus);
+    window.__latestCeremonySchedule = st.ceremonySchedule;
+    updateCeremonyBar(st.ceremonySchedule);
+    renderPollUI(st.activePoll);
+
     renderIncenseSticks(st.activeIncenseSticks || 9);
 
     if (st.settings?.stageBg) {
@@ -826,6 +869,10 @@
 
   function formatEventSummary(ev) {
     switch (ev.type) {
+      case 'milestoneUnlocked':
+        return `🏆 <strong>Mở khoá mốc:</strong> ${escapeHtml(ev.milestone?.name || 'Công đức')}!`;
+      case 'ceremony':
+        return `🐉 <strong>Nghi lễ:</strong> ${escapeHtml(ev.ceremony?.name || 'Đại Lễ')}!`;
       case 'burnVotive':
       case 'burnIncense':
         return `${ev.itemEmoji || '🪙'} <strong>${escapeHtml(ev.user)}</strong> hoá ${ev.count || 3} ${escapeHtml(ev.itemName || 'Thoi Vàng')} (+${ev.merit} LĐ)`;
@@ -845,6 +892,217 @@
     }
   }
 
+  // 7B. Hàng đợi thông báo ưu tiên & các module tương tác realtime
+  const priorityQueue = [];
+  let isDisplayingToast = false;
+
+  function pushPriorityNotification(text, priority = 2, icon = '✨', durationMs = 4500) {
+    priorityQueue.push({ text, priority, icon, durationMs });
+    priorityQueue.sort((a, b) => a.priority - b.priority);
+    processPriorityQueue();
+  }
+
+  function processPriorityQueue() {
+    if (isDisplayingToast || priorityQueue.length === 0) return;
+    isDisplayingToast = true;
+    const item = priorityQueue.shift();
+    const stack = document.getElementById('priorityNotificationStack');
+    if (!stack) {
+      isDisplayingToast = false;
+      return;
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `priority-toast priority-${item.priority}`;
+    toast.innerHTML = `
+      <span>${item.icon} ${item.text}</span>
+      <span style="font-size: 11px; opacity: 0.85; padding-left: 8px;">🔥 Đàn Tràng</span>
+    `;
+    stack.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-14px) scale(0.9)';
+      setTimeout(() => {
+        toast.remove();
+        isDisplayingToast = false;
+        processPriorityQueue();
+      }, 400);
+    }, item.durationMs);
+  }
+
+  let milestoneBannerTimer = null;
+  function showMilestoneUnlockedBanner(milestone) {
+    const banner = document.getElementById('milestoneUnlockedBanner');
+    const title = document.getElementById('milestoneBannerTitle');
+    const sub = document.getElementById('milestoneBannerSub');
+    if (!banner || !milestone) return;
+
+    if (title) title.textContent = `✨ ${milestone.name.toUpperCase()} (${Number(milestone.threshold).toLocaleString('vi-VN')} TIM) ✨`;
+    if (sub) sub.textContent = milestone.description || 'Toàn thể đạo tràng đồng tâm tích đức khai thông linh khí!';
+
+    banner.classList.add('visible');
+    audio.playMilestoneChime();
+    particles.triggerMilestoneVisual(milestone.effect);
+
+    clearTimeout(milestoneBannerTimer);
+    milestoneBannerTimer = setTimeout(() => {
+      banner.classList.remove('visible');
+    }, 6500);
+
+    pushPriorityNotification(`Mở khoá mốc: ${milestone.name}!`, 1, '🏆', 5500);
+  }
+
+  let blessingTimer = null;
+  function showSpiritualBlessingToast(devotee, message) {
+    const toast = document.getElementById('spiritualBlessingToast');
+    const nameEl = document.getElementById('blessingDevoteeLine');
+    const msgEl = document.getElementById('blessingMessageLine');
+    if (!toast) return;
+
+    if (nameEl) nameEl.textContent = `Tín chủ: ${devotee || 'Thành Tâm'}`;
+    if (msgEl) msgEl.textContent = message || 'Cầu cho gia quyến bốn mùa thân tâm an lạc, tai qua nạn khỏi, vạn sự hanh thông.';
+
+    toast.classList.add('visible');
+    audio.playIncenseChime();
+
+    clearTimeout(blessingTimer);
+    blessingTimer = setTimeout(() => {
+      toast.classList.remove('visible');
+    }, 6000);
+  }
+
+  function updateFurnaceUI(furnace) {
+    if (!furnace) return;
+    const pill = document.getElementById('furnaceStatusPill');
+    const txt = document.getElementById('furnaceStatusText');
+    const dot = document.getElementById('furnacePulseDot');
+    if (!pill || !txt) return;
+
+    const temp = furnace.temperature || 368;
+    const label = furnace.label || 'Lò đang hoạt động';
+    txt.textContent = `🔥 ${label.toUpperCase()} • ${temp}°C`;
+
+    if (furnace.state === 'burning' || furnace.state === 'grand_ceremony') {
+      pill.style.borderColor = '#ffd700';
+      pill.style.boxShadow = '0 0 16px rgba(255, 215, 0, 0.7)';
+      if (dot) dot.style.background = '#ffeb3b';
+      particles.furnaceBoost = Math.max(particles.furnaceBoost, furnace.state === 'grand_ceremony' ? 1.8 : 1.3);
+    } else {
+      pill.style.borderColor = 'rgba(244, 193, 80, 0.65)';
+      pill.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.8)';
+      if (dot) dot.style.background = '#ff4500';
+    }
+  }
+
+  function renderPollUI(poll) {
+    const card = document.getElementById('livePollCard');
+    const list = document.getElementById('pollOptionsList');
+    const timer = document.getElementById('pollTimerBadge');
+    const qText = document.getElementById('pollQuestionText');
+    if (!card || !poll) return;
+
+    if (!poll.active) {
+      if (!poll.winner) card.style.display = 'none';
+      return;
+    }
+
+    card.style.display = 'flex';
+    if (qText) qText.textContent = poll.question || 'Bình chọn vật phẩm:';
+    if (timer) timer.textContent = `⏳ ${poll.remainingSeconds || 0}s`;
+
+    if (list && Array.isArray(poll.options)) {
+      const total = Math.max(1, poll.totalVotes || 0);
+      let maxVotes = -1;
+      poll.options.forEach((o) => {
+        if (o.votes > maxVotes) maxVotes = o.votes;
+      });
+
+      list.innerHTML = poll.options.map((opt) => {
+        const pct = Math.round((opt.votes / total) * 100);
+        const isLeading = maxVotes > 0 && opt.votes === maxVotes;
+        return `
+          <div class="poll-option-row ${isLeading ? 'leading' : ''}">
+            <div class="poll-option-bar" style="width: ${pct}%;"></div>
+            <div class="poll-option-info">
+              <span><span class="poll-option-num">${opt.id}</span> ${opt.emoji || '🪙'} ${escapeHtml(opt.text)}</span>
+              <span><strong>${opt.votes}</strong> (${pct}%)</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function handlePollEnded(poll, winner) {
+    const card = document.getElementById('livePollCard');
+    const timer = document.getElementById('pollTimerBadge');
+    if (timer) timer.textContent = '🏆 HOÀN TẤT';
+    audio.playFanfare();
+
+    if (winner) {
+      pushPriorityNotification(`Vật phẩm chiến thắng bình chọn: ${winner.text}!`, 1, '🏆', 7000);
+      particles.spawnVotiveBurning(winner.emoji || '🪙', 5);
+    }
+
+    setTimeout(() => {
+      if (card) card.style.display = 'none';
+    }, 7000);
+  }
+
+  function updateCeremonyBar(schedule = []) {
+    const bar = document.getElementById('ceremonyCountdownBar');
+    const nameEl = document.getElementById('ceremonyName');
+    const timerEl = document.getElementById('ceremonyTimer');
+    const tagEl = document.getElementById('ceremonyTag');
+    if (!bar || !schedule || schedule.length === 0) return;
+
+    const now = new Date();
+    const curMinutes = now.getHours() * 60 + now.getMinutes();
+
+    let upcoming = null;
+    let minDiff = Infinity;
+
+    for (const c of schedule) {
+      const [h, m] = c.time.split(':').map(Number);
+      const cerMinutes = h * 60 + m;
+      let diff = cerMinutes - curMinutes;
+      if (diff < 0) diff += 24 * 60;
+      if (diff < minDiff) {
+        minDiff = diff;
+        upcoming = c;
+      }
+    }
+
+    if (upcoming && nameEl && timerEl) {
+      nameEl.textContent = `${upcoming.name} (${upcoming.time})`;
+      const remainingSec = minDiff * 60 - now.getSeconds();
+      const mm = String(Math.floor(remainingSec / 60)).padStart(2, '0');
+      const ss = String(remainingSec % 60).padStart(2, '0');
+      timerEl.textContent = `Còn ${mm}:${ss}`;
+      if (minDiff <= 5) {
+        if (tagEl) tagEl.textContent = '🔥 SẮP BẮT ĐẦU';
+        bar.style.borderColor = '#ff4500';
+      } else {
+        if (tagEl) tagEl.textContent = '⏳ SỰ KIỆN TIẾP THEO';
+        bar.style.borderColor = 'rgba(244, 193, 80, 0.65)';
+      }
+    }
+  }
+
+  function handleCeremonyStart(ceremony) {
+    if (!ceremony) return;
+    audio.playFanfare();
+    particles.triggerMilestoneVisual('grand_ceremony');
+    pushPriorityNotification(`Bắt đầu nghi thức: ${ceremony.name}!`, 1, '🐉', 7500);
+  }
+
+  setInterval(() => {
+    if (window.__latestCeremonySchedule) {
+      updateCeremonyBar(window.__latestCeremonySchedule);
+    }
+  }, 1000);
+
   // 8. Xử lý hiệu ứng khi có Nghi Thức Hoá Vàng mới
   let fortuneTimer = null;
   let grandTimer = null;
@@ -857,6 +1115,16 @@
     }
 
     switch (ev.type) {
+      case 'milestoneUnlocked': {
+        showMilestoneUnlockedBanner(ev.milestone);
+        break;
+      }
+
+      case 'ceremony': {
+        handleCeremonyStart(ev.ceremony);
+        break;
+      }
+
       case 'burnVotive':
       case 'burnIncense': {
         const emoji = ev.itemEmoji || '🪙';
@@ -866,6 +1134,7 @@
         audio.playIncenseChime();
         audio.playFireCrackle(1.4, 0.9);
         particles.spawnFloatingMerit(`+${ev.merit} Lộc Đức`, 520, 880, '#ffe082');
+        particles.spawnVotiveBurning(emoji, Math.min(count, 5));
         animateWalkerOnCarpet(
           ev.user,
           ev.avatar,
@@ -873,6 +1142,7 @@
           ev.wish,
           { itemKey, badgeText: `${emoji} ${count} ${shortenName(itemName, 16)}` }
         );
+        pushPriorityNotification(`${ev.user} hoá ${count} ${itemName}`, 3, emoji, 3800);
         break;
       }
 
@@ -950,6 +1220,12 @@
         audio.playFireCrackle(1.4, 0.85);
         spawnSkyLantern(ev.user, ev.wish);
         particles.spawnFloatingMerit(`+${ev.merit} Lộc Đức`, 520, 900, '#ffb74d');
+        if (ev.wish && ev.wish.includes('(')) {
+          const parts = ev.wish.split('(');
+          const wishText = parts[0].trim();
+          const blessing = parts[1].replace(')', '').trim();
+          showSpiritualBlessingToast(ev.user, `${wishText}. ${blessing}`);
+        }
         animateWalkerOnCarpet(
           ev.user,
           ev.avatar,
@@ -957,6 +1233,7 @@
           ev.wish,
           { itemKey: 'scroll', badgeText: '📜 Sớ Điệp Cầu Lộc' }
         );
+        pushPriorityNotification(`${ev.user} dâng sớ cầu an lộc`, 3, '📜', 4000);
         break;
       }
 
@@ -968,6 +1245,7 @@
         audio.playTempleBell(0.9);
         audio.playFireCrackle(1.8, 1.0);
         particles.spawnFloatingMerit(`+${ev.merit} Lộc Đức`, 520, 860, '#fff3b0');
+        particles.spawnVotiveBurning(emoji, 3);
         animateWalkerOnCarpet(
           ev.user,
           ev.avatar,
@@ -975,6 +1253,7 @@
           ev.wish,
           { itemKey, badgeText: `${emoji} ${shortenName(giftName, 18)}` }
         );
+        pushPriorityNotification(`${ev.user} hoá ${giftName} (+${ev.merit} LĐ)`, 2, emoji, 5000);
         break;
       }
 
@@ -992,6 +1271,7 @@
           ev.wish,
           { itemKey: 'dragon_treasury', badgeText: '🐉 Đại Bảo Rương Rồng Vàng' }
         );
+        pushPriorityNotification(`ĐẠI LỄ: ${ev.user} khai mở ${ev.giftName}!`, 1, '🐉', 7500);
         break;
       }
 
@@ -1206,6 +1486,21 @@
           registerRoomActivity();
           if (msg.params?.state) updateUIState(msg.params.state);
           if (msg.params?.event) triggerRitualVisuals(msg.params.event);
+        } else if (msg.method === 'temple.milestoneUnlocked') {
+          registerRoomActivity();
+          if (msg.params?.milestone) showMilestoneUnlockedBanner(msg.params.milestone);
+          if (msg.params?.state) updateUIState(msg.params.state);
+        } else if (msg.method === 'furnace.update') {
+          if (msg.params?.furnace) updateFurnaceUI(msg.params.furnace);
+        } else if (msg.method === 'poll.update') {
+          if (msg.params?.poll) renderPollUI(msg.params.poll);
+        } else if (msg.method === 'poll.ended') {
+          handlePollEnded(msg.params?.poll, msg.params?.winner);
+        } else if (msg.method === 'ceremony.start') {
+          handleCeremonyStart(msg.params?.ceremony);
+        } else if (msg.method === 'gate.unlocked') {
+          pushPriorityNotification(`Cổng Trời Kim Long: ${msg.params?.level?.name || 'Khai Mở'}!`, 1, '✨', 6000);
+          audio.playMilestoneChime();
         } else if (msg.method === 'temple.welcome') {
           showWelcomeDevoteeToast(msg.params?.user, msg.params?.avatar);
         } else if (msg.method === 'temple.chat') {
