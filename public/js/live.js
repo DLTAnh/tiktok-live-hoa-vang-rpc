@@ -935,7 +935,7 @@
     const toast = document.createElement('div');
     toast.className = `priority-toast priority-${item.priority}`;
     toast.innerHTML = `
-      <span>${item.icon} ${item.text}</span>
+      <span>${escapeHtml(item.icon)} ${escapeHtml(item.text)}</span>
       <span style="font-size: 11px; opacity: 0.85; padding-left: 8px;">🔥 Đàn Tràng</span>
     `;
     stack.appendChild(toast);
@@ -2064,6 +2064,7 @@
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 })();

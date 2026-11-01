@@ -1,4 +1,6 @@
 node_modules/
 .DS_Store
-data/tts-cache/
-*.log
+data/tts-cache/*
+!data/tts-cache/.gitkeep
+data/*.tmp
+.venv/

@@ -7,7 +7,38 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const cors = require('cors');
 const { WebSocketServer } = require('ws');
-const { TikTokLiveConnection, WebcastEvent, ControlEvent } = require('tiktok-live-connector');
+let TikTokLiveConnection, WebcastEvent, ControlEvent;
+try {
+  ({ TikTokLiveConnection, WebcastEvent, ControlEvent } = require('tiktok-live-connector'));
+} catch (e) {
+  WebcastEvent = {
+    ROOM_USER: 'roomUser',
+    MEMBER: 'member',
+    CHAT: 'chat',
+    LIKE: 'like',
+    FOLLOW: 'follow',
+    SHARE: 'share',
+    SOCIAL: 'social',
+    GIFT: 'gift'
+  };
+  ControlEvent = {
+    CONNECTED: 'connected',
+    DISCONNECTED: 'disconnected',
+    ERROR: 'error'
+  };
+  TikTokLiveConnection = class {
+    constructor(username, options) {
+      this.username = username;
+      this.options = options;
+      this.roomId = null;
+    }
+    on(event, handler) {}
+    async connect() {
+      throw new Error(`Kết nối TikTok Live yêu cầu Node.js >= 20 (phiên bản hiện tại: ${process.version}). Màn hình đang chạy ở chế độ Giả lập / RPC.`);
+    }
+    async disconnect() {}
+  };
+}
 
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
@@ -812,10 +843,32 @@ function loadState() {
 
 let state = loadState();
 
+function pruneDevoteesIfNeeded() {
+  if (!state.devotees) return;
+  const keys = Object.keys(state.devotees);
+  if (keys.length <= 2000) return;
+
+  // Giữ lại top 1500 tín chủ có công đức cao nhất hoặc tương tác gần nhất
+  const sorted = keys.map((k) => ({ k, dev: state.devotees[k] }));
+  sorted.sort((a, b) => {
+    const meritDiff = (b.dev?.merit || 0) - (a.dev?.merit || 0);
+    if (meritDiff !== 0) return meritDiff;
+    return (b.dev?.lastSeen || 0) - (a.dev?.lastSeen || 0);
+  });
+
+  const keepKeys = new Set(sorted.slice(0, 1500).map((x) => x.k));
+  for (const k of keys) {
+    if (!keepKeys.has(k)) {
+      delete state.devotees[k];
+    }
+  }
+}
+
 let saveTimer = null;
 function saveState() {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
+  saveTimer = setTimeout(async () => {
+    pruneDevoteesIfNeeded();
     const toSave = {
       totalIncense: state.totalIncense,
       totalVotiveBurned: state.totalVotiveBurned,
@@ -845,9 +898,16 @@ function saveState() {
       stageScene: state.stageScene,
       smartPromptSettings: state.smartPromptSettings
     };
-    fs.promises.writeFile(STATE_FILE, JSON.stringify(toSave, null, 2), 'utf8').catch((e) => {
-      console.error('[State] Lỗi lưu file:', e.message);
-    });
+    const tempPath = `${STATE_FILE}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`;
+    try {
+      await fs.promises.writeFile(tempPath, JSON.stringify(toSave, null, 2), 'utf8');
+      await fs.promises.rename(tempPath, STATE_FILE);
+    } catch (e) {
+      console.error('[State] Lỗi lưu file nguyên tử (atomic write):', e.message);
+      try {
+        if (fs.existsSync(tempPath)) await fs.promises.unlink(tempPath);
+      } catch (_) {}
+    }
   }, 1000);
 }
 
@@ -2165,12 +2225,24 @@ async function resolveTikTokUsername(rawInput) {
     if (directMatch && directMatch[1]) {
       return directMatch[1];
     }
+    // Chỉ resolve URL nếu domain là tiktok.com hợp lệ để ngăn SSRF
     try {
-      const resp = await fetch(urlToFetch, { redirect: 'follow' });
-      const finalUrl = resp.url || '';
-      const resolvedMatch = finalUrl.match(/tiktok\.com\/@([^/?#]+)/i);
-      if (resolvedMatch && resolvedMatch[1]) {
-        return resolvedMatch[1];
+      const parsed = new URL(urlToFetch);
+      if (parsed.hostname.endsWith('tiktok.com')) {
+        const resolved = await new Promise((resolve) => {
+          const clientLib = parsed.protocol === 'http:' ? http : https;
+          const req = clientLib.get(urlToFetch, { timeout: 5000 }, (res) => {
+            const loc = res.headers.location || '';
+            const match = loc.match(/tiktok\.com\/@([^/?#]+)/i);
+            if (match && match[1]) {
+              return resolve(match[1]);
+            }
+            resolve(null);
+          });
+          req.on('error', () => resolve(null));
+          req.on('timeout', () => { req.destroy(); resolve(null); });
+        });
+        if (resolved) return resolved;
       }
     } catch (e) {
       console.warn('[TikTok URL Resolve Warning]', e.message);
@@ -2320,12 +2392,17 @@ async function connectTikTokLive(usernameOrUrl) {
     const repeatCount = Math.max(1, Number(data?.repeatCount || data?.comboCount || 1));
 
     const prevCount = giftComboTracker.get(groupId) || 0;
-    if (repeatCount <= prevCount && data?.repeatEnd) {
-      giftComboTracker.delete(groupId);
+    if (repeatCount <= prevCount) {
+      if (data?.repeatEnd) {
+        giftComboTracker.delete(groupId);
+      }
       return;
     }
-    const deltaCount = Math.max(1, repeatCount - prevCount);
+    const deltaCount = repeatCount - prevCount;
     giftComboTracker.set(groupId, repeatCount);
+    if (data?.repeatEnd) {
+      giftComboTracker.delete(groupId);
+    }
     if (giftComboTracker.size > 500) {
       const firstKey = giftComboTracker.keys().next().value;
       giftComboTracker.delete(firstKey);
@@ -2937,19 +3014,36 @@ function broadcastNotification(method, params) {
   });
   for (const client of wss.clients) {
     if (client.readyState === 1) {
-      client.send(payload);
+      try {
+        client.send(payload, (err) => {
+          if (err) {
+            // Write failed on disconnected socket, ignore safely
+          }
+        });
+      } catch (_) {}
     }
   }
 }
 
+wss.on('error', (err) => {
+  console.warn('[WebSocketServer Error]', err?.message || err);
+});
+
 wss.on('connection', (ws) => {
-  ws.send(
-    JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'temple.state',
-      params: getPublicState()
-    })
-  );
+  ws.on('error', (err) => {
+    console.warn('[WebSocket Client Error]', err?.message || err);
+  });
+
+  try {
+    ws.send(
+      JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'temple.state',
+        params: getPublicState()
+      }),
+      () => {}
+    );
+  } catch (_) {}
 
   ws.on('message', async (raw) => {
     let msg;
@@ -2961,23 +3055,25 @@ wss.on('connection', (ws) => {
     if (!msg || !msg.method) return;
     try {
       const result = await handleRpcCall(msg.method, msg.params || {});
-      if (msg.id !== undefined) {
+      if (msg.id !== undefined && ws.readyState === 1) {
         ws.send(
           JSON.stringify({
             jsonrpc: '2.0',
             id: msg.id,
             result
-          })
+          }),
+          () => {}
         );
       }
     } catch (err) {
-      if (msg.id !== undefined) {
+      if (msg.id !== undefined && ws.readyState === 1) {
         ws.send(
           JSON.stringify({
             jsonrpc: '2.0',
             id: msg.id,
             error: { code: -32000, message: err.message || 'RPC Error' }
-          })
+          }),
+          () => {}
         );
       }
     }
@@ -3012,7 +3108,7 @@ server.listen(PORT, '0.0.0.0', () => {
     }
   }, 6 * 60 * 1000);
 
-  // Tự động quét và kết nối tức thì khi kênh @quangvangma1 vừa bấm phát LIVE (chu kỳ 5s)
+  // Tự động quét và kết nối khi kênh @quangvangma1 phát LIVE (chu kỳ 15s để tránh bị TikTok rate limit)
   let isAutoScanning = false;
   setInterval(async () => {
     if (state.tiktok.connected || state.tiktok.connecting || isAutoScanning) return;
@@ -3026,5 +3122,5 @@ server.listen(PORT, '0.0.0.0', () => {
     } finally {
       isAutoScanning = false;
     }
-  }, 5000);
+  }, 15000);
 });
