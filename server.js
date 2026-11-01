@@ -1503,6 +1503,20 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 app.use('/tts-cache', express.static(TTS_CACHE_DIR, { maxAge: '7d' }));
+
+// Route chuyên dụng cho TikTok Live Studio & OBS Browser Source (chỉ hiển thị 100% màn hình đài hoá vàng 9:16 sạch)
+app.get(['/obs', '/live', '/stream'], (_req, res) => {
+  const htmlPath = path.join(__dirname, 'public', 'index.html');
+  try {
+    let html = fs.readFileSync(htmlPath, 'utf8');
+    html = html.replace('<body>', '<body class="obs-mode">');
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(html);
+  } catch (err) {
+    res.status(500).send('Error loading live template');
+  }
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/admin', (_req, res) => {
