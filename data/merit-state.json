@@ -1,19 +1,19 @@
 {
-  "totalIncense": 964,
-  "totalVotiveBurned": 1959,
-  "totalMerit": 124909,
+  "totalIncense": 1000,
+  "totalVotiveBurned": 2062,
+  "totalMerit": 126514,
   "dailyMeritTarget": 1000000,
-  "dailyMeritCurrent": 124909,
-  "woodenFishHits": 3129,
+  "dailyMeritCurrent": 126514,
+  "woodenFishHits": 3159,
   "bellRings": 71,
   "lanternCount": 82,
   "fortuneCount": 48,
   "activeIncenseSticks": 36,
   "offerings": {
-    "gold_ingot": 769,
+    "gold_ingot": 868,
     "hell_money": 156,
     "royal_robe": 27,
-    "sacred_horse": 43,
+    "sacred_horse": 44,
     "five_elements_tray": 12,
     "golden_tech": 12,
     "luxury_villa_car": 44,
@@ -98,11 +98,17 @@
       "name": "Gia Chủ Minh Tâm",
       "uniqueId": "giachủminhtâm",
       "avatar": "",
-      "merit": 76405,
-      "incense": 262,
-      "votiveCount": 665,
+      "merit": 78010,
+      "incense": 298,
+      "votiveCount": 768,
       "gifts": 31,
-      "lastWish": "Thành tâm hoá vàng kính biếu Gia Tiên, cầu buôn may bán đắt, tài lộc đầy nhà"
+      "lastWish": "Thả 10 tim tích 20 công đức Cấp 1",
+      "firstSeen": 1793529915166,
+      "sessionsCount": 5,
+      "streakDays": 1,
+      "lastSeen": 1793659312597,
+      "badge": "👑 Bảo Trợ Đàn Tràng",
+      "greetedThisSession": true
     },
     "luklacstore": {
       "name": "user51360464158",
@@ -1680,7 +1686,7 @@
   "communityGate": {
     "name": "Cổng Trời Kim Long Khai Khố",
     "targetHearts": 50000,
-    "currentHearts": 20600,
+    "currentHearts": 20630,
     "status": "half_open",
     "levels": [
       {
@@ -1953,7 +1959,7 @@
   "smartPromptSettings": {
     "enabled": true,
     "intervalSeconds": 25,
-    "activePrompt": "🎯 Nhiệm vụ cộng đồng: Dâng 300 Đóa Hoa Sen (Còn 167)! Gõ từ khóa để cùng hoàn thành!",
+    "activePrompt": "🗳️ Bình chọn đang mở! Hãy bình luận 1, 2, 3 hoặc 4 để chọn vật phẩm hoá tiếp theo!",
     "rules": [
       {
         "condition": "poll_active",

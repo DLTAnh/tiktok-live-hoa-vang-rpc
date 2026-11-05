@@ -1582,7 +1582,7 @@
     }, 5500);
   }
 
-  // Tự động nhắc nhở phòng Live khi không có bình luận mới (45s) để người mới vào luôn hiểu live làm gì
+  // Tự động cập nhật bong bóng chữ hướng dẫn khi phòng Live yên ắng (chỉ hiển thị chữ, không đọc TTS tránh lặp âm thanh)
   let lastRoomActivityTime = Date.now();
   function registerRoomActivity() {
     lastRoomActivityTime = Date.now();
@@ -1590,28 +1590,25 @@
 
   setInterval(() => {
     const now = Date.now();
-    if (now - lastRoomActivityTime >= 45000 && !audio.ttsPlaying) {
+    // Giãn cách 3 phút và chỉ hiển thị chữ trong bong bóng thoại, KHÔNG phát âm thanh giọng đọc nhắc nhở
+    if (now - lastRoomActivityTime >= 180000) {
       lastRoomActivityTime = now;
       const bubbleEl = document.getElementById('masterChantBubble');
       const statusEl = document.getElementById('masterStatusText');
       if (bubbleEl) {
-        bubbleEl.textContent = '📜 “Kính mời thiện tín bình luận [Tên + Lời khấn] để Thầy dâng sớ hoá vàng!”';
+        bubbleEl.textContent = '📜 “Kính mời thiện tín bình luận [Tên + Lời khấn] để dâng sớ hoá vàng!”';
       }
       if (statusEl) {
-        statusEl.textContent = '📢 Lời nhắc hướng dẫn cầu an';
+        statusEl.textContent = '📢 Hướng dẫn dâng sớ';
       }
       setMasterPose('chant');
-      audio.playTempleBell(0.8);
-
-      const guideSpoken = 'Kính chào thiện nam tín nữ. Hãy bình luận họ tên và ước nguyện tài lộc để Thầy Chủ Lễ kính dâng sớ điệp hoá vàng vào lò lửa linh thiêng.';
-      audio.enqueueTts(guideSpoken, { voice: 'maichi' });
 
       setTimeout(() => {
         setMasterPose('stand');
         if (statusEl) statusEl.textContent = '🔥 Trực đàn khấn lễ';
       }, 7000);
     }
-  }, 10000);
+  }, 15000);
 
   // 9. Kết nối JSON-RPC 2.0 WebSocket & Gửi Lệnh RPC
   let ws = null;

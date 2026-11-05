@@ -4,3 +4,5 @@ data/tts-cache/*
 !data/tts-cache/.gitkeep
 data/*.tmp
 .venv/
+.node/
+.tools/

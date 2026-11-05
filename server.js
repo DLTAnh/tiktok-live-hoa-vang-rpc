@@ -7,38 +7,42 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const cors = require('cors');
 const { WebSocketServer } = require('ws');
-let TikTokLiveConnection, WebcastEvent, ControlEvent;
-try {
-  ({ TikTokLiveConnection, WebcastEvent, ControlEvent } = require('tiktok-live-connector'));
-} catch (e) {
-  WebcastEvent = {
-    ROOM_USER: 'roomUser',
-    MEMBER: 'member',
-    CHAT: 'chat',
-    LIKE: 'like',
-    FOLLOW: 'follow',
-    SHARE: 'share',
-    SOCIAL: 'social',
-    GIFT: 'gift'
-  };
-  ControlEvent = {
-    CONNECTED: 'connected',
-    DISCONNECTED: 'disconnected',
-    ERROR: 'error'
-  };
-  TikTokLiveConnection = class {
-    constructor(username, options) {
-      this.username = username;
-      this.options = options;
-      this.roomId = null;
+let TikTokLiveConnection = null;
+let WebcastEvent = {
+  ROOM_USER: 'roomUser',
+  MEMBER: 'member',
+  CHAT: 'chat',
+  LIKE: 'like',
+  FOLLOW: 'follow',
+  SHARE: 'share',
+  SOCIAL: 'social',
+  GIFT: 'gift'
+};
+let ControlEvent = {
+  CONNECTED: 'connected',
+  DISCONNECTED: 'disconnected',
+  ERROR: 'error'
+};
+
+let connectorReadyPromise = null;
+function ensureTikTokConnector() {
+  if (connectorReadyPromise) return connectorReadyPromise;
+  connectorReadyPromise = (async () => {
+    try {
+      const mod = await import('tiktok-live-connector');
+      TikTokLiveConnection = mod.TikTokLiveConnection;
+      if (mod.WebcastEvent) WebcastEvent = mod.WebcastEvent;
+      if (mod.ControlEvent) ControlEvent = mod.ControlEvent;
+      console.log('[TikTok Live] Đã nạp thành công module TikTokLiveConnection chính thức!');
+      return true;
+    } catch (e) {
+      console.warn('[TikTok Live Warning] Không thể nạp module tiktok-live-connector:', e.message);
+      return false;
     }
-    on(event, handler) {}
-    async connect() {
-      throw new Error(`Kết nối TikTok Live yêu cầu Node.js >= 20 (phiên bản hiện tại: ${process.version}). Màn hình đang chạy ở chế độ Giả lập / RPC.`);
-    }
-    async disconnect() {}
-  };
+  })();
+  return connectorReadyPromise;
 }
+ensureTikTokConnector();
 
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
@@ -2265,7 +2269,28 @@ function extractUserFromEvent(data) {
   return { user, uniqueId, avatar };
 }
 
+function describeTikTokError(err) {
+  if (!err) return 'Lỗi không xác định';
+  if (typeof err === 'string') return err;
+  const parts = [];
+  if (err.info) parts.push(String(err.info));
+  const ex = err.exception || err.error || err.cause;
+  if (ex) parts.push(ex.message || String(ex));
+  if (err.message) parts.push(err.message);
+  if (err.code) parts.push(`code=${err.code}`);
+  if (parts.length) return [...new Set(parts)].join(' | ');
+  try {
+    return JSON.stringify(err).slice(0, 500);
+  } catch (_) {
+    return String(err);
+  }
+}
+
 async function connectTikTokLive(usernameOrUrl) {
+  await ensureTikTokConnector();
+  if (!TikTokLiveConnection) {
+    throw new Error(`Chưa nạp được module tiktok-live-connector (yêu cầu Node >= 20, hiện tại Node ${process.version}).`);
+  }
   const cleanUser = await resolveTikTokUsername(usernameOrUrl);
   if (!cleanUser) {
     throw new Error('Không tìm thấy @username hợp lệ từ dữ liệu nhập vào');
@@ -2311,7 +2336,7 @@ async function connectTikTokLive(usernameOrUrl) {
   });
 
   tiktokConn.on(ControlEvent.ERROR, (err) => {
-    state.tiktok.lastError = err?.message || String(err);
+    state.tiktok.lastError = describeTikTokError(err);
     console.warn('[TikTok Live Warning]', state.tiktok.lastError);
     broadcastNotification('temple.state', getPublicState());
   });
@@ -2436,7 +2461,8 @@ async function connectTikTokLive(usernameOrUrl) {
     state.tiktok.connected = false;
     state.tiktok.connecting = false;
     state.tiktok.lastError =
-      err?.message || 'Không thể kết nối phòng Live (kiểm tra tài khoản đang phát Live chưa)';
+      describeTikTokError(err) || 'Không thể kết nối phòng Live (kiểm tra tài khoản đang phát Live chưa)';
+    console.warn(`[TikTok Live] Kết nối @${cleanUser} thất bại: ${state.tiktok.lastError}`);
     broadcastNotification('temple.state', getPublicState());
     throw new Error(state.tiktok.lastError);
   }
